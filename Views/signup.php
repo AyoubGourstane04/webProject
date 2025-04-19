@@ -44,32 +44,32 @@
                             <form class="user" method="POST" action="#">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="FirstName" name="firstName" placeholder="Prénom" >
+                                    <input type="text" class="form-control form-control-user" id="FirstName" name="firstName" placeholder="Prénom" required>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="LastName" name="lastName" placeholder="Nom" >
+                                    <input type="text" class="form-control form-control-user" id="LastName" name="lastName" placeholder="Nom" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="birthdate" class="form-label">Date de naissance</label>
-                                    <input type="date" class="form-control form-control-user" id="birthdate" name="birthdate" >
+                                    <input type="date" class="form-control form-control-user" id="birthdate" name="birthdate" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="cin" class="form-label">CIN (Carte d'Identité Nationale)</label>
                                     <input type="text" class="form-control form-control-user" id="cin" name="cin" 
-                                        placeholder="Ex: AB12345">
+                                        placeholder="Ex: AB12345" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-user" id="InputEmail" name="email"
-                                    placeholder="Adresse email" >
+                                    placeholder="Adresse email" required>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" >
+                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="department" class="form-label">Département :</label>
