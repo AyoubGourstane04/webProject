@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 11:54 AM
+-- Generation Time: Apr 20, 2025 at 02:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -42,7 +42,8 @@ CREATE TABLE `departement` (
 
 INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 (1, 'Mathématiques et Informatique', 'MI'),
-(2, 'Génie Civil Energétique et Environnement', 'GCEE');
+(2, 'Génie Civil Energétique et Environnement', 'GCEE'),
+(3, 'none', '-');
 
 -- --------------------------------------------------------
 
@@ -105,6 +106,13 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `role_id`, `speciality`, `id_departement`, `creation_date`) VALUES
+(1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 1, 'none', 3, '2025-04-19 14:10:42');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -144,7 +152,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT for table `departement`
 --
 ALTER TABLE `departement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -162,7 +170,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

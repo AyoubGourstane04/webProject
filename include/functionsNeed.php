@@ -100,5 +100,16 @@
         ];
     }
 
+   
+    function sendEmail($password,$email){
+        $to = $email;
+        $subject = "Your New Account";
+        $message = "Your temporary password: $password";
+        mail($to, $subject, $message);
+    }
+
+
+
+
 
 
