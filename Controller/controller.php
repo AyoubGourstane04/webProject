@@ -13,4 +13,9 @@
     session_start();
     seConnecte();
   }  
+
+  function GetUsersById($id){
+    $data=GetRowFromDb("utilisateurs","id",$id);
+    return $data;
+  }
  

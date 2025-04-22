@@ -110,6 +110,44 @@
 
 
 
+    function propertyExists($pdo,$tableName,$property){
+        $statment=$pdo->prepare("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=? AND COLUMN_NAME=?;");
+        $statment->execute([$tableName,$property]);
+        return $statment->fetchColumn();
+    }
+
+
+
+    function HandleImageInput(){
+        $fileName = null;
+        if (!empty($_FILES['image']['name'])) {
+            $allowedTypes = ['image/jpeg', 'image/png'];
+            
+            // Validate file
+            if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+                echo '<div class="alert alert-danger">File upload error: ' . $_FILES['image']['error'] . '</div>';
+                return false;
+            }
+    
+            if (!in_array($_FILES['image']['type'], $allowedTypes)) {
+                echo '<div class="alert alert-danger">Only JPG, PNG, or GIF files are allowed.</div>';
+                return false;
+            }
+    
+            // Generate safe filename
+            $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid('img_', true) . '.' . strtolower($extension);
+            $uploadPath = '../resources/images/' . $fileName;
+    
+            if (!move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath)) {
+                echo '<div class="alert alert-danger">Failed to save uploaded file.</div>';
+            }
+        }
+        return $fileName;
+    }
+
+
+
 
 
 

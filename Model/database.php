@@ -26,9 +26,11 @@
     $password =GeneratePassword();
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    //sending the Email :
-    sendEmail($password,$formData['email']);
-     
+   
+
+    //Image Handling : 
+    $fileName=HandleImageInput();
+
     try{
         $pdo = dataBaseConnection();
         $priorityRoles = ['4', '3', '2'];
@@ -49,14 +51,17 @@
                                                         password,
                                                         role_id,
                                                         speciality,
-                                                        id_departement
-                                                    ) VALUES (?,?,?,?,?,?,?,?,?);
+                                                        id_departement,
+                                                        image
+                                                    ) VALUES (?,?,?,?,?,?,?,?,?,?);
                                                     ');
     
     
     
         $conn->execute([$formData['firstName'],$formData['lastName'],$formData['cin'],$formData['birthdate'],$formData['email'],
-                        $hashedPassword,$selectedRoleId,$formData['speciality'],$formData['department'],]);
+                        $hashedPassword,$selectedRoleId,$formData['speciality'],$formData['department'],$fileName]);
+        //sending the Email :
+         sendEmail($password,$formData['email']);
             return true;
     }catch (PDOException $e) {
         echo 'Error: ' . $e->getMessage();
@@ -86,7 +91,11 @@
         if($statment->rowCount()>=1){
             if(password_verify($password,$data['password'])){
                 $_SESSION['role_id']=$data['role_id'];
+                $_SESSION['id']=$data['id'];
                 $role=$_SESSION['role_id'];
+
+                //this should be replaced by this in the future : 
+                // header('location: dashboard.php?role_id=..&id=..');
             switch ($role) {
                     case '1'://admin
                         header('location: /webProject/Views/pages/admin.php');
@@ -114,5 +123,23 @@
           }    
     }
 
+    function GetRowFromDb($tableName,$property,$value){
+        $allowedTables = ['utilisateurs', 'role', 'departement', 'units'];
+        if(!in_array($tableName,$allowedTables)){
+            throw new Exception("Invalid table name.");
+        }
+         $pdo=dataBaseConnection();
+        if(propertyExists($pdo,$tableName,$property)){
+            $stmt=$pdo->prepare("SELECT * FROM $tableName WHERE $property=?;");
+            $stmt->execute([$value]);
+            $data=$stmt->fetch(PDO::FETCH_ASSOC);
+                return $data;
+        }else{
+            throw new Exception("Invalid column name.");
+        }
+    }    
 
+
+
+   
   

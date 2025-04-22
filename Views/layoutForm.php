@@ -11,7 +11,6 @@
 
     <title><?php echo $title; ?></title>
 
-    
     <link rel="icon" href="..\resources\images\gg-removebg-preview.png">
 
     <!-- Custom fonts for this template-->

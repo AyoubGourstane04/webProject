@@ -1,46 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<?php
+   require_once __DIR__ . '/../../Controller/controller.php';
+   session_start();
+    if ((!isset($_SESSION['role_id']) || $_SESSION['role_id'] != 1)&&!isset($_SESSION['id'])) {
+        header("Location: /webProject/Views/login.php");
+        exit();
+    }
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    $data=GetUsersById($_SESSION['id']);
 
-    <title>SB Admin 2 - Blank</title>
+    ob_start();
+ 
 
-    <!-- Custom fonts for this template-->
-    <link href="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\fontawesome-free\css\all.min.css" rel="stylesheet" type="text/css">
-    
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="..\..\startbootstrap-sb-admin-2-gh-pages\css\sb-admin-2.min.css" rel="stylesheet">
-    
+?>
 
-</head>
 
-<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-       
-
-
-
-
-
-
-
-
-
-
-
-         
-
+    
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -49,7 +27,7 @@
         <div class="sidebar-brand-icon">
             <img src="..\..\startbootstrap-sb-admin-2-gh-pages\img\logo2.png" alt="Logo" style="width: 40px; height: 40px;">
         </div>
-        <div class="sidebar-brand-text mx-3">6.2.BETA</div>
+        <div class="sidebar-brand-text mx-3">E-service</div>
     </a>
 
     <!-- Divider -->
@@ -68,191 +46,73 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        ETUDES & STAGE
+        Utilisateurs
     </div>
 
-    <!-- Nav Items -->
+    <!-- Nav Items- Enseignants -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCours"
             aria-expanded="false" aria-controls="collapseCours">
-            <i class="fas fa-book"></i>
-            <span>Cours</span>
+            <i class="fas fa-users"></i>
+            <span>Enseignants</span>
         </a>
         <div id="collapseCours" class="collapse" aria-labelledby="headingCours" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">COURS:</h6>
-                <a class="collapse-item" href="#">Cours de ma classe</a>
-                <a class="collapse-item" href="#">Cours année actuelle</a>
-                <a class="collapse-item" href="#">Recherche avancée</a>
-                <a class="collapse-item" href="#">Anciens documents</a>
-                <div class="collapse-divider"></div>
+                <h6 class="collapse-header">Enseignants:</h6>
+                <a class="collapse-item" href="#">List des Enseignants</a>
+                <a class="collapse-item" href="#">Ajouter</a>
+                <a class="collapse-item" href="#">Modifier</a>
+                <a class="collapse-item" href="#">Specialité</a>
+                <!-- <div class="collapse-divider"></div>
                 <h6 class="collapse-header">GÉRER LES NOTIFICATIONS:</h6>
-                <a class="collapse-item" href="#">Activer/Désactiver</a>
+                <a class="collapse-item" href="#">Activer/Désactiver</a> -->
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - Rapports & Stage -->
+    <!-- Nav Item - chefs de departement -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRapports"
             aria-expanded="false" aria-controls="collapseRapports">
-            <i class="fas fa-file-alt"></i>
-            <span>Rapports & stage</span>
+            <i class="fas fa-user-tie"></i>
+            <span>Chefs de departement</span>
         </a>
         <div id="collapseRapports" class="collapse" aria-labelledby="headingRapports" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">RAPPORT PFE:</h6>
-                <a class="collapse-item" href="#">Consulter</a>
-                <a class="collapse-item" href="#">Désposer un rapport PFE</a>
-                <a class="collapse-item" href="#">Mes rapports PFE</a>
-                <h6 class="collapse-header">AUTRES RAPPORT:</h6>
+                <h6 class="collapse-header">chefs de departement :</h6>
+                <a class="collapse-item" href="#">List des Chefs</a>
+                <a class="collapse-item" href="#">Ajouter</a>
+                <a class="collapse-item" href="#">Modifier</a>
+                <!-- <h6 class="collapse-header">AUTRES RAPPORT:</h6>
                 <a class="collapse-item" href="#">Rapport PFA</a>
                 <a class="collapse-item" href="#">Désposer un rapport PFA </a>
                 <a class="collapse-item" href="#">Mes rapports PFA</a>
                 <h6 class="collapse-header">DOCUMENTS STAGE:</h6>
                 <a class="collapse-item" href="#">Demande</a>
-                <a class="collapse-item" href="#">Convention</a>
+                <a class="collapse-item" href="#">Convention</a> -->
             </div>
         </div>
     </li>
 
-    <!-- Nav Item - Bibliothèque -->
+    <!-- Nav Item - coordinateurs des filiéres -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBibliotheque"
             aria-expanded="false" aria-controls="collapseBibliotheque">
-            <i class="fas fa-book-reader"></i>
-            <span>Bibliothèque</span>
+            <i class="fas fa-user-tie"></i>
+            <span>coordinateurs des filiéres</span>
         </a>
         <div id="collapseBibliotheque" class="collapse" aria-labelledby="headingBibliotheque" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">CATALOGUE:</h6>
-                <a class="collapse-item" href="#">Consulter</a>
+                <h6 class="collapse-header">coordinateurs des filiéres </h6>
+                <a class="collapse-item" href="#">List des Coordinateurs</a>
+                <a class="collapse-item" href="#">Ajouter</a>
+                <a class="collapse-item" href="#">Modifier</a>
             </div>
         </div>
     </li>
+</ul> 
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        SERVICES EN LIGNE
-    </div>
-
-    <!-- Nav Item - Activités Parascolaires -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseActivites"
-            aria-expanded="false" aria-controls="collapseActivites">
-            <i class="fas fa-running"></i>
-            <span>Activités Parascolaires</span>
-        </a>
-        <div id="collapseActivites" class="collapse" aria-labelledby="headingActivites" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">consulter</a>
-            </div>
-        </div>
-    </li>
-    <!-- Réinscription -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReinscription"
-            aria-expanded="false" aria-controls="collapseReinscription">
-            <i class="fas fa-sync-alt"></i>
-            <span>Réinscription</span>
-        </a>
-        <div id="collapseReinscription" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Réinscription à l'ENSAH</a>
-                <a class="collapse-item" href="#">Réinscription à l'internat</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Demandes -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDemandes"
-            aria-expanded="false" aria-controls="collapseDemandes">
-            <i class="fas fa-file-signature"></i>
-            <span>Demandes</span>
-        </a>
-        <div id="collapseDemandes" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Nouvelle demande</a>
-                <a class="collapse-item" href="#">État de mes demandes</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Orientation -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrientation"
-            aria-expanded="false" aria-controls="collapseOrientation">
-            <i class="fas fa-map-signs"></i>
-            <span>Orientation</span>
-        </a>
-        <div id="collapseOrientation" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Option 3ème Année GC</a>
-                <a class="collapse-item" href="#">Option 3ème Année GI</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Affichage des notes -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotes"
-            aria-expanded="false" aria-controls="collapseNotes">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Affichage des notes</span>
-        </a>
-        <div id="collapseNotes" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Tableau des notes</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Profile -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile"
-            aria-expanded="false" aria-controls="collapseProfile">
-            <i class="fas fa-user"></i>
-            <span>Profile</span>
-        </a>
-        <div id="collapseProfile" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">MES INFORMATIONS:</h6>
-                <a class="collapse-item" href="#">Consulter ma fiche</a>
-                <a class="collapse-item" href="#">Changer photo</a>
-                <a class="collapse-item" href="#">Modifier coordonnées</a>
-                <h6 class="collapse-header">COMPTE ESERVICES:</h6>
-                <a class="collapse-item" href="#">Changer mot de passe</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Personnel -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePersonnel"
-            aria-expanded="false" aria-controls="collapsePersonnel">
-            <i class="fas fa-users"></i>
-            <span>Personnel</span>
-        </a>
-        <div id="collapsePersonnel" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Consulter</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-</ul>
-<!-- End of Sidebar -->
 
 
 
@@ -298,7 +158,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+                    <!-- <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."aria-label="Search" aria-describedby="basic-addon2">
@@ -308,7 +168,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -460,7 +320,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $data['firstName'].' '.$data['lastName']; ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="..\..\startbootstrap-sb-admin-2-gh-pages\img\logo3.png">
                             </a>
@@ -508,7 +368,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                    <h1 class="h3 mb-4 text-gray-800"></h1>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -582,16 +442,9 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\jquery\jquery.min.js"></script>
-    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\bootstrap\js\bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\jquery-easing\jquery.easing.min.js"></script>
+<?php
+    $content=ob_get_clean();
+    include_once "../dashboards.php";
 
-    <!-- Custom scripts for all pages-->
-    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\sb-admin-2.min.js"></script>
-
-</body>
-
-</html>
+?>

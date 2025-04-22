@@ -17,7 +17,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Créez un compte !</h1>
                             </div>
-                            <form action="../create.php" class="user" method="POST">
+                            <form action="../create.php" class="user" method="POST" enctype="multipart/form-data">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" class="form-control form-control-user" id="FirstName" name="firstName" placeholder="Prénom" required>
@@ -39,22 +39,28 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="InputEmail" name="email"
-                                    placeholder="Adresse email" required>
+                            <div class="form-group row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control form-control-user" id="InputEmail" name="email"
+                                        placeholder="Adresse email" required>
+                                </div>    
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
+                                </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
-                                </div>
                                 <div class="col-sm-6">
-                                    <label for="department" class="form-label">Département :</label>
+                                    <label for="department" class="form-label">Département </label>
                                     <select class="form-control" id="department" name="department" >
                                         <option value="" disabled selected>Sélectionnez le département</option>
                                         <option value="1">Mathématiques et Informatique (MI)</option>
                                         <option value="2">Génie Civil Energétique et Environnement (GCEE)</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <label for="formFile" class="form-label">Image </label>
+                                    <input class="form-control-user" type="file" id="image" name="image">
                                 </div>
                             </div>
                                 <div class="form-group">
