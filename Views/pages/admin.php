@@ -9,6 +9,7 @@
     $data=GetUsersById($_SESSION['id']);
 
     ob_start();
+    $title=$data['firstName'].' '.$data['lastName'];
  
 
 
@@ -29,6 +30,10 @@
         </div>
         <div class="sidebar-brand-text mx-3">E-service</div>
     </a>
+        <!-- Sidebar Toggler -->
+        <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -110,6 +115,7 @@
             </div>
         </div>
     </li>
+    <hr class="sidebar-divider d-none d-md-block">
 </ul> 
 
 
@@ -142,13 +148,6 @@
 
             <!-- Main Content -->
             <div id="content">
-
-
-
-
-
-
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -368,7 +367,8 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800"></h1>
+                    <!-- <h1 class="h3 mb-4 text-gray-800"></h1> -->
+                    <?php include_once "../include/tables.php";?>
 
                 </div>
                 <!-- /.container-fluid -->

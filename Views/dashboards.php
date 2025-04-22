@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title><?php echo $title;?></title>
 
 
 
@@ -30,6 +30,9 @@
 
     <!-- Custom styles for this template-->
     <link href="..\..\startbootstrap-sb-admin-2-gh-pages\css\sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for the tables page -->
+    <link href="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\datatables\dataTables.bootstrap4.min.css" rel="stylesheet">
     
 
 </head>
@@ -50,6 +53,13 @@
 
     <!-- Custom scripts for all pages-->
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\datatables\jquery.dataTables.min.js"></script>
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\datatables\dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\datatables-demo.js"></script>
 
 </body>
 
