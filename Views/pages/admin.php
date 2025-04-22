@@ -7,6 +7,7 @@
     }
 
     $data=GetUsersById($_SESSION['id']);
+    var_dump($data);
 
     ob_start();
     $title=$data['firstName'].' '.$data['lastName'];

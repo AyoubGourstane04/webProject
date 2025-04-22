@@ -28,8 +28,7 @@
 
    
 
-    //Image Handling : 
-    $fileName=HandleImageInput();
+ 
 
     try{
         $pdo = dataBaseConnection();
@@ -52,14 +51,13 @@
                                                         role_id,
                                                         speciality,
                                                         id_departement,
-                                                        image
-                                                    ) VALUES (?,?,?,?,?,?,?,?,?,?);
+                                                    ) VALUES (?,?,?,?,?,?,?,?,?);
                                                     ');
     
     
     
         $conn->execute([$formData['firstName'],$formData['lastName'],$formData['cin'],$formData['birthdate'],$formData['email'],
-                        $hashedPassword,$selectedRoleId,$formData['speciality'],$formData['department'],$fileName]);
+                        $hashedPassword,$selectedRoleId,$formData['speciality'],$formData['department']]);
         //sending the Email :
          sendEmail($password,$formData['email']);
             return true;
@@ -69,15 +67,7 @@
     }
     }
 
-    function bringDb($tableName){
-        $allowedTables = ['utilisateurs', 'role', 'departement', 'units'];
-        if(!in_array($tableName,$allowedTables)){
-            throw new Exception("Invalid table name.");
-        }
-        $pdo=dataBaseConnection();
-        $data=$pdo->query("SELECT * FROM $tableName ;")->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
-    }
+
 
     function seConnecte(){
         $email=$_POST['email'];
@@ -123,21 +113,29 @@
           }    
     }
 
-    function GetRowFromDb($tableName,$property,$value){
-        $allowedTables = ['utilisateurs', 'role', 'departement', 'units'];
-        if(!in_array($tableName,$allowedTables)){
-            throw new Exception("Invalid table name.");
-        }
-         $pdo=dataBaseConnection();
-        if(propertyExists($pdo,$tableName,$property)){
-            $stmt=$pdo->prepare("SELECT * FROM $tableName WHERE $property=?;");
-            $stmt->execute([$value]);
-            $data=$stmt->fetch(PDO::FETCH_ASSOC);
-                return $data;
+    function GetFromDb($query,$values){
+        $pdo=dataBaseConnection();
+        $stmt=$pdo->prepare($query);
+
+        if (is_array($values)){
+            $stmt->execute($values);
         }else{
-            throw new Exception("Invalid column name.");
+            $stmt->execute([$values]);
         }
-    }    
+
+        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+    } 
+
+    function GetSimpleDb($query){
+        $pdo=dataBaseConnection();
+        $stmt=$pdo->query($query);
+        $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    } 
+
+
+
 
 
 

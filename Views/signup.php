@@ -39,17 +39,17 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <div class="mb-3">
                                     <input type="email" class="form-control form-control-user" id="InputEmail" name="email"
                                         placeholder="Adresse email" required>
-                                </div>    
-                                <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
-                                </div>
+                                </div>     
                             </div>
 
                             <div class="form-group row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
+                                </div>
                                 <div class="col-sm-6">
                                     <label for="department" class="form-label">Département </label>
                                     <select class="form-control" id="department" name="department" >
@@ -57,10 +57,6 @@
                                         <option value="1">Mathématiques et Informatique (MI)</option>
                                         <option value="2">Génie Civil Energétique et Environnement (GCEE)</option>
                                     </select>
-                                </div>
-                                <div class="col-sm-6 ">
-                                    <label for="formFile" class="form-label">Image </label>
-                                    <input class="form-control-user" type="file" id="image" name="image">
                                 </div>
                             </div>
                                 <div class="form-group">

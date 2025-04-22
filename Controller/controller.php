@@ -15,7 +15,7 @@
   }  
 
   function GetUsersById($id){
-    $data=GetRowFromDb("utilisateurs","id",$id);
+    $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$id);
     return $data;
   }
  
