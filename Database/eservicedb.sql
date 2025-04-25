@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2025 at 02:27 AM
+-- Generation Time: Apr 25, 2025 at 06:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `eservicedb`
 --
-CREATE DATABASE IF NOT EXISTS `eservicedb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `eservicedb`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +27,6 @@ USE `eservicedb`;
 -- Table structure for table `departement`
 --
 
-DROP TABLE IF EXISTS `departement`;
 CREATE TABLE `departement` (
   `id` int(11) NOT NULL,
   `departement_name` varchar(150) NOT NULL,
@@ -51,7 +48,6 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 -- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role_label` varchar(50) NOT NULL
@@ -74,7 +70,6 @@ INSERT INTO `role` (`id`, `role_label`) VALUES
 -- Table structure for table `units`
 --
 
-DROP TABLE IF EXISTS `units`;
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `unit_name` varchar(100) NOT NULL,
@@ -90,7 +85,6 @@ CREATE TABLE `units` (
 -- Table structure for table `utilisateurs`
 --
 
-DROP TABLE IF EXISTS `utilisateurs`;
 CREATE TABLE `utilisateurs` (
   `id` int(11) NOT NULL,
   `firstName` varchar(50) NOT NULL,
@@ -141,6 +135,7 @@ ALTER TABLE `units`
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `CIN` (`CIN`),
   ADD KEY `role_id` (`role_id`),
   ADD KEY `id_departement` (`id_departement`);
 
@@ -170,7 +165,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

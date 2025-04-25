@@ -1,14 +1,8 @@
 <?php 
-     require_once __DIR__ . '/../../Model/database.php';
 
-     $users = GetSimpleDb("
-            SELECT u.*, d.departement_name, r.role_label 
-            FROM utilisateurs u
-            JOIN departement d ON u.id_departement = d.id
-            JOIN role r ON u.role_id = r.id
-            WHERE u.role_id = 1;
-        ");
-
+    $users=GetSimpleDb('SELECT * FROM utilisateurs WHERE role_id!=1;');
+       
+  
 ?>
 
     <!-- Page Wrapper -->
@@ -44,10 +38,16 @@
                                             <th>Specialité</th>
                                             <th>Departement</th>
                                             <th>Role</th>
+                                            <th>Operations</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php foreach($users as $info){ ?>
+
+                                    <?php foreach($users as $info){ 
+                                            $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$info['id_departement'],false);
+
+                                            $role = GetFromDb("SELECT * FROM role WHERE id=? ;",$info['role_id'],false);
+                                    ?>
                                         <tr>
                                             <td><?php echo $info['id'];?></td>
                                             <td><?php echo $info['firstName'];?></td>
@@ -56,10 +56,17 @@
                                             <td><?php echo $info['Birthdate'];?></td>
                                             <td><?php echo $info['email'];?></td>
                                             <td><?php echo $info['speciality'];?></td>
-                                            <td><?php echo $info['departement_name']?></td>
-                                            <td><?php echo $info['role_label'];?></td>
+                                            <td>
+                                                <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo ($role && isset($role['role_label'])) ? $role['role_label'] : ''; ?>
+                                            </td>
+                                            <td>
+                                            <a href="..\operations\Modifier.php?id=<?=$info['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
+                                            <a href="..\operations\Supprimer.php?id=<?=$info['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>
+                                            </td>
                                         </tr>
-
                                        <?php }?>
                                     </tbody>
                                 </table>

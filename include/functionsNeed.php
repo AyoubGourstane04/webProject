@@ -48,6 +48,7 @@
     }
     
  
+ 
     function validateFormInputs($requiredFields = []) {
         $errors = [];
         $sanitized = [];
@@ -101,13 +102,25 @@
     }
 
    
-    function sendEmail($password,$email){
+    // function sendEmail($password,$email){
+    //     $to = $email;
+    //     $subject = "Your New Account";
+    //     $message = "Your temporary password: $password";
+    //     mail($to, $subject, $message);
+    // }
+
+    function sendEmail($password, $email){
         $to = $email;
         $subject = "Your New Account";
         $message = "Your temporary password: $password";
-        mail($to, $subject, $message);
+        $headers = "From: ayoubgourstan@gmail.com";
+    
+        if(mail($to, $subject, $message, $headers)){
+            echo "Email sent successfully.";
+        } else {
+            echo "Email sending failed.";
+        }
     }
-
 
 
 
