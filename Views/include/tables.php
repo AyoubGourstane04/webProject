@@ -1,8 +1,14 @@
 <?php 
-
-    $users=GetSimpleDb('SELECT * FROM utilisateurs WHERE role_id!=1;');
-       
-  
+    $roleData=GetSimpleDb('SELECT * FROM role WHERE id='.$role.';',false);
+    
+    $roles=GetSimpleDb('SELECT * FROM userroles WHERE role_id='.$role.';');
+    $users = [];
+    foreach($roles as $data){
+        $user=GetSimpleDb('SELECT * FROM utilisateurs WHERE id='.$data['user_id'].';',false);
+        if($user){
+            $users[]=$user;
+        }
+    }
 ?>
 
     <!-- Page Wrapper -->
@@ -17,12 +23,12 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">List des Enseignants</h1>
+                    <h1 class="h3 mb-2 text-gray-800"><?= $header ?></h1>
                  
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Enseignants</h6>
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary"><?= 'liste des '.$header ?></h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -43,28 +49,25 @@
                                     </thead>
                                     <tbody>
 
-                                    <?php foreach($users as $info){ 
-                                            $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$info['id_departement'],false);
-
-                                            $role = GetFromDb("SELECT * FROM role WHERE id=? ;",$info['role_id'],false);
+                                    <?php foreach($users as $user){ 
+                                            $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$user['id_departement'],false);
+                                          
                                     ?>
                                         <tr>
-                                            <td><?php echo $info['id'];?></td>
-                                            <td><?php echo $info['firstName'];?></td>
-                                            <td><?php echo $info['lastName'];?></td>
-                                            <td><?php echo $info['CIN'];?></td>
-                                            <td><?php echo $info['Birthdate'];?></td>
-                                            <td><?php echo $info['email'];?></td>
-                                            <td><?php echo $info['speciality'];?></td>
+                                            <td><?php echo $user['id'];?></td>
+                                            <td><?php echo $user['firstName'];?></td>
+                                            <td><?php echo $user['lastName'];?></td>
+                                            <td><?php echo $user['CIN'];?></td>
+                                            <td><?php echo $user['Birthdate'];?></td>
+                                            <td><?php echo $user['email'];?></td>
+                                            <td><?php echo $user['speciality'];?></td>
                                             <td>
                                                 <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
                                             </td>
+                                            <td><?php echo $roleData['role_label'];?></td>
                                             <td>
-                                                <?php echo ($role && isset($role['role_label'])) ? $role['role_label'] : ''; ?>
-                                            </td>
-                                            <td>
-                                            <a href="..\operations\Modifier.php?id=<?=$info['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
-                                            <a href="..\operations\Supprimer.php?id=<?=$info['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>
+                                            <a href="..\operations\Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
+                                            <a href="..\operations\Supprimer.php?id=<?=$user['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>
                                             </td>
                                         </tr>
                                        <?php }?>

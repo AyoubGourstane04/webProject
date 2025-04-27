@@ -1,19 +1,33 @@
 <?php
     require_once __DIR__ . '/../../Controller/controller.php';
     session_start();
-    if ((!isset($_SESSION['role_id']) || $_SESSION['role_id'] != 1)&&!isset($_SESSION['id'])) {
+    if ((!isset($_SESSION['role']) || $_SESSION['role'] != 1)&&!isset($_SESSION['id'])) {
         header("Location: /webProject/Views/login.php");
         exit();
     }
 
     ob_start();
-    $title="Modifier un Enseignant";
+    $admin=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
+
+   $title="Modifier un utilisateur";
+    
+    $userName=$admin['firstName'].' '.$admin['lastName'];
 
 
-    $idEns=$_GET['id'];
 
-    $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$idEns,false);
+    $id=$_GET['id'];
 
+    $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$id,false);
+
+
+    //roles : 
+
+    $roles=GetSimpleDb('SELECT * FROM userroles WHERE user_id='.$id.';');  
+    
+    $rolesArray=[];
+    foreach($roles as $userRole){
+        $rolesArray[]=$userRole['role_id'];
+    }
 ?>
  
     
@@ -35,7 +49,7 @@
             <div class="col-lg-12">
                 <div class="p-5">
                     <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Modifier les informations d'un Enseignant</h1>
+                        <h1 class="h4 text-gray-900 mb-4">Modifier les informations d'un utilisateur</h1>
                     </div>
                     <form action="../../edit.php" class="user" method="POST">
                         <input type="hidden" name="id" value="<?=$data['id']?>">
@@ -74,18 +88,18 @@
                                 <div class="col-sm-6">
                                     <label for="department" class="form-label">Département </label>
                                     <select class="form-control" id="department" name="department" >
-                                        <option value="" disabled <?php $data['id_departement']==null?'selected':'';?>>Sélectionnez le département</option>
-                                        <option value="1" <?php $data['id_departement']==1? 'selected':'';?>>Mathématiques et Informatique (MI)</option>
-                                        <option value="2" <?php $data['id_departement']==2? 'selected':'';?>>Génie Civil Energétique et Environnement (GCEE)</option>
+                                        <option value="" disabled <?= $data['id_departement']==null?'selected':'';?>>Sélectionnez le département</option>
+                                        <option value="1" <?= $data['id_departement']==1? 'selected':'';?>>Mathématiques et Informatique (MI)</option>
+                                        <option value="2" <?= $data['id_departement']==2? 'selected':'';?>>Génie Civil Energétique et Environnement (GCEE)</option>
                                     </select>
                                 </div>
                             </div>
-                                <div class="form-group">
+                            <div class="form-group">
                                     <p class="h6 text-gray-800 mb-3">Affecter un rôle :</p>
                                     <div class="row">  
                                         <div class="col-md-6">
                                                 <div class="custom-control custom-checkbox mb-3">
-                                                    <input type="checkbox" class="custom-control-input" id="roleTeacher" name="roles[]" value="2" checked>
+                                                    <input type="checkbox" class="custom-control-input" id="roleTeacher" name="roles[0]" value="2" <?= in_array(2,$rolesArray)? 'checked':'';?>>
                                                     <label class="custom-control-label" for="roleTeacher">
                                                         <i class="fas fa-chalkboard-teacher mr-2"></i>Enseignant
                                                     </label>
@@ -93,7 +107,7 @@
                                             </div>  
                                         <div class="col-md-6">
                                             <div class="custom-control custom-checkbox mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="roleDeptHead" name="roles[]" value="3">
+                                                <input type="checkbox" class="custom-control-input" id="roleDeptHead" name="roles[1]" value="3" <?= in_array(3,$rolesArray)? 'checked':'';?> >
                                                 <label class="custom-control-label" for="roleDeptHead">
                                                     <i class="fas fa-user-tie mr-2"></i>Chef de département
                                                 </label>
@@ -102,14 +116,15 @@
                                         
                                         <div class="col-md-6">
                                             <div class="custom-control custom-checkbox mb-3">
-                                                <input type="checkbox" class="custom-control-input" id="roleCoordinator" name="roles[]" value="4">
+                                                <input type="checkbox" class="custom-control-input" id="roleCoordinator" name="roles[2]" value="4" <?= in_array(4,$rolesArray)? 'checked':'';?>>
                                                 <label class="custom-control-label" for="roleCoordinator">
                                                     <i class="fas fa-user mr-2"></i>Coordonnateur de filière
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+                                 
                                 <input type="submit" value="Modifier" class="btn btn-primary btn-user btn-block">
 
                                 

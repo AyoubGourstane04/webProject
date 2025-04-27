@@ -13,7 +13,7 @@
 
 
   function createAccount(){
-    $inputs=validateFormInputs(['firstName','lastName','cin','email','speciality','department']);
+    $inputs=validateFormInputs(['firstName','lastName','cin','email','birthdate','speciality','department']);
 
     if (!empty($inputs['errors'])) {
         foreach ($inputs['errors'] as $field => $error) {
@@ -28,8 +28,6 @@
 
    
 
- 
-
     try{
         $pdo = dataBaseConnection();
 
@@ -40,16 +38,25 @@
                                                         Birthdate,
                                                         email,
                                                         password,
-                                                        role_id,
                                                         speciality,
                                                         id_departement
-                                                    ) VALUES (?,?,?,?,?,?,?,?,?);
+                                                    ) VALUES (?,?,?,?,?,?,?,?);
                                                     ');
     
     
     
         $conn->execute([$formData['firstName'],$formData['lastName'],$formData['cin'],$formData['birthdate'],$formData['email'],
-                        $hashedPassword,2,$formData['speciality'],$formData['department']]);
+                        $hashedPassword,$formData['speciality'],$formData['department']]);
+
+        $user_id=$pdo->lastInsertId();
+
+        $roles = validateRoles($_POST['roles']);
+
+        foreach($roles as $roleId){
+            $stmt=$pdo->prepare('INSERT INTO userroles (user_id,role_id) VALUES (?,?);');
+            $stmt->execute([$user_id,$roleId]);
+        }
+
         //sending the Email :
          sendEmail($password,$formData['email']);
             return true;
@@ -72,15 +79,33 @@
 
         if($statment->rowCount()>=1){
             if(password_verify($password,$data['password'])){
-                $_SESSION['role_id']=$data['role_id'];
-                $_SESSION['id']=$data['id'];
-                $role=$_SESSION['role_id'];
 
-                //this should be replaced by this in the future : 
-                // header('location: dashboard.php?role_id=..&id=..');
+                $stmt = $pdo->prepare('SELECT * FROM userroles WHERE user_id = ?;');
+                $stmt->execute([$data['id']]);
+                $roleData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if (!empty($roleData)) {
+                    $_SESSION['id'] = $roleData[0]['user_id'];
+                }
+
+                $validRoles = ['1', '2', '3', '4'];
+
+                $roleIds = array_column($roleData, 'role_id');
+
+                $filteredRoles = array_intersect($validRoles, $roleIds);
+
+                if (in_array('1', $filteredRoles)) {
+                    $role = '1';
+                } elseif (!empty($filteredRoles)) {
+                    $role = max($filteredRoles);
+                } else {
+                    $role = null;
+                }
+                $_SESSION['role'] = $role;
+
             switch ($role) {
                     case '1'://admin
-                        header('location: /webProject/Views/pages/admin.php');
+                        header('location: /webProject/Views/adminViews/admin.php');
                         break;
                     case '2'://enseignant
                         header('location: /webProject/Views/pages/professeur.php');
@@ -134,11 +159,15 @@
         } 
     }
 
-    function GetSimpleDb($query){
+    function GetSimpleDb($query,$fetchAll=true){
         try {
             $pdo=dataBaseConnection();
             $stmt=$pdo->query($query);
-            $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($fetchAll){
+                $data=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            }else{
+                $data=$stmt->fetch(PDO::FETCH_ASSOC);
+            }
                 if ($data === false) {
                     return false;
                 }
@@ -149,7 +178,7 @@
         }  
     } 
 
-    function EditUser($id, $firstName, $lastName, $birthdate, $cin, $email, $speciality, $departement, $role) {
+    function EditUser($id, $firstName, $lastName, $birthdate, $cin, $email, $speciality, $departement, $roles) {
         try {
             $pdo = dataBaseConnection();
 
@@ -178,10 +207,6 @@
                 $updateFields[] = 'email = ?';
                 $params[] = $email;
             }
-            if (!empty($role)) {
-                $updateFields[] = 'role_id = ?';
-                $params[] = $role;
-            }
             if (!empty($speciality)) {
                 $updateFields[] = 'speciality = ?';
                 $params[] = $speciality;
@@ -198,33 +223,57 @@
                 $stmt = $pdo->prepare($updateQuery);
                 $stmt->execute($params);
             }
+                $roles = validateRoles($_POST['roles']);
+
+                $existingRoles =GetFromDb('SELECT role_id FROM userroles WHERE user_id=?;',$id);
+
+                $existingRoleIds = array_column($existingRoles, 'role_id');
+
+                $rolesToRemove = array_diff($existingRoleIds, $roles);
+
+                if(!empty($rolesToRemove)){
+                    $placeholders=implode(',', array_fill(0, count($rolesToRemove), '?'));
+                    $statment=$pdo->prepare('DELETE FROM userroles WHERE user_id=? AND role_id IN ('.$placeholders.');');
+                    $statment->execute(array_merge([$id],$rolesToRemove));
+                }
+
+                foreach($roles as $roleId){
+                    if (!in_array($roleId,$existingRoleIds)){
+                        $sql=$pdo->prepare('INSERT INTO userroles (role_id,user_id) VALUES (?,?);');
+                        $sql->execute([$roleId,$id]);
+                    }
+                }
+
             $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
             if ($stmt->rowCount() > 0) {
                 return "User updated successfully.";
             } else {
-                return "No changes made. Either the user was not found or the data is identical.";
+                return header('location: /webProject/Views/adminViews/admin.php');
             }
+
+            
         } catch (PDOException $e) {
             return "Error updating user: " . $e->getMessage();
         }
     }
 
-    function DeleteDb($id){
+
+    function DeleteDb($tableName,$id){
         try{
             $pdo = dataBaseConnection();
             
             $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
 
-            $statment=$pdo->prepare('DELETE FROM utilisateurs WHERE id=?;');
+            $statment=$pdo->prepare('DELETE FROM '.$tableName.' WHERE id=?;');
             $statment->execute([$id]);
 
             $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
             if ($statment->rowCount() > 0) {
-                return "User deleted successfully.";
-            }else {
-                return "No user found with the specified ID or no changes made.";
+                return true;
+            } else {
+                throw new Exception("No user found with the specified ID or no changes made.");
             }
             
         } catch (PDOException $e) {
@@ -232,6 +281,56 @@
         }
     }
     
+
+    function insertUser($firstName,$lastName,$birthdate,$cin,$email,$speciality){
+        try{
+            $pdo = dataBaseConnection();
+    
+            $conn=$pdo->prepare('INSERT INTO newusers (
+                                                            firstName,
+                                                            lastName,
+                                                            CIN,
+                                                            Birthdate,
+                                                            email,                                                    
+                                                            speciality
+                                                        ) VALUES (?,?,?,?,?,?);
+                                                        ');
+        
+        
+        
+            $conn->execute([$firstName,$lastName,$cin,$birthdate,$email,$speciality]);
+                return true;
+        }catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    
+    }
+
+
+    function DeleteRoleFromDB($user_id){
+        try{
+            $pdo = dataBaseConnection();
+            
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+
+            $statment=$pdo->prepare('DELETE FROM userroles WHERE user_id=?;');
+            $statment->execute([$user_id]);
+
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+            if ($statment->rowCount() > 0) {
+                return true;
+            } else {
+                throw new Exception("No user found with the specified ID or no changes made.");
+            }
+            
+        } catch (PDOException $e) {
+            return "Error deleting roles: " . $e->getMessage();
+        }
+    }
+
+
 
 
 

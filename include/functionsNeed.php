@@ -46,8 +46,6 @@
     
         return null;
     }
-    
- 
  
     function validateFormInputs($requiredFields = []) {
         $errors = [];
@@ -68,31 +66,22 @@
         $sanitized['cin'] = !empty($_POST['cin']) ? htmlspecialchars(trim($_POST['cin'])) : null;
         $sanitized['email'] = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : null;
         $sanitized['speciality'] = !empty($_POST['speciality']) ? htmlspecialchars(trim($_POST['speciality'])) : null;
+        
+        // HandleRoleInsert($_POST['roles']);
+        
     
         // Validate department :
         $validdepartments = ['1', '2'];
         if(isset($_POST['department'])){
             $sanitized['department'] = in_array($_POST['department'], $validdepartments) ? $_POST['department']: null;
         }
-    
-        // Validate roles :
-        $validRoles = ['2', '3', '4'];
-        $sanitized['roles'] = [];
-        if (isset($_POST['roles']) && is_array($_POST['roles'])) {
-            foreach ($_POST['roles'] as $role) {
-                if (in_array($role, $validRoles)) {
-                    $sanitized['roles'][] = htmlspecialchars($role);
-                }
-            }
-        }
+
 
         foreach ($sanitized as $fieldName => $value) {
-            if($fieldName!=='roles'){
                 $error = checkemptiness($fieldName, $value);
                 if ($error !== null) {
                     $errors[$fieldName] = $error;
                 }
-            }
         }
        
         return [
@@ -101,13 +90,6 @@
         ];
     }
 
-   
-    // function sendEmail($password,$email){
-    //     $to = $email;
-    //     $subject = "Your New Account";
-    //     $message = "Your temporary password: $password";
-    //     mail($to, $subject, $message);
-    // }
 
     function sendEmail($password, $email){
         $to = $email;
@@ -122,7 +104,26 @@
         }
     }
 
+    function validateRoles($roles){
+        $validRoles = ['1','2', '3', '4'];
+        $sanitizedRoles = isset($roles) && is_array($roles)? array_values(array_intersect($validRoles,$roles)):[];
+        
+        if (empty($sanitizedRoles)) {
+            throw new Exception("Au moins un rôle doit être sélectionné.");
+        }else{
+            return $sanitizedRoles;
+        }
+    }
 
+
+
+
+    
+
+
+
+
+   
 
 
 

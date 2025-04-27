@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2025 at 06:37 PM
+-- Generation Time: Apr 27, 2025 at 04:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -45,6 +45,22 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `newusers`
+--
+
+CREATE TABLE `newusers` (
+  `id` int(11) NOT NULL,
+  `firstName` varchar(50) NOT NULL,
+  `lastName` varchar(75) NOT NULL,
+  `CIN` varchar(10) NOT NULL,
+  `Birthdate` date NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `speciality` varchar(70) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `role`
 --
 
@@ -82,6 +98,24 @@ CREATE TABLE `units` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `userroles`
+--
+
+CREATE TABLE `userroles` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userroles`
+--
+
+INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `utilisateurs`
 --
 
@@ -93,7 +127,6 @@ CREATE TABLE `utilisateurs` (
   `Birthdate` date NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role_id` int(11) NOT NULL,
   `speciality` varchar(70) NOT NULL,
   `id_departement` int(11) NOT NULL,
   `creation_date` datetime NOT NULL DEFAULT current_timestamp()
@@ -103,8 +136,8 @@ CREATE TABLE `utilisateurs` (
 -- Dumping data for table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `role_id`, `speciality`, `id_departement`, `creation_date`) VALUES
-(1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 1, 'none', 3, '2025-04-19 14:10:42');
+INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`) VALUES
+(1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42');
 
 --
 -- Indexes for dumped tables
@@ -115,6 +148,13 @@ INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `
 --
 ALTER TABLE `departement`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `newusers`
+--
+ALTER TABLE `newusers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `role`
@@ -130,13 +170,19 @@ ALTER TABLE `units`
   ADD KEY `departement_id` (`departement_id`);
 
 --
+-- Indexes for table `userroles`
+--
+ALTER TABLE `userroles`
+  ADD KEY `role_id` (`role_id`),
+  ADD KEY `user_Id` (`user_id`);
+
+--
 -- Indexes for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `CIN` (`CIN`),
-  ADD KEY `role_id` (`role_id`),
   ADD KEY `id_departement` (`id_departement`);
 
 --
@@ -148,6 +194,12 @@ ALTER TABLE `utilisateurs`
 --
 ALTER TABLE `departement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `newusers`
+--
+ALTER TABLE `newusers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -165,7 +217,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -178,11 +230,17 @@ ALTER TABLE `units`
   ADD CONSTRAINT `units_ibfk_1` FOREIGN KEY (`departement_id`) REFERENCES `departement` (`id`);
 
 --
+-- Constraints for table `userroles`
+--
+ALTER TABLE `userroles`
+  ADD CONSTRAINT `userroles_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  ADD CONSTRAINT `userroles_ibfk_2` FOREIGN KEY (`user_Id`) REFERENCES `utilisateurs` (`id`);
+
+--
 -- Constraints for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`),
-  ADD CONSTRAINT `utilisateurs_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
+  ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

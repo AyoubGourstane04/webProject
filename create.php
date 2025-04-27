@@ -1,3 +1,4 @@
 <?php
  require_once __DIR__ . '../Controller/controller.php';
- create();
+ $id=$_GET['id'];
+ create($id);
