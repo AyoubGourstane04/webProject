@@ -101,6 +101,41 @@
     } 
   }
 
+ function changePassword(){
+
+  $new_password= !empty($_POST['new_password']) ? htmlspecialchars(trim($_POST['new_password'])) : null;
+  if($new_password){
+        try {
+            if(NewPassword($new_password)){
+              unset($_SESSION['force_password_change']);
+              header("Location: /webProject/Views/login.php");
+              exit();
+            }
+        }catch (Exception $e) {
+          echo "<div class='alert alert-danger'>Une erreur s'est produite : " . $e->getMessage() . "</div>";
+        } 
+  }else{
+    echo "<div class='alert alert-danger'>Veuillez entrer un nouveau mot de passe.</div>";
+  }
+ 
+ }
+
+ function insertTempUnit($userId,$unitId,$demande){
+  try {
+    $result = insertTable('INSERT INTO tempunits (id_prof,id_unit,demande) VALUES (?,?,?);',[$userId,$unitId,$demande]);
+      if ($result === true ) {
+        header('location: '.$_SERVER['HTTP_REFERER']);
+        exit();
+      }else{
+           throw new Exception($result);
+        }
+ }catch (Exception $e) {
+     echo "An error adding the temporary unit: " . $e->getMessage();
+  } 
+ }
+
+
+
 
   
 

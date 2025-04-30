@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 04:03 AM
+-- Generation Time: Apr 30, 2025 at 04:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `eservicedb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chefs`
+--
+
+CREATE TABLE `chefs` (
+  `id_chef` int(11) NOT NULL,
+  `id_departement` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coordinateurs`
+--
+
+CREATE TABLE `coordinateurs` (
+  `id_coordinateur` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,6 +67,33 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `filieres`
+--
+
+CREATE TABLE `filieres` (
+  `id` int(11) NOT NULL,
+  `label` varchar(100) NOT NULL,
+  `acronym` varchar(10) NOT NULL,
+  `id_departement` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `filieres`
+--
+
+INSERT INTO `filieres` (`id`, `label`, `acronym`, `id_departement`) VALUES
+(1, 'Cycle Préparatoire', 'CP', 3),
+(2, 'Génie Informatique', 'GI', 1),
+(3, 'Génie Civil', 'GC', 2),
+(4, 'Génie de l\'eau et de l\'Environnement', 'GEE', 2),
+(5, 'Génie énergétique et énergies renouvelables', 'GEER', 2),
+(6, 'Génie Mécanique', 'GM', 2),
+(7, 'Ingénierie des données', 'ID', 1),
+(8, 'Transformation Digitale et Intelligence Artificielle', 'TDIA', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newusers`
 --
 
@@ -56,6 +105,18 @@ CREATE TABLE `newusers` (
   `Birthdate` date NOT NULL,
   `email` varchar(50) NOT NULL,
   `speciality` varchar(70) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `professeur`
+--
+
+CREATE TABLE `professeur` (
+  `id_professeur` int(11) NOT NULL,
+  `id_unit` int(11) NOT NULL,
+  `hours` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -83,17 +144,45 @@ INSERT INTO `role` (`id`, `role_label`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tempunits`
+--
+
+CREATE TABLE `tempunits` (
+  `id_prof` int(11) NOT NULL,
+  `id_unit` int(11) NOT NULL,
+  `demande` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tempunits`
+--
+
+INSERT INTO `tempunits` (`id_prof`, `id_unit`, `demande`) VALUES
+(2, 1, 'I want to teach this course');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `units`
 --
 
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
   `unit_name` varchar(100) NOT NULL,
-  `type` varchar(30) NOT NULL,
-  `hours` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `Hours` int(11) NOT NULL,
   `credits` int(11) NOT NULL,
-  `departement_id` int(11) NOT NULL
+  `departement_id` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL,
+  `statut` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `unit_name`, `description`, `Hours`, `credits`, `departement_id`, `id_filiere`, `statut`) VALUES
+(1, 'POO C++', 'programmation oriente objet en c++', 21, 14, 1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -111,7 +200,8 @@ CREATE TABLE `userroles` (
 --
 
 INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
-(1, 1);
+(1, 1),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -129,25 +219,48 @@ CREATE TABLE `utilisateurs` (
   `password` varchar(255) NOT NULL,
   `speciality` varchar(70) NOT NULL,
   `id_departement` int(11) NOT NULL,
-  `creation_date` datetime NOT NULL DEFAULT current_timestamp()
+  `creation_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `must_change_password` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`) VALUES
-(1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42');
+INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
+(1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
+(2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `chefs`
+--
+ALTER TABLE `chefs`
+  ADD KEY `id_chef` (`id_chef`),
+  ADD KEY `id_departement` (`id_departement`);
+
+--
+-- Indexes for table `coordinateurs`
+--
+ALTER TABLE `coordinateurs`
+  ADD KEY `id_coordinateur` (`id_coordinateur`),
+  ADD KEY `id_filiere` (`id_filiere`);
+
+--
 -- Indexes for table `departement`
 --
 ALTER TABLE `departement`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `filieres`
+--
+ALTER TABLE `filieres`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_departement` (`id_departement`);
 
 --
 -- Indexes for table `newusers`
@@ -157,17 +270,32 @@ ALTER TABLE `newusers`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `professeur`
+--
+ALTER TABLE `professeur`
+  ADD KEY `id_professeur` (`id_professeur`),
+  ADD KEY `id_unit` (`id_unit`);
+
+--
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tempunits`
+--
+ALTER TABLE `tempunits`
+  ADD KEY `id_prof` (`id_prof`),
+  ADD KEY `id_unit` (`id_unit`);
+
+--
 -- Indexes for table `units`
 --
 ALTER TABLE `units`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `departement_id` (`departement_id`);
+  ADD KEY `departement_id` (`departement_id`),
+  ADD KEY `id_filiere` (`id_filiere`);
 
 --
 -- Indexes for table `userroles`
@@ -196,10 +324,16 @@ ALTER TABLE `departement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `filieres`
+--
+ALTER TABLE `filieres`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -211,23 +345,58 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `chefs`
+--
+ALTER TABLE `chefs`
+  ADD CONSTRAINT `chefs_ibfk_1` FOREIGN KEY (`id_chef`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `chefs_ibfk_2` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `coordinateurs`
+--
+ALTER TABLE `coordinateurs`
+  ADD CONSTRAINT `coordinateurs_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `coordinateurs_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `filieres`
+--
+ALTER TABLE `filieres`
+  ADD CONSTRAINT `filieres_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `professeur`
+--
+ALTER TABLE `professeur`
+  ADD CONSTRAINT `professeur_ibfk_1` FOREIGN KEY (`id_professeur`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `professeur_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
+
+--
+-- Constraints for table `tempunits`
+--
+ALTER TABLE `tempunits`
+  ADD CONSTRAINT `tempunits_ibfk_1` FOREIGN KEY (`id_prof`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `tempunits_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
+
+--
 -- Constraints for table `units`
 --
 ALTER TABLE `units`
-  ADD CONSTRAINT `units_ibfk_1` FOREIGN KEY (`departement_id`) REFERENCES `departement` (`id`);
+  ADD CONSTRAINT `units_ibfk_1` FOREIGN KEY (`departement_id`) REFERENCES `departement` (`id`),
+  ADD CONSTRAINT `units_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
 -- Constraints for table `userroles`

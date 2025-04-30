@@ -115,6 +115,25 @@
         }
     }
 
+    function checkPassword($password){
+        if (strlen($password) < 8) {
+            return "Le mot de passe doit contenir au moins 8 caractères.";
+        }
+    
+        if (!preg_match('/[A-Za-z]/', $password)) {
+            return "Le mot de passe doit contenir au moins une lettre.";
+        }
+    
+        if (!preg_match('/[0-9]/', $password)) {
+            return "Le mot de passe doit contenir au moins un chiffre.";
+        }
+    
+        if (!preg_match('/[\W_]/', $password)) {
+            return "Le mot de passe doit contenir au moins un caractère spécial.";
+        }
+    
+        return true;
+    }
 
 
 

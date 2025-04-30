@@ -80,6 +80,14 @@
         if($statment->rowCount()>=1){
             if(password_verify($password,$data['password'])){
 
+                    if ($data['must_change_password']) {
+                        $_SESSION['id'] = $data['id'];
+                        $_SESSION['force_password_change'] = true;
+                        header('Location: /webProject/Views/change_password.php');
+                        exit();
+                    }
+                
+
                 $stmt = $pdo->prepare('SELECT * FROM userroles WHERE user_id = ?;');
                 $stmt->execute([$data['id']]);
                 $roleData = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -108,7 +116,7 @@
                         header('location: /webProject/Views/adminViews/admin.php');
                         break;
                     case '2'://enseignant
-                        header('location: /webProject/Views/pages/professeur.php');
+                        header('location: /webProject/Views/ProfViews/index.php');
                         break;
                     case '3'://chef de departement
                         header('location: /webProject/Views/pages/chef.php');
@@ -330,6 +338,58 @@
         }
     }
 
+
+
+    function NewPassword($new_password){
+        $isValid=checkPassword($new_password);
+        if($isValid===true){
+            try{
+                $hashedPassword=password_hash($new_password, PASSWORD_DEFAULT);
+                $pdo = dataBaseConnection();
+                
+                $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+    
+                $statment=$pdo->prepare('UPDATE utilisateurs SET password=?,must_change_password=0 WHERE id=?;');
+                $statment->execute([$hashedPassword,$_SESSION['id']]);
+    
+                $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+    
+                if ($statment->rowCount() > 0) {
+                    return true;
+                } else {
+                    throw new Exception("Aucune modification détectée ou utilisateur introuvable.");
+                }
+                
+            } catch (PDOException $e) {
+                return "Erreur lors de la mise à jour : " . $e->getMessage();
+            }
+        }else {
+            echo "<div class='alert alert-danger'>$isValid</div>";
+            return false;
+        }
+    }
+
+    function insertTable($query,$values){
+        try{
+            $pdo = dataBaseConnection();
+            
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+
+            $statment=$pdo->prepare($query);
+            
+            if (is_array($values)){
+                $statment->execute($values);
+            }else{
+                $statment->execute([$values]);
+            }
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+            return true;
+
+        } catch (PDOException $e) {
+            echo "Error Inserting temporary unit: " . $e->getMessage();
+            return false;
+        }
+    }
 
 
 

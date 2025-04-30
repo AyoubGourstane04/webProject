@@ -27,8 +27,8 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-   <?php require_once "../include/nav.php";?>
-
+    <?php require_once "../include/navBars/AdminNav.php";?>
+    
    <?php require_once "../include/header.php";?>
    
                 <!-- Begin Page Content -->

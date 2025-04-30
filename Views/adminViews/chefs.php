@@ -2,9 +2,9 @@
    require_once __DIR__ . '/../../Controller/controller.php';
    session_start();
    if ((!isset($_SESSION['role']) || $_SESSION['role'] != 1)&&!isset($_SESSION['id'])) {
-    header("Location: /webProject/Views/login.php");
-    exit();
-}
+        header("Location: /webProject/Views/login.php");
+        exit();
+    }
 
     ob_start();
     
@@ -27,7 +27,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-   <?php require_once "../include/nav.php";?>
+    <?php require_once "../include/navBars/AdminNav.php";?>>
 
    <?php require_once "../include/header.php";?>
    
