@@ -37,13 +37,16 @@
                 </div>
                 <!-- /.container-fluid -->
 
+
             </div>
             <!-- End of Main Content -->
+
+            <?php require_once "../include/footer.php";?>
+
 
 
 
    
-        <?php require_once "../include/footer.php";?>
 
 
 

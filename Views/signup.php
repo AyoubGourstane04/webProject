@@ -56,8 +56,10 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12 mb-3">
-                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required>
+                                    <input type="text" class="form-control form-control-user" id="InputSpeciality" name="speciality" placeholder="Spécialité" required><br>
+                                    <a class="text-center" href="login.php">Login</a><br>
                                 </div>
+
 
                                 <input type="submit" value="Inscription" class="btn btn-primary btn-user btn-block">
                             </form>
