@@ -1,5 +1,6 @@
 <?php
     ob_start();
+    session_start();  // nssiti hadi 
     $title="ENSAH | E-SERVICES";
 
 ?>
@@ -23,7 +24,14 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Platforme eServices</h1>
                                     </div>
-                                    <form class="user" action ="../seConnecter.php" method="POST">
+<!-- cette partie de php ces pour afficher erreur mot de pass ou email  -->
+                                    <?php
+                                    if (isset($_SESSION['login_error'])) {
+                                    echo '<div class="alert alert-danger">' . $_SESSION['login_error'] . '</div>';
+                                    unset($_SESSION['login_error']); // Supprimer le message après l'affichage
+                                    }
+                                     ?>
+                                   <form class="user" action ="../seConnecter.php" method="POST">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                name="email" id="exampleInputEmail" aria-describedby="emailHelp"

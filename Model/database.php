@@ -132,11 +132,18 @@
                         break;
                 }
                     exit();
-            }        
-        }else{
-            throw new Exception("L'utilisateur n'existe pas!");
-          }    
-    }
+                  
+                }else {  //hadi ila kan ghalt l mot de pass
+                $_SESSION['login_error'] = 'Mot de passe incorrect!';
+                header('Location: /webProject/Views/login.php');
+                exit();
+                }                    
+            }else {  // nssiti ila kan ghalt l email
+                $_SESSION['login_error'] = 'L\'utilisateur n\'existe pas!';
+                header('Location: /webProject/Views/login.php');
+                exit();
+            }
+}
 
     function GetFromDb($query,$values,$fetchAll=true){
         try {
