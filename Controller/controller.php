@@ -122,7 +122,7 @@
 
  function insertTempUnit($userId,$unitId,$demande){
   try {
-    $result = insertTable('INSERT INTO tempunits (id_prof,id_unit,demande) VALUES (?,?,?);',[$userId,$unitId,$demande]);
+    $result = changeTable('INSERT INTO tempunits (id_prof,id_unit,demande) VALUES (?,?,?);',[$userId,$unitId,$demande]);
       if ($result === true ) {
         header('location: '.$_SERVER['HTTP_REFERER']);
         exit();
@@ -134,6 +134,74 @@
   } 
  }
 
+
+
+ function addUnit_prof(){
+  $unitId = !empty($_POST['unit']) ? htmlspecialchars(trim($_POST['unit'])) : null;
+  $profId = !empty($_POST['prof']) ? htmlspecialchars(trim($_POST['prof'])) : null;
+
+  try {
+    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit) VALUES (?,?);',[$profId,$unitId]);
+      if ($result === true ) {
+        $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$unitId]);
+        if ($update === true ) {
+          header('location: ../liste_ues.php');
+          exit();
+        }else{
+             throw new Exception($update);
+          }
+
+      }else{
+           throw new Exception($result);
+        }
+  }catch (Exception $e) {
+       echo "Erreur lors de l'affectaion d'unité au professeur : " . $e->getMessage();
+  } 
+
+ }
+
+
+ function validate_choice_action($id_prof,$id_unit){
+  try {
+    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit) VALUES (?,?);',[$id_prof,$id_unit]);
+      if ($result === true ) {
+        $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$id_unit]);
+        if ($update === true) {
+          $delete = changeTable('DELETE FROM tempunits WHERE id_prof=? AND id_unit=?;',[$id_prof,$id_unit]);
+          if($delete === true){
+            header('location: ../liste_ues.php');
+            exit();
+          }else{
+            throw new Exception($delete);
+          }
+        }else{
+             throw new Exception($update);
+          }
+      }else{
+           throw new Exception($result);
+        }
+  }catch (Exception $e) {
+       echo "Erreur lors de l'affectaion d'unité au professeur : " . $e->getMessage();
+  } 
+     
+
+ }
+ 
+ function refuse_choice_action($id_prof,$id_unit){
+  try {
+          $delete = changeTable('DELETE FROM tempunits WHERE id_prof=?,id_unit=?;',[$id_prof,$id_unit]);
+          if($delete === true){
+            header('location: Views/ChefViews/liste_ues.php');
+            exit();
+          }else{
+            throw new Exception($delete);
+          }
+  }catch (Exception $e) {
+       echo "Erreur lors de la suppression : " . $e->getMessage();
+  } 
+
+
+ }
 
 
 

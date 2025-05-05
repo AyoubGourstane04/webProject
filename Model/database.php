@@ -119,7 +119,7 @@
                         header('location: /webProject/Views/ProfViews/index.php');
                         break;
                     case '3'://chef de departement
-                        header('location: /webProject/Views/pages/chef.php');
+                        header('location: /webProject/Views/ChefViews/index.php');
                         break;
                     case '4'://coordinateur de filiere
                         header('location: /webProject/Views/pages/coordinateur.php');
@@ -369,7 +369,7 @@
         }
     }
 
-    function insertTable($query,$values){
+    function changeTable($query,$values){
         try{
             $pdo = dataBaseConnection();
             
@@ -386,12 +386,26 @@
             return true;
 
         } catch (PDOException $e) {
-            echo "Error Inserting temporary unit: " . $e->getMessage();
+            echo "Error Changing the table : " . $e->getMessage();
             return false;
         }
     }
 
 
+    function getCount($tableName){
+        try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->query('SELECT COUNT(*) FROM '.$tableName);
+            if($statment){
+                $count=$statment->fetchColumn();
+                return $count;
+            }
+
+        } catch (PDOException $e) {
+            echo "Error Getting the count : " . $e->getMessage();
+            return -1;
+        }
+    }
 
 
 

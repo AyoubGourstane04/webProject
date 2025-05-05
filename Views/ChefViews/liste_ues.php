@@ -22,7 +22,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <?php require_once "../include/navBars/ProfNav.php";?>
+    <?php require_once "../include/navBars/ChefNav.php";?>
 
     <?php require_once "../include/header.php";?>
 
@@ -36,12 +36,12 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Unités d'enseignement disponible</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Unités d'enseignement</h1>
                  
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">liste des unités d'enseignement disponible</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">liste des unités d'enseignement</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -56,7 +56,7 @@
                                             <th>Filière</th>
                                             <th>Departement</th>
                                             <th>Statut</th>
-                                            <th>Demander</th>
+                                            <th>Professeur</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,6 +64,13 @@
                                     <?php foreach($units as $unit){ 
                                             $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$unit['departement_id'],false);
                                             $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$unit['id_filiere'],false);
+                                            $prof = GetFromDb("SELECT 
+                                                                u.firstName,
+                                                                u.lastName
+                                                                FROM utilisateurs u
+                                                                JOIN professeur p 
+                                                                ON u.id=p.id_professeur
+                                                                WHERE p.id_unit=?;",$unit['id'],false);
                                     ?>
                                         <tr>
                                             <td><?php echo $unit['id'];?></td>
@@ -84,12 +91,8 @@
                                                         }
                                                 ?>    
                                             </td>
-                                            <td class="text-center">
-                                                <?php if($unit['statut']==0){?>
-                                                    <a href="demandeUE.php?id=<?=$unit['id']?>" class="btn btn-primary btn-circle">+</a>
-                                                <?php }else{?>
-                                                    <button class="btn btn-danger btn-circle" disabled>x</button>
-                                                <?php }?>
+                                            <td>
+                                                <?php echo ($prof && isset($prof['firstName']) && isset($prof['lastName'])) ? $prof['firstName'].' '.$prof['lastName'] : '-'; ?>
                                             </td>
                                         </tr>
                                        <?php }?>
@@ -105,17 +108,6 @@
             </div>
             <!-- End of Main Content -->
             
-
-            <!-- Footer -->
-            <!-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer> -->
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -128,27 +120,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
+    
 
 
 <?php

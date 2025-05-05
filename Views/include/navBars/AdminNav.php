@@ -3,12 +3,15 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.php">
         <div class="sidebar-brand-icon">
             <img src="..\..\startbootstrap-sb-admin-2-gh-pages\img\logo2.png" alt="Logo" style="width: 40px; height: 40px;">
         </div>
         <div class="sidebar-brand-text mx-3">E-service</div>
     </a>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-2">
+
         <!-- Sidebar Toggler -->
         <div class="text-center d-none d-md-inline">
              <button class="rounded-circle border-0" id="sidebarToggle"></button>
@@ -19,7 +22,7 @@
 
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/admin.php">
+        <a class="nav-link" href="../adminViews/index.php">
             <!-- ../adminViews/admin.php -->
             <i class="fas fa-home"></i>
             <span>Accueil</span>
@@ -33,14 +36,14 @@
     <div class="sidebar-heading">
        Administrateur
     </div>
-     <!-- Nav Items- Valider l'ajout
+     <!-- Nav Items- Valider l'ajout -->
      <li class="nav-item">
-        <a class="nav-link" href="..\operations\Ajouter.php"  data-target="#collapseCours"
+        <a class="nav-link" href="admin.php"  data-target="#collapseCours"
             aria-expanded="false" aria-controls="collapseCours">
             <i class="fas fa-user-plus"></i>
             <span>Ajouter</span>
         </a>
-    </li> -->
+    </li>
 
     <!-- Nav Items- Enseignants -->
     <li class="nav-item">

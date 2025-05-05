@@ -47,11 +47,11 @@
                                     <div class="text-center">
                                         <a class="small" href="..\forgot-password.html">Mot de passe oublié ?</a>
                                     </div><br>
-                                    <!-- <div class="text-center">
-                                     Don't have an account? <a class="small" href="signup.php"> SignUp</a>
-                                    </div><br> -->
                                     <div class="text-center">
-                                        <p>Copyright © 2020 - Tous droits réservés</p>
+                                     Don't have an account? <a class="small" href="signup.php"> SignUp</a>
+                                    </div><br>
+                                    <div class="text-center">
+                                        <p>Copyright © 2025 - Tous droits réservés</p>
                                     </div>
                                 </div>
                             </div>
