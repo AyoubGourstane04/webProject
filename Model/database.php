@@ -113,7 +113,7 @@
 
             switch ($role) {
                     case '1'://admin
-                        header('location: /webProject/Views/adminViews/admin.php');
+                        header('location: /webProject/Views/adminViews/index.php');
                         break;
                     case '2'://enseignant
                         header('location: /webProject/Views/ProfViews/index.php');
