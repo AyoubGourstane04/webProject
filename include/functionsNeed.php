@@ -38,8 +38,8 @@
                 break;
     
             case 'cin':
-                if (!empty($fieldValue) && !preg_match('/^[A-Za-z]{2}\d{5}$/', $fieldValue)) {
-                    return "CIN must be 2 letters followed by 5 digits";
+                if (!empty($fieldValue) && !preg_match('/^[A-Za-z]{1,2}[0-9]{4,6}$/', $fieldValue)) {
+                    return "CIN must be 2 letters followed by 4 to 6 digits";
                 }
                 break;
         }

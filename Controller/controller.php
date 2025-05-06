@@ -82,7 +82,7 @@
             session_start();
             $_SESSION['signup_message'] = "Attendez la validation de votre compte!";
 
-            header('location: Views/signup.php');
+            header('location: Views/login.php');
             exit();
           }else{
               throw new Exception($result);
