@@ -206,8 +206,53 @@
        echo "Erreur lors de la suppression : " . $e->getMessage();
   } 
 
-
  }
+
+ function getFiliere(){
+    if(!isset($_GET['department_id'])){
+      echo json_encode([]);
+      exit;
+    }
+    
+    $id_departement=htmlspecialchars($_GET['department_id']);
+    $filieres=GetFromDb('SELECT * FROM filieres WHERE id_departement=? ;',$id_departement);
+
+    echo json_encode($filieres);
+ }
+
+function addUnit($filiere_id,$dept_id){
+  //these will be inserted in the units table :
+  $codeModule=isset($_POST['code_module'])?htmlspecialchars($_POST['code_module']):null;
+  $intitule=isset($_POST['intitule'])?htmlspecialchars($_POST['intitule']):null;
+  $speciality=isset($_POST['speciality'])?htmlspecialchars($_POST['speciality']):null;
+  $credits=isset($_POST['credits'])?htmlspecialchars($_POST['credits']):null;
+  $semestre=isset($_POST['semestre'])?htmlspecialchars($_POST['semestre']):null;
+  //these have their own table Volume Horraire : 
+  $CM=isset($_POST['CM'])?htmlspecialchars($_POST['CM']):null;
+  $TD=isset($_POST['TD'])?htmlspecialchars($_POST['TD']):null;
+  $TP=isset($_POST['TP'])?htmlspecialchars($_POST['TP']):null;
+  $autre=isset($_POST['autre'])?htmlspecialchars($_POST['autre']):null;
+  $evaluation=isset($_POST['evaluation'])?htmlspecialchars($_POST['evaluation']):null;
+
+  //inserting in the unit table : 
+      try {
+        $unit_id = insertUnit($codeModule, $intitule, $semestre, $credits, $speciality, $dept_id, $filiere_id);
+        if ($unit_id != -1) {
+            $result = changeTable('INSERT INTO volumehorraire (id_unit,Cours,TD,TP,Autre,Evaluation) VALUES(?,?,?,?,?,?);', [$unit_id, $CM, $TD, $TP, $autre, $evaluation]);
+            if ($result === true) {
+                return ['success' => true, 'message' => 'Unité ajoutée avec succès!'];
+            }
+        }
+    } catch (Exception $e) {
+        return ['success' => false, 'message' => 'Erreur: ' . $e->getMessage()];
+    } 
+    
+    return ['success' => false, 'message' => 'Erreur inconnue'];
+  }
+
+
+
+
 
 
 

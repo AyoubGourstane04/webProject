@@ -46,9 +46,6 @@
         <div id="collapseUE" class="collapse" aria-labelledby="headingUE" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="../ProfViews/UeList.php">Liste disponibles</a>
-                <a class="collapse-item" href="../ProfViews/demandeUE.php">Exprimer les souhaits</a>
-                <a class="collapse-item" href="#">Calcul charge horaire</a>
-                <a class="collapse-item" href="#">Notifications</a>
             </div>
         </div>
     </li>

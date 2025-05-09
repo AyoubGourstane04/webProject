@@ -48,10 +48,9 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>id</th> 
-                                            <th>Nom</th>
-                                            <th>Description</th>
-                                            <th>Volume Horraire</th>
+                                            <th>Code Module</th> 
+                                            <th>Intitulé</th>
+                                            <th>Semestre</th>
                                             <th>Nombre de crédits</th>
                                             <th>Filière</th>
                                             <th>Departement</th>
@@ -73,10 +72,9 @@
                                                                 WHERE p.id_unit=?;",$unit['id'],false);
                                     ?>
                                         <tr>
-                                            <td><?php echo $unit['id'];?></td>
-                                            <td><?php echo $unit['unit_name'];?></td>
-                                            <td><?php echo $unit['description'];?></td>
-                                            <td><?php echo $unit['Hours'];?></td>
+                                            <td><?php echo $unit['code_module'];?></td>
+                                            <td><?php echo $unit['intitule'];?></td>
+                                            <td><?php echo $unit['semestre'];?></td>
                                             <td><?php echo $unit['credits'];?></td>
                                             <td>
                                                 <?php echo ($filiere && isset($filiere['label'])) ? $filiere['label'] : ''; ?>

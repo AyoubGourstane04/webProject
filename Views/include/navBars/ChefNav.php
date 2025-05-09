@@ -45,8 +45,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Gestion des UEs:</h6>
                 <a class="collapse-item" href="liste_ues.php">Lister les UEs</a>
-                <a class="collapse-item" href="ues_vacantes.php">UEs Vacantes (Valider)</a>
-                 <!-- Affectation might be better placed under Professeurs or its own section -->
             </div>
         </div>
     </li>
@@ -63,7 +61,6 @@
                 <h6 class="collapse-header">Gestion des Professeurs:</h6>
                 <a class="collapse-item" href="liste_professeurs.php">Lister les Professeurs</a>
                 <a class="collapse-item" href="affecter_ue_professeur.php">Affecter UE à Professeur</a>
-                <!-- Moved 'Affecter' here as it relates directly to professors -->
             </div>
         </div>
     </li>
@@ -79,8 +76,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Suivi des Affectations:</h6>
                 <a class="collapse-item" href="liste_choix_professeurs.php">Lister les Choix</a>
-                <!-- <a class="collapse-item" href="valider_choix_professeurs.php">Valider/Décliner Choix</a>
-                <a class="collapse-item" href="calculer_charge_horaire.php">Calculer Charge Horaire</a> -->
             </div>
         </div>
     </li>

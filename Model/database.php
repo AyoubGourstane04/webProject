@@ -57,6 +57,22 @@
             $stmt->execute([$user_id,$roleId]);
         }
 
+        //filieres if the user is a coordinateur :
+        if (in_array(4, $roles)){
+            $filiere_id = isset($_POST['filiere']) ? htmlspecialchars($_POST['filiere']) : null;
+        
+            if ($filiere_id){
+                $result = changeTable('INSERT INTO coordinateurs (id_coordinateur, id_filiere) VALUES (?, ?);', [$user_id, $filiere_id]);
+                if (!$result){
+                    echo '<div class="alert alert-danger">Erreur lors de l\'affectation de la filière au coordonnateur.</div>';
+                    return false;
+                }
+            }else{
+                echo '<div class="alert alert-danger">Une filière doit être sélectionnée pour un Coordonnateur.</div>';
+                return false;
+            }
+        }            
+        
         //sending the Email :
          sendEmail($password,$formData['email']);
             return true;
@@ -122,7 +138,7 @@
                         header('location: /webProject/Views/ChefViews/index.php');
                         break;
                     case '4'://coordinateur de filiere
-                        header('location: /webProject/Views/pages/coordinateur.php');
+                        header('location: /webProject/Views/CoordViews/index.php');
                         break;  
                     case '5'://vacataire
                         header('location: /webProject/Views/pages/vacataire.php');
@@ -415,6 +431,55 @@
     }
 
 
+    function insertUnit($codeModule,$intitule,$semestre,$credits,$speciality,$dept_id,$filiere_id){
+         try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->prepare('INSERT INTO units (code_module,
+                                                   intitule,
+                                                   semestre,
+                                                   credits,
+                                                   speciality,
+                                                   departement_id,
+                                                   id_filiere)
+                                                   VALUES(?,?,?,?,?,?,?);');
+           $statment->execute([$codeModule,$intitule,$semestre,$credits,$speciality,$dept_id,$filiere_id]);
+           if($statment){
+             $unit_id=$pdo->lastInsertId();
+             return $unit_id;
+           }
+
+        } catch (PDOException $e) {
+            echo "Error inserting the unit : " . $e->getMessage();
+            return -1;
+        }
+    }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function insertUnitHours($CM,$TD,$TP,$autre,$evaluation,$unit_id){
+
+ }
 
    
   

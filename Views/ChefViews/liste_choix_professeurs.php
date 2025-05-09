@@ -17,7 +17,7 @@
 
     $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$data['id_departement'],false);
 
-    $choix = GetFromDb("SELECT p.firstName,p.lastName,p.id,u.unit_name,t.demande,t.id_unit
+    $choix = GetFromDb("SELECT p.firstName,p.lastName,p.id,u.intitule,t.demande,t.id_unit
                                FROM utilisateurs p 
                                JOIN tempunits t 
                                ON p.id=t.id_prof 
@@ -63,7 +63,7 @@
                                         <tr>
                                             <td><?php echo $choice['firstName'];?></td>
                                             <td><?php echo $choice['lastName'];?></td>
-                                            <td><?php echo $choice['unit_name'];?></td>
+                                            <td><?php echo $choice['intitule'];?></td>
                                             <td><?php echo $choice['demande'];?></td>
                                             <td>
                                             <a href="operations/valider_choix.php?id_prof=<?=$choice['id']?>&id_unit=<?=$choice['id_unit']?>" class="btn btn-success btn-sm"> <i class="fa-solid fa-circle-check"></i> Valider</a>

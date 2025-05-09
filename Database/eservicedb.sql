@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 04:48 PM
+-- Generation Time: May 09, 2025 at 10:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -42,6 +42,13 @@ CREATE TABLE `coordinateurs` (
   `id_coordinateur` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coordinateurs`
+--
+
+INSERT INTO `coordinateurs` (`id_coordinateur`, `id_filiere`) VALUES
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -118,15 +125,6 @@ CREATE TABLE `professeur` (
   `id_unit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `professeur`
---
-
-INSERT INTO `professeur` (`id_professeur`, `id_unit`) VALUES
-(2, 3),
-(2, 1),
-(4, 4);
-
 -- --------------------------------------------------------
 
 --
@@ -169,24 +167,16 @@ CREATE TABLE `tempunits` (
 
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
-  `unit_name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `Hours` int(11) NOT NULL,
-  `credits` int(11) NOT NULL,
+  `code_module` varchar(10) NOT NULL,
+  `intitule` varchar(100) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `credits` decimal(11,2) NOT NULL,
+  `speciality` varchar(50) NOT NULL,
   `departement_id` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL,
-  `statut` tinyint(4) NOT NULL DEFAULT 0
+  `statut` tinyint(4) NOT NULL DEFAULT 0,
+  `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `units`
---
-
-INSERT INTO `units` (`id`, `unit_name`, `description`, `Hours`, `credits`, `departement_id`, `id_filiere`, `statut`) VALUES
-(1, 'POO C++', 'programmation oriente objet en c++', 21, 14, 1, 2, 1),
-(2, 'Mécanique des fluides', 'mécanique des fluides couvrant tous les aspects de la physique liés aux mouvements et aux flux des fluides', 21, 14, 2, 6, 0),
-(3, 'Web technologies', 'Learn the essential building blocks of the web. Master HTML for structure, CSS for styling, and introductory JavaScript for interactivity to create your first websites.', 22, 14, 1, 2, 1),
-(4, 'linux', 'lunix cnnfhfj', 23, 14, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -208,7 +198,9 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (2, 2),
 (3, 3),
 (3, 2),
-(4, 2);
+(4, 2),
+(5, 2),
+(5, 4);
 
 -- --------------------------------------------------------
 
@@ -238,7 +230,24 @@ INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
 (2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
 (3, 'jane', 'Doe', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
-(4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0);
+(4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
+(5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `volumehorraire`
+--
+
+CREATE TABLE `volumehorraire` (
+  `id_unit` int(11) NOT NULL,
+  `Cours` int(11) NOT NULL,
+  `TD` int(11) NOT NULL,
+  `TP` int(11) NOT NULL,
+  `Autre` int(11) NOT NULL,
+  `Evaluation` int(11) NOT NULL,
+  `VolumeTotal` int(11) GENERATED ALWAYS AS (`Cours` + `TD` + `TP` + `Autre` + `Evaluation`) STORED
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -323,6 +332,12 @@ ALTER TABLE `utilisateurs`
   ADD KEY `id_departement` (`id_departement`);
 
 --
+-- Indexes for table `volumehorraire`
+--
+ALTER TABLE `volumehorraire`
+  ADD KEY `id_unit` (`id_unit`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -342,7 +357,7 @@ ALTER TABLE `filieres`
 -- AUTO_INCREMENT for table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -354,13 +369,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -419,6 +434,12 @@ ALTER TABLE `userroles`
 --
 ALTER TABLE `utilisateurs`
   ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `volumehorraire`
+--
+ALTER TABLE `volumehorraire`
+  ADD CONSTRAINT `volumehorraire_ibfk_1` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
