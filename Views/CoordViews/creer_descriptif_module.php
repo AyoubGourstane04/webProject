@@ -31,7 +31,7 @@
    
     <!-- Hna ila bgha i importi l UE machi idekhelha bidih -->
     <div class="container mt-3 d-flex justify-content-end">
-        <form action="operations/importUE.php" method="POST" enctype="multipart/form-data">
+        <form action="operations/importUE.php?id_filiere=<?=$Coord['id_filiere']?>&id_dept=<?=$departement['id_departement']?>" method="POST" enctype="multipart/form-data">
             <label class="btn btn-primary mb-0" style="cursor: pointer;">
                 <i class="fas fa-file-import"></i>  Importer l'Unité d'Enseignement
                 <input type="file" name="UeFile" hidden onchange="this.form.submit()">
