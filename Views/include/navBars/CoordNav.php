@@ -78,8 +78,8 @@
         <div id="collapseAffectationsEDT" class="collapse" aria-labelledby="headingAffectationsEDT" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Suivi et Planification:</h6>
-                <a class="collapse-item" href="consulter_affectations_validees.php">Consulter Affectations</a>
-                <a class="collapse-item" href="charger_emploi_du_temps.php">Charger Emploi du Temps</a>
+                <a class="collapse-item" href="consulter_affectations.php">Consulter Affectations</a>
+                <a class="collapse-item" href="emploi_du_temps.php">Charger Emploi du Temps</a>
             </div>
         </div>
     </li>
