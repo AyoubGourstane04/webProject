@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2025 at 10:42 PM
+-- Generation Time: May 14, 2025 at 02:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -70,6 +70,19 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 (1, 'Mathématiques et Informatique', 'MI'),
 (2, 'Génie Civil Energétique et Environnement', 'GCEE'),
 (3, 'none', '-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emploi`
+--
+
+CREATE TABLE `emploi` (
+  `id_coordinateur` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `Emploi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -200,7 +213,8 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (3, 2),
 (4, 2),
 (5, 2),
-(5, 4);
+(5, 4),
+(6, 5);
 
 -- --------------------------------------------------------
 
@@ -231,7 +245,8 @@ INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `
 (2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
 (3, 'jane', 'Doe', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
 (4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
-(5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0);
+(5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
+(6, 'vacataire', 'am', 'KN339944', '1998-03-15', 'here.there.everywhere2004@gmail.com', '$2y$10$Rnatb0ITzFAslgtmVfeImOylY49O.iByLPGefiCB2ZgVlIRbdxMEq', 'machine learning', 1, '2025-05-14 00:00:06', 0);
 
 -- --------------------------------------------------------
 
@@ -272,6 +287,13 @@ ALTER TABLE `coordinateurs`
 --
 ALTER TABLE `departement`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `emploi`
+--
+ALTER TABLE `emploi`
+  ADD KEY `id_coordinateur` (`id_coordinateur`),
+  ADD KEY `id_filiere` (`id_filiere`);
 
 --
 -- Indexes for table `filieres`
@@ -375,7 +397,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -394,6 +416,13 @@ ALTER TABLE `chefs`
 ALTER TABLE `coordinateurs`
   ADD CONSTRAINT `coordinateurs_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `coordinateurs_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `emploi`
+--
+ALTER TABLE `emploi`
+  ADD CONSTRAINT `emploi_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `coordinateurs` (`id_coordinateur`),
+  ADD CONSTRAINT `emploi_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
 -- Constraints for table `filieres`
