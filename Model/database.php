@@ -455,6 +455,47 @@
     }
 
   
+    function AddVacataire($dept_id){
+        $firstName = !empty($_POST['firstName']) ? htmlspecialchars(trim($_POST['firstName'])) : null;
+        $lastName = !empty($_POST['lastName']) ? htmlspecialchars(trim($_POST['lastName'])) : null;
+        $birthdate = !empty($_POST['birthdate']) ? htmlspecialchars(trim($_POST['birthdate'])) : null;
+        $cin = !empty($_POST['cin']) ? htmlspecialchars(trim($_POST['cin'])) : null;
+        $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : null;
+        $speciality = !empty($_POST['speciality']) ? htmlspecialchars(trim($_POST['speciality'])) : null;
+
+        $password =GeneratePassword();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+
+        try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->prepare('INSERT INTO utilisateurs (
+                                                        firstName,
+                                                        lastName,
+                                                        CIN,
+                                                        Birthdate,
+                                                        email,
+                                                        password,
+                                                        speciality,
+                                                        id_departement
+                                                    ) VALUES (?,?,?,?,?,?,?,?);');
+           $statment->execute([$firstName,$lastName,$cin,$birthdate,$email,$hashedPassword,$speciality,$dept_id]);
+           if($statment){
+             $vacId=$pdo->lastInsertId();
+
+             $result=changeTable('INSERT INTO userroles (user_id,role_id) VALUES (?,?);',[$vacId,5]);
+             if($result)
+                sendEmail($password,$email);
+
+             return true;
+           }
+
+        } catch (PDOException $e) {
+            echo "Error inserting the Vacataire : " . $e->getMessage();
+            return false;
+        }
+       
+    }
 
 
 
@@ -467,19 +508,4 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
- function insertUnitHours($CM,$TD,$TP,$autre,$evaluation,$unit_id){
-
- }
-
-   
-  
+ 
