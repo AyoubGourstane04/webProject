@@ -14,10 +14,13 @@
 
     $title=$data['firstName'].' '.$data['lastName'];
     $userName=$data['firstName'].' '.$data['lastName'];
+    
+    $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
 
-    $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$data['id_departement'],false);
+    $units=GetFromDb("SELECT * FROM units WHERE id_filiere=? AND statut=1 ;",$Coord['id_filiere']);
+    $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$Coord['id_filiere'],false);
 
-    $professeurs = GetFromDb("SELECT 
+    $vacataires = GetFromDb("SELECT 
                                 u.id,
                                 u.firstName,
                                 u.lastName,
@@ -28,12 +31,15 @@
                                 FROM utilisateurs u
                                 JOIN userroles r 
                                 ON u.id=r.user_id 
-                                WHERE u.id_departement=? AND r.role_id=2 AND u.id!=? ;",[$data['id_departement'],$data['id']]);
+                                WHERE r.role_id=? AND u.id!=? ;",[5,$Coord['id_coordinateur']]);
+
+
 ?>
+
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <?php require_once "../include/navBars/ChefNav.php";?>
+    <?php require_once "../include/navBars/CoordNav.php";?>
 
     <?php require_once "../include/header.php";?>
 
@@ -48,18 +54,16 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">
-                        Professeurs appartennant au departement 
-                        <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
+                        Vacataires appartennant au filière <?=$filiere['label']?>
                     </h1>
                  
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                            <h6 class="m-0 font-weight-bold text-primary"> 
-                                Professeurs appartennant au departement 
-                                <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
+                                Vacataires appartennant au filière <?=$filiere['label']?>
                             </h6>
-                            <form method="post" action="operations/Export_prof.php">
+                            <form method="post" action="operations/Export_vacataire.php">
                                 <button type="submit" class="btn btn-success btn-sm">
                                     <i class="fas fa-file-excel"></i> Exporter Excel
                                 </button>
@@ -81,15 +85,15 @@
                                     </thead>
                                     <tbody>
 
-                                    <?php foreach($professeurs as $prof){ ?>
+                                    <?php foreach($vacataires as $vacataire){ ?>
                                         <tr>
-                                            <td><?php echo $prof['id'];?></td>
-                                            <td><?php echo $prof['firstName'];?></td>
-                                            <td><?php echo $prof['lastName'];?></td>
-                                            <td><?php echo $prof['CIN'];?></td>
-                                            <td><?php echo $prof['Birthdate'];?></td>
-                                            <td><?php echo $prof['email'];?></td>
-                                            <td><?php echo $prof['speciality'];?></td>         
+                                            <td><?php echo $vacataire['id'];?></td>
+                                            <td><?php echo $vacataire['firstName'];?></td>
+                                            <td><?php echo $vacataire['lastName'];?></td>
+                                            <td><?php echo $vacataire['CIN'];?></td>
+                                            <td><?php echo $vacataire['Birthdate'];?></td>
+                                            <td><?php echo $vacataire['email'];?></td>
+                                            <td><?php echo $vacataire['speciality'];?></td>         
                                         </tr>
                                        <?php }?>
                                     </tbody>

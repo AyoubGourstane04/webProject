@@ -34,6 +34,15 @@
    
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Page Title -->
+                    <h1 class="h3 mb-4 text-gray-800">Liste des affectations</h1>
+
+                    <!-- Export Button -->
+                    <div class="mb-4">
+                        <a href="operations/Export_affectations.php" class="btn btn-success">
+                            <i class="fas fa-file-export"></i> Exporter vers Excel
+                        </a>
+                    </div>
 
                 <table class="table table-striped">
                             <thead>

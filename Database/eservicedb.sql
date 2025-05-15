@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2025 at 02:19 PM
+-- Generation Time: May 15, 2025 at 03:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -114,6 +114,20 @@ INSERT INTO `filieres` (`id`, `label`, `acronym`, `id_departement`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `groupes`
+--
+
+CREATE TABLE `groupes` (
+  `id_coordinateur` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL,
+  `type` varchar(2) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `groupes_file` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newusers`
 --
 
@@ -135,7 +149,8 @@ CREATE TABLE `newusers` (
 
 CREATE TABLE `professeur` (
   `id_professeur` int(11) NOT NULL,
-  `id_unit` int(11) NOT NULL
+  `id_unit` int(11) NOT NULL,
+  `Volume_horr` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -190,6 +205,13 @@ CREATE TABLE `units` (
   `statut` tinyint(4) NOT NULL DEFAULT 0,
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
+(1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 0, '2025-05-15 01:12:28');
 
 -- --------------------------------------------------------
 
@@ -265,6 +287,13 @@ CREATE TABLE `volumehorraire` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `volumehorraire`
+--
+
+INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
+(1, 20, 10, 15, 0, 5);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -301,6 +330,13 @@ ALTER TABLE `emploi`
 ALTER TABLE `filieres`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_departement` (`id_departement`);
+
+--
+-- Indexes for table `groupes`
+--
+ALTER TABLE `groupes`
+  ADD KEY `id_coordinateur` (`id_coordinateur`),
+  ADD KEY `id_filiere` (`id_filiere`);
 
 --
 -- Indexes for table `newusers`
@@ -391,7 +427,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
@@ -429,6 +465,13 @@ ALTER TABLE `emploi`
 --
 ALTER TABLE `filieres`
   ADD CONSTRAINT `filieres_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `groupes`
+--
+ALTER TABLE `groupes`
+  ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `groupes_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
 -- Constraints for table `professeur`

@@ -19,6 +19,9 @@
 
     $units=GetFromDb("SELECT * FROM units WHERE id_filiere=? ;",$Coord['id_filiere']);
 
+    $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$Coord['id_filiere'],false);
+
+
 
 ?>
 
@@ -38,27 +41,43 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Unités d'enseignement</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Unités d'enseignement de filliere <?=$filiere['label']?></h1>
                  
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">liste des unités d'enseignement</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Liste des unités d'enseignement</h6>
+                            <form method="post" action="operations/ExportUE.php">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-file-excel"></i> Exporter Excel
+                                </button>
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Code Module</th> 
-                                            <th>Intitulé</th>
-                                            <th>Semestre</th>
-                                            <th>Nombre de crédits</th>
-                                            <th>Departement</th>
-                                            <th>Statut</th>
-                                            <th>Professeur</th>
+                                            <th rowspan="2">Code Module</th>
+                                            <th rowspan="2">Intitulé</th>
+                                            <th rowspan="2">Semestre</th>
+                                            <th rowspan="2">Nombre de crédits</th>
+                                            <th colspan="5">Volume Horaire</th>
+                                            <th rowspan="2">Volume Total</th>
+                                            <th rowspan="2">Spécialité</th>
+                                            <th rowspan="2">Département</th>
+                                            <th rowspan="2">Statut</th>
+                                            <th rowspan="2">Professeur</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Cours</th>
+                                            <th>TD</th>
+                                            <th>TP</th>
+                                            <th>Autre</th>
+                                            <th>Évaluation</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
 
                                     <?php foreach($units as $unit){ 
@@ -70,12 +89,26 @@
                                                                 JOIN professeur p 
                                                                 ON u.id=p.id_professeur
                                                                 WHERE p.id_unit=?;",$unit['id'],false);
+                                            $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$unit['id'],false);   
+                                                $cours = $hours['Cours'] ?? 0;
+                                                $td = $hours['TD'] ?? 0;
+                                                $tp = $hours['TP'] ?? 0;
+                                                $autre = $hours['Autre'] ?? 0;
+                                                $evaluation = $hours['Evaluation'] ?? 0; 
+                                                $VolumeTotal = $hours['VolumeTotal'] ?? 0;                 
                                     ?>
                                         <tr>
                                             <td><?php echo $unit['code_module'];?></td>
                                             <td><?php echo $unit['intitule'];?></td>
                                             <td><?php echo $unit['semestre'];?></td>
                                             <td><?php echo $unit['credits'];?></td>
+                                            <td><?php echo $cours;?></td>
+                                            <td><?php echo $td;?></td>
+                                            <td><?php echo $tp;?></td>
+                                            <td><?php echo $autre;?></td>
+                                            <td><?php echo $evaluation;?></td>
+                                            <td><?php echo $VolumeTotal;?></td>
+                                            <td><?php echo $unit['speciality'];?></td>
                                             <td>
                                                 <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
                                             </td>

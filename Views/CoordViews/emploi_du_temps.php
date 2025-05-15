@@ -43,15 +43,7 @@
                     </div>
                     <form action="operations/ajouter_Emploi.php?id_coord=<?=$_SESSION['id']?>&id_filiere=<?=$Coord['id_filiere']?>" class="user" method="POST" enctype="multipart/form-data">
                         <div class="form-group row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">
-                                        <i class="fas fa-file-import me-2"></i> Importer l'emploi du temps
-                                    </label>
-                                    <input class="form-control-primary btn btn-primary" type="file" name="emploi_file" id="formFile" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <label for="semestre" class="form-label">Semestre</label>
                                 <select class="form-control" id="semestre" name="semestre">
                                     <option value="" selected>Sélectionnez le semestre</option>
@@ -61,6 +53,25 @@
                                         <option value="S4">S4</option>
                                         <option value="S5">S5</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <div class="col-12">
+                                <label class="form-label fw-bold mb-3">Importer l'emploi du Temps </label>
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center py-4">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
+                                            <div class="custom-file-upload">
+                                                <input type="file" class="d-none" name="emploi_file" id="formFile" required>
+                                                <label for="formFile" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                                                    <i class="fas fa-folder-open me-2"></i> Choisir un fichier
+                                                </label>
+                                                <div class="small text-muted mt-2" id="fileName">Aucun fichier sélectionné</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -91,6 +102,13 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+<script>
+    // Display selected file name
+    document.getElementById('formFile').addEventListener('change', function(e) {
+        var fileName = e.target.files[0] ? e.target.files[0].name : "Aucun fichier sélectionné";
+        document.getElementById('fileName').textContent = fileName;
+    });
+</script>
 
     
     

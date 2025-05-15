@@ -12,13 +12,6 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-2">
 
-        <!-- Sidebar Toggler -->
-        <div class="text-center d-none d-md-inline">
-             <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
@@ -93,8 +86,12 @@
                 <a class="collapse-item" href="#">Modifier</a>
             </div>
         </div> -->
-    </li>
+    </li><br>
     <hr class="sidebar-divider d-none d-md-block">
+    <br>
+    <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 </ul> 
 
 

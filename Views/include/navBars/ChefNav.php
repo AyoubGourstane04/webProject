@@ -12,13 +12,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-2">
 
-   <!-- Sidebar Toggler -->
-   <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
@@ -86,15 +79,15 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Outils & Historique
+        Historique
     </div>
 
     <!-- Nav Item - Reporting -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="reporting.php">
             <i class="fas fa-fw fa-chart-bar"></i>
             <span>Reporting</span></a>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Historique -->
     <li class="nav-item">
@@ -104,15 +97,18 @@
     </li>
 
      <!-- Nav Item - Import/Export -->
-     <li class="nav-item">
+     <!-- <li class="nav-item">
         <a class="nav-link" href="import_export.php">
-            <i class="fas fa-fw fa-exchange-alt"></i> <!-- Or fa-file-import / fa-file-export -->
+            <i class="fas fa-fw fa-exchange-alt"></i> 
             <span>Import/Export Données</span></a>
-    </li>
-
+    </li> -->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
 
 </ul>
