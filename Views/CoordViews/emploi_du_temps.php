@@ -43,7 +43,7 @@
                     </div>
                     <form action="operations/ajouter_Emploi.php?id_coord=<?=$_SESSION['id']?>&id_filiere=<?=$Coord['id_filiere']?>" class="user" method="POST" enctype="multipart/form-data">
                         <div class="form-group row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <label for="semestre" class="form-label">Semestre</label>
                                 <select class="form-control" id="semestre" name="semestre">
                                     <option value="" selected>Sélectionnez le semestre</option>
@@ -53,6 +53,10 @@
                                         <option value="S4">S4</option>
                                         <option value="S5">S5</option>
                                 </select>
+                            </div>
+                             <div class="col-sm-6">
+                                <label for="AU" class="form-label">Année Universitaire</label>
+                                <input type="text" class="form-control form-control-user" name="AU" id="AU" placeholder="Entrer l'année universitaire">
                             </div>
                         </div>
                         <div class="form-group row mb-4">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 03:21 AM
+-- Generation Time: May 16, 2025 at 04:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -81,6 +81,7 @@ CREATE TABLE `emploi` (
   `id_coordinateur` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL,
   `semestre` varchar(2) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
   `Emploi` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -122,6 +123,7 @@ CREATE TABLE `groupes` (
   `id_filiere` int(11) NOT NULL,
   `type` varchar(2) NOT NULL,
   `semestre` varchar(2) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
   `groupes_file` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -139,6 +141,46 @@ CREATE TABLE `newusers` (
   `Birthdate` date NOT NULL,
   `email` varchar(50) NOT NULL,
   `speciality` varchar(70) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `newusers`
+--
+
+INSERT INTO `newusers` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `speciality`) VALUES
+(8, 'Youssef', 'El Amrani', 'CD789012', '1993-03-14', 'youssef.amrani@example.com', 'Génie Civil'),
+(9, 'Nadia', 'Kabbaj', 'EF345678', '1990-11-02', 'nadia.kabbaj@example.com', 'Télécommunications'),
+(10, 'Omar', 'Zahidi', 'GH901234', '1998-01-25', 'omar.zahidi@example.com', 'Électronique'),
+(11, 'Fatima', 'Maaroufi', 'IJ567890', '1996-06-10', 'fatima.maaroufi@example.com', 'Mathématiques Appliquées');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notes`
+--
+
+CREATE TABLE `notes` (
+  `id_prof` int(11) NOT NULL,
+  `id_unit` int(11) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `session` varchar(15) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
+  `Notes` varchar(255) NOT NULL,
+  `date_upload` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -205,13 +247,6 @@ CREATE TABLE `units` (
   `statut` tinyint(4) NOT NULL DEFAULT 0,
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `units`
---
-
-INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
-(1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 0, '2025-05-15 01:12:28');
 
 -- --------------------------------------------------------
 
@@ -346,6 +381,19 @@ ALTER TABLE `newusers`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `notes`
+--
+ALTER TABLE `notes`
+  ADD KEY `id_prof` (`id_prof`),
+  ADD KEY `id_unit` (`id_unit`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `professeur`
 --
 ALTER TABLE `professeur`
@@ -415,7 +463,13 @@ ALTER TABLE `filieres`
 -- AUTO_INCREMENT for table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -427,7 +481,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
@@ -472,6 +526,13 @@ ALTER TABLE `filieres`
 ALTER TABLE `groupes`
   ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `groupes_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `notes`
+--
+ALTER TABLE `notes`
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`id_prof`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 
 --
 -- Constraints for table `professeur`

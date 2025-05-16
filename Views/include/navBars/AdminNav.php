@@ -86,7 +86,14 @@
                 <a class="collapse-item" href="#">Modifier</a>
             </div>
         </div> -->
-    </li><br>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="../adminViews/Vacataires.php"  data-target="#collapseCours"
+            aria-expanded="false" aria-controls="collapseCours">
+            <i class="fas fa-user-clock"></i>
+            <span>Vacataires</span>
+        </a>
+    </li>
     <hr class="sidebar-divider d-none d-md-block">
     <br>
     <div class="text-center d-none d-md-inline">

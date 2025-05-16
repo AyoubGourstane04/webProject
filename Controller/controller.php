@@ -147,7 +147,7 @@
   $profId = !empty($_POST['prof']) ? htmlspecialchars(trim($_POST['prof'])) : null;
 
   try {
-    $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$unitId);
+    $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$unitId,false);
     $result = changeTable('INSERT INTO professeur (id_professeur,id_unit,Volume_horr) VALUES (?,?,?);',[$profId,$unitId,$hours['VolumeTotal']]);
       if ($result === true ) {
         $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$unitId]);

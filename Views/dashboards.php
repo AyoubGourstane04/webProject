@@ -55,6 +55,13 @@
     <!-- Page level custom scripts -->
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\datatables-demo.js"></script>
 
+        <!-- Page level plugins -->
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\chart.js\Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\chart-area-demo.js"></script>
+    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\chart-pie-demo.js"></script>
+
 </body>
 
 </html>

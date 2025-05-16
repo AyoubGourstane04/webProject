@@ -112,7 +112,7 @@
                     $_SESSION['id'] = $roleData[0]['user_id'];
                 }
 
-                $validRoles = ['1', '2', '3', '4'];
+                $validRoles = ['1', '2', '3', '4','5'];
 
                 $roleIds = array_column($roleData, 'role_id');
 
@@ -141,7 +141,7 @@
                         header('location: /webProject/Views/CoordViews/index.php');
                         break;  
                     case '5'://vacataire
-                        header('location: /webProject/Views/pages/vacataire.php');
+                        header('location: /webProject/Views/vacViews/index.php');
                         break;        
                     default:
                         header("Location: /webProject/Views/login.php");
