@@ -253,6 +253,7 @@
                                                         <th>Nom</th>
                                                         <th>CIN</th>
                                                         <th>Rôle(s)</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -263,6 +264,11 @@
                                                             <td><?= htmlspecialchars($user['CIN']) ?></td>
                                                             <td>
                                                                 <?= htmlspecialchars(implode(' / ', $userRoles[$user['id']] ?? ['Aucun rôle'])) ?>
+                                                            </td>
+                                                            <td>
+                                                                <a href="..\operations\Modifier.php?id=<?= $user['id']; ?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
+                                                                    <i class="fas fa-pencil-alt me-2"></i> Modifier
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
