@@ -51,6 +51,7 @@
         $user_id=$pdo->lastInsertId();
 
         $roles = validateRoles($_POST['roles']);
+        $departement=$formData['department'];
 
         foreach($roles as $roleId){
             $stmt=$pdo->prepare('INSERT INTO userroles (user_id,role_id) VALUES (?,?);');
@@ -71,7 +72,7 @@
                 echo '<div class="alert alert-danger">Une filière doit être sélectionnée pour un Coordonnateur.</div>';
                 return false;
             }
-        }            
+        }                      
         
         //sending the Email :
          sendEmail($password,$formData['email']);
@@ -424,6 +425,41 @@
                 return $count;
             }
 
+        } catch (PDOException $e) {
+            echo "Error Getting the count : " . $e->getMessage();
+            return -1;
+        }
+    }
+       
+    function Counter($query){
+        try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->query($query);
+            if($statment){
+                $count=$statment->fetchColumn();
+                return $count;
+            }
+
+        } catch (PDOException $e) {
+            echo "Error Getting the count : " . $e->getMessage();
+            return -1;
+        }
+    }
+
+    function CounterValues($query,$values){
+        try{
+            $pdo=dataBaseConnection();
+            $stmt=$pdo->prepare($query);
+
+            if (is_array($values)){
+                $stmt->execute($values);
+            }else{
+                $stmt->execute([$values]);
+            }
+            if($stmt){
+                $count=$stmt->fetchColumn();
+                return $count;
+            }
         } catch (PDOException $e) {
             echo "Error Getting the count : " . $e->getMessage();
             return -1;

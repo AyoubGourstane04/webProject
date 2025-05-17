@@ -11,18 +11,17 @@
   $title=$data['firstName'].' '.$data['lastName'];
   $userName=$title;
   $nbrofUsers= getCount('utilisateurs');
-  $pdo=dataBaseConnection();
-  $statment = $pdo->query('SELECT COUNT(*) FROM utilisateurs u JOIN userroles r ON u.id=r.user_id WHERE r.role_id=2;');
-  $nbrofProfs= $statment->fetchColumn();
   
-  $stmt = $pdo->query('SELECT COUNT(*) FROM departement WHERE id!=3;');
-  $nbrofDept= $stmt->fetchColumn();
+  $nbrofProfs=Counter('SELECT COUNT(*) FROM utilisateurs u JOIN userroles r ON u.id=r.user_id WHERE r.role_id=2;');
+  
+  $nbrofDept=Counter('SELECT COUNT(*) FROM departement WHERE id!=3;');
 
   $nbrofFile= getCount('filieres');
 
   $New_users=GetSimpleDb('SELECT * FROM Newusers;');
 
-
+  
+  $pdo=dataBaseConnection();
 
   $roleCounts = [];
 
@@ -63,7 +62,7 @@
    <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><?=$userName?></h1>
+        <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
         </div>

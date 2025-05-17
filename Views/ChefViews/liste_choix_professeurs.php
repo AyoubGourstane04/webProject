@@ -24,7 +24,6 @@
                                JOIN units u 
                                ON u.id=t.id_unit  
                                WHERE p.id_departement=? ;",$data['id_departement']);
-            // var_dump($choix);
 
 ?>
 

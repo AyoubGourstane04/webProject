@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 04:20 AM
+-- Generation Time: May 17, 2025 at 02:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,17 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `eservicedb`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chefs`
---
-
-CREATE TABLE `chefs` (
-  `id_chef` int(11) NOT NULL,
-  `id_departement` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -300,7 +289,7 @@ CREATE TABLE `utilisateurs` (
 INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
 (2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
-(3, 'jane', 'Doe', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
+(3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
 (4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
 (5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
 (6, 'vacataire', 'am', 'KN339944', '1998-03-15', 'here.there.everywhere2004@gmail.com', '$2y$10$Rnatb0ITzFAslgtmVfeImOylY49O.iByLPGefiCB2ZgVlIRbdxMEq', 'machine learning', 1, '2025-05-14 00:00:06', 0);
@@ -331,13 +320,6 @@ INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluati
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `chefs`
---
-ALTER TABLE `chefs`
-  ADD KEY `id_chef` (`id_chef`),
-  ADD KEY `id_departement` (`id_departement`);
 
 --
 -- Indexes for table `coordinateurs`
@@ -492,13 +474,6 @@ ALTER TABLE `utilisateurs`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `chefs`
---
-ALTER TABLE `chefs`
-  ADD CONSTRAINT `chefs_ibfk_1` FOREIGN KEY (`id_chef`) REFERENCES `utilisateurs` (`id`),
-  ADD CONSTRAINT `chefs_ibfk_2` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
 
 --
 -- Constraints for table `coordinateurs`

@@ -40,7 +40,7 @@
    try {
         $result = EditUser($id, $firstName, $lastName, $birthdate, $cin, $email, $speciality, $departement, $roles);
           if ($result === true || $result === "User updated successfully.") {
-            header('location: Views/adminViews/admin.php');
+            header('location: '.$_SERVER['HTTP_REFERER']);
             exit();
           }else{
                throw new Exception($result);
