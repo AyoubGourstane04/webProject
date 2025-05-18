@@ -16,6 +16,9 @@
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $dept_id=$data['id_departement'];
+    $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
+    $filiere=$Coord['id_filiere'];
+
 
 
 ?>
@@ -45,7 +48,7 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Ajouter un Vacataire</h1>
                     </div>
-                    <form action="operations/ajouter_vacataire.php?id_dept=<?=$dept_id?>" class="user" method="POST">
+                    <form action="operations/ajouter_vacataire.php?id_dept=<?=$dept_id?>&id_fil=<?=$filiere?>" class="user" method="POST">
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <input type="text" class="form-control form-control-user" id="FirstName" name="firstName" placeholder="Prénom" required>

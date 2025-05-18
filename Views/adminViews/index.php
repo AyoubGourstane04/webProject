@@ -10,6 +10,7 @@
   $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
   $title=$data['firstName'].' '.$data['lastName'];
   $userName=$title;
+
   $nbrofUsers= getCount('utilisateurs');
   
   $nbrofProfs=Counter('SELECT COUNT(*) FROM utilisateurs u JOIN userroles r ON u.id=r.user_id WHERE r.role_id=2;');
@@ -18,7 +19,7 @@
 
   $nbrofFile= getCount('filieres');
 
-  $New_users=GetSimpleDb('SELECT * FROM Newusers;');
+  $New_users=GetSimpleDb('SELECT * FROM Newusers LIMIT 5;');
 
   
   $pdo=dataBaseConnection();
@@ -33,7 +34,7 @@
     }
 
 
-    $users = GetFromDb('SELECT * FROM utilisateurs WHERE id!=?;', 1);
+    $users = GetFromDb('SELECT * FROM utilisateurs WHERE id!=? LIMIT 5;', 1);
 
 
     $userIds = array_column($users, 'id');
@@ -168,12 +169,12 @@
                                                         <td>
                                                             <a href="..\operations\Ajouter.php?id=<?= $info['id']; ?>" 
                                                             class="btn btn-success btn-sm me-1">
-                                                                <i class="fas fa-user-plus"></i> Ajouter
+                                                                <i class="fas fa-user-plus pr-2"></i> Ajouter
                                                             </a>
                                                             <a href="..\operations\deleteTempUser.php?id=<?= $info['id']; ?>" 
                                                             class="btn btn-danger btn-sm" 
                                                             onclick="return confirm('Êtes-vous sûr de vouloir refuser cet utilisateur ?')">
-                                                                <i class="fas fa-xmark"></i> Refuser
+                                                                <i class="fas fa-xmark pr-2"></i> Refuser
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -266,7 +267,7 @@
                                                             </td>
                                                             <td>
                                                                 <a href="..\operations\Modifier.php?id=<?= $user['id']; ?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
-                                                                    <i class="fas fa-pencil-alt me-2"></i> Modifier
+                                                                    <i class="fas fa-pencil-alt pr-2"></i> Modifier
                                                                 </a>
                                                             </td>
                                                         </tr>

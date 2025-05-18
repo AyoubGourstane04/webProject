@@ -14,6 +14,9 @@
     
     $userName=$data['firstName'].' '.$data['lastName'];
 
+    $Ue_id=isset($_GET['unit_id'])?$_GET['unit_id']:null;
+
+
     $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
 
     $departement=GetFromDb("SELECT * FROM filieres WHERE id	=? ;",$Coord['id_filiere'],false);
@@ -86,8 +89,10 @@
                                           $units=GetFromDb("SELECT * FROM units WHERE id_filiere=? AND statut=0 ;",$Coord['id_filiere']);
                                         foreach($units as $unit){
                                         ?>
-                                        <option value="<?=$unit['id']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option>
-
+                                        <!-- <option value="<?=$unit['id']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option> -->
+                                         <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>" <?= ($Ue_id == $unit['id']) ? 'selected' : '' ?>>
+                                                   <?=$unit['intitule']?>
+                                            </option>
                                         <?php 
                                             }  
                                         ?>

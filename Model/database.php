@@ -491,7 +491,7 @@
     }
 
   
-    function AddVacataire($dept_id){
+    function AddVacataire($dept_id,$fil_id){
         $firstName = !empty($_POST['firstName']) ? htmlspecialchars(trim($_POST['firstName'])) : null;
         $lastName = !empty($_POST['lastName']) ? htmlspecialchars(trim($_POST['lastName'])) : null;
         $birthdate = !empty($_POST['birthdate']) ? htmlspecialchars(trim($_POST['birthdate'])) : null;
@@ -520,10 +520,15 @@
              $vacId=$pdo->lastInsertId();
 
              $result=changeTable('INSERT INTO userroles (user_id,role_id) VALUES (?,?);',[$vacId,5]);
-             if($result)
-                sendEmail($password,$email);
+             if($result){
+                $valid=changeTable('INSERT INTO vacataires (id_vacataire,id_filiere) VALUES (?,?);',[$vacId,$fil_id]);
+                if($valid){
+                        sendEmail($password,$email);
 
-             return true;
+                        return true;
+                }
+             }
+
            }
 
         } catch (PDOException $e) {

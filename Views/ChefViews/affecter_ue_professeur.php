@@ -9,6 +9,7 @@
     
 
     ob_start();
+    $Ue_id=isset($_GET['unit_id'])?$_GET['unit_id']:null;
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
@@ -29,7 +30,7 @@
                                 JOIN userroles r 
                                 ON u.id=r.user_id 
                                 WHERE u.id_departement=? AND r.role_id=2 AND u.id!=? ;",[$data['id_departement'],$data['id']]);
-        
+    
     
 
 ?>
@@ -93,8 +94,10 @@
                                           $units=GetFromDb("SELECT * FROM units WHERE departement_id=? AND statut=0 ;",$data['id_departement']);
                                         foreach($units as $unit){
                                         ?>
-                                        <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option>
-
+                                        <!-- <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option> -->
+                                            <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>" <?= ($Ue_id == $unit['id']) ? 'selected' : '' ?>>
+                                                   <?=$unit['intitule']?>
+                                            </option>
                                         <?php 
                                             }  
                                         ?>

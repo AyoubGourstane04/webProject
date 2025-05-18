@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 02:43 AM
+-- Generation Time: May 18, 2025 at 04:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -184,6 +184,14 @@ CREATE TABLE `professeur` (
   `Volume_horr` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `professeur`
+--
+
+INSERT INTO `professeur` (`id_professeur`, `id_unit`, `Volume_horr`) VALUES
+(2, 1, 50),
+(6, 2, 68);
+
 -- --------------------------------------------------------
 
 --
@@ -218,6 +226,13 @@ CREATE TABLE `tempunits` (
   `demande` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tempunits`
+--
+
+INSERT INTO `tempunits` (`id_prof`, `id_unit`, `demande`) VALUES
+(2, 2, 'I want to teach the algo unit');
+
 -- --------------------------------------------------------
 
 --
@@ -236,6 +251,14 @@ CREATE TABLE `units` (
   `statut` tinyint(4) NOT NULL DEFAULT 0,
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
+(1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 19:30:57'),
+(2, 'INF102', 'Algorithmiquenées', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 20:09:39');
 
 -- --------------------------------------------------------
 
@@ -292,7 +315,25 @@ INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `
 (3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
 (4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
 (5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
-(6, 'vacataire', 'am', 'KN339944', '1998-03-15', 'here.there.everywhere2004@gmail.com', '$2y$10$Rnatb0ITzFAslgtmVfeImOylY49O.iByLPGefiCB2ZgVlIRbdxMEq', 'machine learning', 1, '2025-05-14 00:00:06', 0);
+(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vacataires`
+--
+
+CREATE TABLE `vacataires` (
+  `id_vacataire` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vacataires`
+--
+
+INSERT INTO `vacataires` (`id_vacataire`, `id_filiere`) VALUES
+(6, 2);
 
 -- --------------------------------------------------------
 
@@ -315,7 +356,7 @@ CREATE TABLE `volumehorraire` (
 --
 
 INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
-(1, 20, 10, 15, 0, 5);
+(2, 26, 12, 16, 8, 6);
 
 --
 -- Indexes for dumped tables
@@ -420,6 +461,13 @@ ALTER TABLE `utilisateurs`
   ADD KEY `id_departement` (`id_departement`);
 
 --
+-- Indexes for table `vacataires`
+--
+ALTER TABLE `vacataires`
+  ADD KEY `id_vacataire` (`id_vacataire`),
+  ADD KEY `id_filiere` (`id_filiere`);
+
+--
 -- Indexes for table `volumehorraire`
 --
 ALTER TABLE `volumehorraire`
@@ -463,7 +511,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
@@ -542,6 +590,13 @@ ALTER TABLE `userroles`
 --
 ALTER TABLE `utilisateurs`
   ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `vacataires`
+--
+ALTER TABLE `vacataires`
+  ADD CONSTRAINT `vacataires_ibfk_1` FOREIGN KEY (`id_vacataire`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `vacataires_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
 -- Constraints for table `volumehorraire`

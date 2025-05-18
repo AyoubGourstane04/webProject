@@ -252,8 +252,8 @@ function addUnit($filiere_id,$dept_id){
     return ['success' => false, 'message' => 'Erreur inconnue'];
   }
 
-  function CreerVacataire($dept_id){
-    if(AddVacataire($dept_id)){
+  function CreerVacataire($dept_id,$fil_id){
+    if(AddVacataire($dept_id,$fil_id)){
       header('location: '.$_SERVER['HTTP_REFERER']);
       exit();
     }
