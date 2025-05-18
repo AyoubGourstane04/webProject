@@ -62,7 +62,7 @@
                         <div class="col-sm-6">
                             <label for="cin" class="form-label">CIN (Carte d'Identité Nationale)</label>
                             <input type="text" class="form-control form-control-user" id="cin" name="cin" 
-                                placeholder="Ex: AB12345" value="<?=$NewUser['CIN']?>" required>
+                                placeholder="Ex: AB123456" value="<?=$NewUser['CIN']?>" required>
                         </div>
                     </div>
 
@@ -83,6 +83,7 @@
                                 <option value="" disabled selected>Sélectionnez le département</option>
                                 <option value="1">Mathématiques et Informatique (MI)</option>
                                 <option value="2">Génie Civil Energétique et Environnement (GCEE)</option>
+                                <option value="3">Années Préparatoires (AP)</option>
                             </select>
                         </div>
                     </div>
@@ -116,8 +117,15 @@
                                         </div>
                                     </div>
                                 </div>
+                    <div class="form-group" id="filiereGroup" style="display: none;">
+                                <label for="filiere">Filière</label>
+                                <select class="form-control" id="filiere" name="filiere">
+                                    <option value="">Sélectionnez une filière</option>
+                                    <!-- Options will be populated via JS -->
+                                </select>
+                    </div>
                     
-                        <input type="submit" value="Ajouter" class="btn btn-primary btn-user btn-block">
+                    <input type="submit" value="Ajouter" class="btn btn-primary btn-user btn-block">
  
                     </form>
                 </div>
@@ -135,14 +143,58 @@
             <!-- End of Main Content -->
 
 
-
    
         <?php require_once "../include/footer.php";?>
+        
+<script>//added to check the filiere option if the user role is coordinateur de fillieres : 
+        document.addEventListener("DOMContentLoaded", function () {
+                const roleCoordinator = document.getElementById("roleCoordinator");
+                const filiereGroup = document.getElementById("filiereGroup");
+                const departmentSelect = document.getElementById("department");
+                const filiereSelect = document.getElementById("filiere");
 
+                function loadFilieres(departmentId) {
+                    if (!departmentId) return;
+                    
+                    // Clear current options
+                    filiereSelect.innerHTML = '<option value="">Chargement...</option>';
 
+                    fetch(`getFiliere.php?department_id=${departmentId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            filiereSelect.innerHTML = '<option value="">Sélectionnez une filière</option>';
+                            data.forEach(filiere => {
+                                const option = document.createElement("option");
+                                option.value = filiere.id;
+                                option.textContent = filiere.label;
+                                filiereSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Erreur lors du chargement des filières:", error);
+                        });
+                }
 
+                roleCoordinator.addEventListener("change", function () {
+                    if (this.checked) {
+                        const departmentId = departmentSelect.value;
+                        if (departmentId) {
+                            loadFilieres(departmentId);
+                        }
+                        filiereGroup.style.display = "block";
+                    } else {
+                        filiereGroup.style.display = "none";
+                        filiereSelect.innerHTML = '<option value="">Sélectionnez une filière</option>';
+                    }
+                });
 
-
+                departmentSelect.addEventListener("change", function () {
+                    if (roleCoordinator.checked) {
+                        loadFilieres(this.value);
+                    }
+                });
+        });
+</script>
 
 
 <?php

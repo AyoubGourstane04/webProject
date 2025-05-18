@@ -51,12 +51,29 @@
         $user_id=$pdo->lastInsertId();
 
         $roles = validateRoles($_POST['roles']);
+        $departement=$formData['department'];
 
         foreach($roles as $roleId){
             $stmt=$pdo->prepare('INSERT INTO userroles (user_id,role_id) VALUES (?,?);');
             $stmt->execute([$user_id,$roleId]);
         }
 
+        //filieres if the user is a coordinateur :
+        if (in_array(4, $roles)){
+            $filiere_id = isset($_POST['filiere']) ? htmlspecialchars($_POST['filiere']) : null;
+        
+            if ($filiere_id){
+                $result = changeTable('INSERT INTO coordinateurs (id_coordinateur, id_filiere) VALUES (?, ?);', [$user_id, $filiere_id]);
+                if (!$result){
+                    echo '<div class="alert alert-danger">Erreur lors de l\'affectation de la filière au coordonnateur.</div>';
+                    return false;
+                }
+            }else{
+                echo '<div class="alert alert-danger">Une filière doit être sélectionnée pour un Coordonnateur.</div>';
+                return false;
+            }
+        }                      
+        
         //sending the Email :
          sendEmail($password,$formData['email']);
             return true;
@@ -96,7 +113,7 @@
                     $_SESSION['id'] = $roleData[0]['user_id'];
                 }
 
-                $validRoles = ['1', '2', '3', '4'];
+                $validRoles = ['1', '2', '3', '4','5'];
 
                 $roleIds = array_column($roleData, 'role_id');
 
@@ -122,10 +139,10 @@
                         header('location: /webProject/Views/ChefViews/index.php');
                         break;
                     case '4'://coordinateur de filiere
-                        header('location: /webProject/Views/pages/coordinateur.php');
+                        header('location: /webProject/Views/CoordViews/index.php');
                         break;  
                     case '5'://vacataire
-                        header('location: /webProject/Views/pages/vacataire.php');
+                        header('location: /webProject/Views/vacViews/index.php');
                         break;        
                     default:
                         header("Location: /webProject/Views/login.php");
@@ -413,8 +430,123 @@
             return -1;
         }
     }
+       
+    function Counter($query){
+        try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->query($query);
+            if($statment){
+                $count=$statment->fetchColumn();
+                return $count;
+            }
+
+        } catch (PDOException $e) {
+            echo "Error Getting the count : " . $e->getMessage();
+            return -1;
+        }
+    }
+
+    function CounterValues($query,$values){
+        try{
+            $pdo=dataBaseConnection();
+            $stmt=$pdo->prepare($query);
+
+            if (is_array($values)){
+                $stmt->execute($values);
+            }else{
+                $stmt->execute([$values]);
+            }
+            if($stmt){
+                $count=$stmt->fetchColumn();
+                return $count;
+            }
+        } catch (PDOException $e) {
+            echo "Error Getting the count : " . $e->getMessage();
+            return -1;
+        }
+    }
 
 
+    function insertUnit($codeModule,$intitule,$semestre,$credits,$speciality,$dept_id,$filiere_id){
+         try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->prepare('INSERT INTO units (code_module,
+                                                   intitule,
+                                                   semestre,
+                                                   credits,
+                                                   speciality,
+                                                   departement_id,
+                                                   id_filiere)
+                                                   VALUES(?,?,?,?,?,?,?);');
+           $statment->execute([$codeModule,$intitule,$semestre,$credits,$speciality,$dept_id,$filiere_id]);
+           if($statment){
+             $unit_id=$pdo->lastInsertId();
+             return $unit_id;
+           }
 
-   
+        } catch (PDOException $e) {
+            echo "Error inserting the unit : " . $e->getMessage();
+            return -1;
+        }
+    }
+
   
+    function AddVacataire($dept_id,$fil_id){
+        $firstName = !empty($_POST['firstName']) ? htmlspecialchars(trim($_POST['firstName'])) : null;
+        $lastName = !empty($_POST['lastName']) ? htmlspecialchars(trim($_POST['lastName'])) : null;
+        $birthdate = !empty($_POST['birthdate']) ? htmlspecialchars(trim($_POST['birthdate'])) : null;
+        $cin = !empty($_POST['cin']) ? htmlspecialchars(trim($_POST['cin'])) : null;
+        $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : null;
+        $speciality = !empty($_POST['speciality']) ? htmlspecialchars(trim($_POST['speciality'])) : null;
+
+        $password =GeneratePassword();
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+
+        try{
+            $pdo = dataBaseConnection();
+            $statment=$pdo->prepare('INSERT INTO utilisateurs (
+                                                        firstName,
+                                                        lastName,
+                                                        CIN,
+                                                        Birthdate,
+                                                        email,
+                                                        password,
+                                                        speciality,
+                                                        id_departement
+                                                    ) VALUES (?,?,?,?,?,?,?,?);');
+           $statment->execute([$firstName,$lastName,$cin,$birthdate,$email,$hashedPassword,$speciality,$dept_id]);
+           if($statment){
+             $vacId=$pdo->lastInsertId();
+
+             $result=changeTable('INSERT INTO userroles (user_id,role_id) VALUES (?,?);',[$vacId,5]);
+             if($result){
+                $valid=changeTable('INSERT INTO vacataires (id_vacataire,id_filiere) VALUES (?,?);',[$vacId,$fil_id]);
+                if($valid){
+                        sendEmail($password,$email);
+
+                        return true;
+                }
+             }
+
+           }
+
+        } catch (PDOException $e) {
+            echo "Error inserting the Vacataire : " . $e->getMessage();
+            return false;
+        }
+       
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+ 

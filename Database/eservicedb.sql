@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 04:48 PM
+-- Generation Time: May 18, 2025 at 04:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -24,17 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chefs`
---
-
-CREATE TABLE `chefs` (
-  `id_chef` int(11) NOT NULL,
-  `id_departement` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `coordinateurs`
 --
 
@@ -42,6 +31,13 @@ CREATE TABLE `coordinateurs` (
   `id_coordinateur` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coordinateurs`
+--
+
+INSERT INTO `coordinateurs` (`id_coordinateur`, `id_filiere`) VALUES
+(5, 2);
 
 -- --------------------------------------------------------
 
@@ -63,6 +59,20 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 (1, 'Mathématiques et Informatique', 'MI'),
 (2, 'Génie Civil Energétique et Environnement', 'GCEE'),
 (3, 'none', '-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emploi`
+--
+
+CREATE TABLE `emploi` (
+  `id_coordinateur` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
+  `Emploi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -94,6 +104,21 @@ INSERT INTO `filieres` (`id`, `label`, `acronym`, `id_departement`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `groupes`
+--
+
+CREATE TABLE `groupes` (
+  `id_coordinateur` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL,
+  `type` varchar(2) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
+  `groupes_file` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newusers`
 --
 
@@ -107,6 +132,46 @@ CREATE TABLE `newusers` (
   `speciality` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `newusers`
+--
+
+INSERT INTO `newusers` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `speciality`) VALUES
+(8, 'Youssef', 'El Amrani', 'CD789012', '1993-03-14', 'youssef.amrani@example.com', 'Génie Civil'),
+(9, 'Nadia', 'Kabbaj', 'EF345678', '1990-11-02', 'nadia.kabbaj@example.com', 'Télécommunications'),
+(10, 'Omar', 'Zahidi', 'GH901234', '1998-01-25', 'omar.zahidi@example.com', 'Électronique'),
+(11, 'Fatima', 'Maaroufi', 'IJ567890', '1996-06-10', 'fatima.maaroufi@example.com', 'Mathématiques Appliquées');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notes`
+--
+
+CREATE TABLE `notes` (
+  `id_prof` int(11) NOT NULL,
+  `id_unit` int(11) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `session` varchar(15) NOT NULL,
+  `anneeUniversitaire` varchar(12) NOT NULL,
+  `Notes` varchar(255) NOT NULL,
+  `date_upload` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -115,17 +180,17 @@ CREATE TABLE `newusers` (
 
 CREATE TABLE `professeur` (
   `id_professeur` int(11) NOT NULL,
-  `id_unit` int(11) NOT NULL
+  `id_unit` int(11) NOT NULL,
+  `Volume_horr` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `professeur`
 --
 
-INSERT INTO `professeur` (`id_professeur`, `id_unit`) VALUES
-(2, 3),
-(2, 1),
-(4, 4);
+INSERT INTO `professeur` (`id_professeur`, `id_unit`, `Volume_horr`) VALUES
+(2, 1, 50),
+(6, 2, 68);
 
 -- --------------------------------------------------------
 
@@ -161,6 +226,13 @@ CREATE TABLE `tempunits` (
   `demande` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tempunits`
+--
+
+INSERT INTO `tempunits` (`id_prof`, `id_unit`, `demande`) VALUES
+(2, 2, 'I want to teach the algo unit');
+
 -- --------------------------------------------------------
 
 --
@@ -169,24 +241,24 @@ CREATE TABLE `tempunits` (
 
 CREATE TABLE `units` (
   `id` int(11) NOT NULL,
-  `unit_name` varchar(100) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `Hours` int(11) NOT NULL,
-  `credits` int(11) NOT NULL,
+  `code_module` varchar(10) NOT NULL,
+  `intitule` varchar(100) NOT NULL,
+  `semestre` varchar(2) NOT NULL,
+  `credits` decimal(11,2) NOT NULL,
+  `speciality` varchar(50) NOT NULL,
   `departement_id` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL,
-  `statut` tinyint(4) NOT NULL DEFAULT 0
+  `statut` tinyint(4) NOT NULL DEFAULT 0,
+  `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `units`
 --
 
-INSERT INTO `units` (`id`, `unit_name`, `description`, `Hours`, `credits`, `departement_id`, `id_filiere`, `statut`) VALUES
-(1, 'POO C++', 'programmation oriente objet en c++', 21, 14, 1, 2, 1),
-(2, 'Mécanique des fluides', 'mécanique des fluides couvrant tous les aspects de la physique liés aux mouvements et aux flux des fluides', 21, 14, 2, 6, 0),
-(3, 'Web technologies', 'Learn the essential building blocks of the web. Master HTML for structure, CSS for styling, and introductory JavaScript for interactivity to create your first websites.', 22, 14, 1, 2, 1),
-(4, 'linux', 'lunix cnnfhfj', 23, 14, 1, 2, 1);
+INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
+(1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 19:30:57'),
+(2, 'INF102', 'Algorithmiquenées', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 20:09:39');
 
 -- --------------------------------------------------------
 
@@ -208,7 +280,10 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (2, 2),
 (3, 3),
 (3, 2),
-(4, 2);
+(4, 2),
+(5, 2),
+(5, 4),
+(6, 5);
 
 -- --------------------------------------------------------
 
@@ -237,19 +312,55 @@ CREATE TABLE `utilisateurs` (
 INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
 (2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
-(3, 'jane', 'Doe', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
-(4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0);
+(3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
+(4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
+(5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
+(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vacataires`
+--
+
+CREATE TABLE `vacataires` (
+  `id_vacataire` int(11) NOT NULL,
+  `id_filiere` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vacataires`
+--
+
+INSERT INTO `vacataires` (`id_vacataire`, `id_filiere`) VALUES
+(6, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `volumehorraire`
+--
+
+CREATE TABLE `volumehorraire` (
+  `id_unit` int(11) NOT NULL,
+  `Cours` int(11) NOT NULL,
+  `TD` int(11) NOT NULL,
+  `TP` int(11) NOT NULL,
+  `Autre` int(11) NOT NULL,
+  `Evaluation` int(11) NOT NULL,
+  `VolumeTotal` int(11) GENERATED ALWAYS AS (`Cours` + `TD` + `TP` + `Autre` + `Evaluation`) STORED
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `volumehorraire`
+--
+
+INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
+(2, 26, 12, 16, 8, 6);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `chefs`
---
-ALTER TABLE `chefs`
-  ADD KEY `id_chef` (`id_chef`),
-  ADD KEY `id_departement` (`id_departement`);
 
 --
 -- Indexes for table `coordinateurs`
@@ -265,6 +376,13 @@ ALTER TABLE `departement`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `emploi`
+--
+ALTER TABLE `emploi`
+  ADD KEY `id_coordinateur` (`id_coordinateur`),
+  ADD KEY `id_filiere` (`id_filiere`);
+
+--
 -- Indexes for table `filieres`
 --
 ALTER TABLE `filieres`
@@ -272,11 +390,31 @@ ALTER TABLE `filieres`
   ADD KEY `id_departement` (`id_departement`);
 
 --
+-- Indexes for table `groupes`
+--
+ALTER TABLE `groupes`
+  ADD KEY `id_coordinateur` (`id_coordinateur`),
+  ADD KEY `id_filiere` (`id_filiere`);
+
+--
 -- Indexes for table `newusers`
 --
 ALTER TABLE `newusers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `notes`
+--
+ALTER TABLE `notes`
+  ADD KEY `id_prof` (`id_prof`),
+  ADD KEY `id_unit` (`id_unit`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `professeur`
@@ -323,6 +461,19 @@ ALTER TABLE `utilisateurs`
   ADD KEY `id_departement` (`id_departement`);
 
 --
+-- Indexes for table `vacataires`
+--
+ALTER TABLE `vacataires`
+  ADD KEY `id_vacataire` (`id_vacataire`),
+  ADD KEY `id_filiere` (`id_filiere`);
+
+--
+-- Indexes for table `volumehorraire`
+--
+ALTER TABLE `volumehorraire`
+  ADD KEY `id_unit` (`id_unit`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -342,7 +493,13 @@ ALTER TABLE `filieres`
 -- AUTO_INCREMENT for table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -354,24 +511,17 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `chefs`
---
-ALTER TABLE `chefs`
-  ADD CONSTRAINT `chefs_ibfk_1` FOREIGN KEY (`id_chef`) REFERENCES `utilisateurs` (`id`),
-  ADD CONSTRAINT `chefs_ibfk_2` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
 
 --
 -- Constraints for table `coordinateurs`
@@ -381,10 +531,31 @@ ALTER TABLE `coordinateurs`
   ADD CONSTRAINT `coordinateurs_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
+-- Constraints for table `emploi`
+--
+ALTER TABLE `emploi`
+  ADD CONSTRAINT `emploi_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `coordinateurs` (`id_coordinateur`),
+  ADD CONSTRAINT `emploi_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
 -- Constraints for table `filieres`
 --
 ALTER TABLE `filieres`
   ADD CONSTRAINT `filieres_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `groupes`
+--
+ALTER TABLE `groupes`
+  ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `groupes_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `notes`
+--
+ALTER TABLE `notes`
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`id_prof`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 
 --
 -- Constraints for table `professeur`
@@ -419,6 +590,19 @@ ALTER TABLE `userroles`
 --
 ALTER TABLE `utilisateurs`
   ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
+
+--
+-- Constraints for table `vacataires`
+--
+ALTER TABLE `vacataires`
+  ADD CONSTRAINT `vacataires_ibfk_1` FOREIGN KEY (`id_vacataire`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `vacataires_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `volumehorraire`
+--
+ALTER TABLE `volumehorraire`
+  ADD CONSTRAINT `volumehorraire_ibfk_1` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

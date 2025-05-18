@@ -13,14 +13,6 @@
     <hr class="sidebar-divider my-2">
 
 
-    <!-- Sidebar Toggler -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
         <a class="nav-link" href="../ProfViews/index.php">
@@ -46,9 +38,6 @@
         <div id="collapseUE" class="collapse" aria-labelledby="headingUE" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="../ProfViews/UeList.php">Liste disponibles</a>
-                <a class="collapse-item" href="../ProfViews/demandeUE.php">Exprimer les souhaits</a>
-                <a class="collapse-item" href="#">Calcul charge horaire</a>
-                <a class="collapse-item" href="#">Notifications</a>
             </div>
         </div>
     </li>
@@ -82,8 +71,10 @@
             <i class="fas fa-history"></i>
             <span>Historique</span>
         </a>
-    </li>
-
-    <hr class="sidebar-divider d-none d-md-block">
+    </li><br>
+    <hr class="sidebar-divider d-none d-md-block"><br>
+    <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 
 </ul>

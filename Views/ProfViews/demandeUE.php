@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?php echo $unit['unit_name'];?></td>
+                                    <td><?php echo $unit['intitule'];?></td>
                                     <form method="POST">   
                                     <td>                                
                                         <div class="form-floating">

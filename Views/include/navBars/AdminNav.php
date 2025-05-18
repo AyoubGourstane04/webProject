@@ -3,7 +3,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../adminViews/index.php">
         <div class="sidebar-brand-icon">
             <img src="..\..\startbootstrap-sb-admin-2-gh-pages\img\logo2.png" alt="Logo" style="width: 40px; height: 40px;">
         </div>
@@ -12,13 +12,6 @@
         <!-- Divider -->
         <hr class="sidebar-divider my-2">
 
-        <!-- Sidebar Toggler -->
-        <div class="text-center d-none d-md-inline">
-             <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
@@ -94,7 +87,18 @@
             </div>
         </div> -->
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="../adminViews/Vacataires.php"  data-target="#collapseCours"
+            aria-expanded="false" aria-controls="collapseCours">
+            <i class="fas fa-user-clock"></i>
+            <span>Vacataires</span>
+        </a>
+    </li>
     <hr class="sidebar-divider d-none d-md-block">
+    <br>
+    <div class="text-center d-none d-md-inline">
+             <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
 </ul> 
 
 

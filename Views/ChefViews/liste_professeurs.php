@@ -15,6 +15,8 @@
     $title=$data['firstName'].' '.$data['lastName'];
     $userName=$data['firstName'].' '.$data['lastName'];
 
+    $minHours=100;
+
     $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$data['id_departement'],false);
 
     $professeurs = GetFromDb("SELECT 
@@ -55,10 +57,15 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary"> 
+                           <h6 class="m-0 font-weight-bold text-primary"> 
                                 Professeurs appartennant au departement 
                                 <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
                             </h6>
+                            <form method="post" action="operations/Export_prof.php">
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fas fa-file-excel"></i> Exporter Excel
+                                </button>
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -72,19 +79,29 @@
                                             <th>Date de naissance</th>
                                             <th>Email</th>
                                             <th>Spécialité</th>
+                                            <th>Volume Horraire</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                    <?php foreach($professeurs as $prof){ ?>
-                                        <tr>
+                                    <?php foreach($professeurs as $prof){ 
+                                              $vol_horr = GetFromDb('SELECT SUM(a.Volume_horr) AS total_volume
+                                                                                FROM affectation a
+                                                                                JOIN professeur p ON p.id_professeur = a.id_professeur
+                                                                                WHERE p.id_professeur = ?
+                                                                                GROUP BY p.id_professeur;',$prof['id']);
+                                                $volume_horr= !empty($vol_horr)?$vol_horr:0;
+                                                $rowClass=($volume_horr<$minHours)?'table-danger':'';    
+                                    ?>
+                                        <tr class="<?=$rowClass?>">
                                             <td><?php echo $prof['id'];?></td>
                                             <td><?php echo $prof['firstName'];?></td>
                                             <td><?php echo $prof['lastName'];?></td>
                                             <td><?php echo $prof['CIN'];?></td>
                                             <td><?php echo $prof['Birthdate'];?></td>
                                             <td><?php echo $prof['email'];?></td>
-                                            <td><?php echo $prof['speciality'];?></td>         
+                                            <td><?php echo $prof['speciality'];?></td>
+                                            <td><?= $volume_horr ?></td>      
                                         </tr>
                                        <?php }?>
                                     </tbody>

@@ -48,15 +48,23 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>id</th> 
-                                            <th>Nom</th>
-                                            <th>Description</th>
-                                            <th>Volume Horraire</th>
-                                            <th>Nombre de crédits</th>
-                                            <th>Filière</th>
-                                            <th>Departement</th>
-                                            <th>Statut</th>
-                                            <th>Demander</th>
+                                            <th rowspan="2">Code Module</th>
+                                            <th rowspan="2">Intitulé</th>
+                                            <th rowspan="2">Semestre</th>
+                                            <th rowspan="2">Nombre de crédits</th>
+                                            <th colspan="5">Volume Horaire</th>
+                                            <th rowspan="2">Volume Total</th>
+                                            <th rowspan="2">Filière</th>
+                                            <th rowspan="2">Département</th>
+                                            <th rowspan="2">Statut</th>
+                                            <th rowspan="2">Demander</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Cours</th>
+                                            <th>TD</th>
+                                            <th>TP</th>
+                                            <th>Autre</th>
+                                            <th>Évaluation</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,13 +72,25 @@
                                     <?php foreach($units as $unit){ 
                                             $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$unit['departement_id'],false);
                                             $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$unit['id_filiere'],false);
+                                            $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$unit['id'],false);   
+                                            $cours = $hours['Cours'] ?? 0;
+                                            $td = $hours['TD'] ?? 0;
+                                            $tp = $hours['TP'] ?? 0;
+                                            $autre = $hours['Autre'] ?? 0;
+                                            $evaluation = $hours['Evaluation'] ?? 0; 
+                                            $VolumeTotal = $hours['VolumeTotal'] ?? 0; 
                                     ?>
                                         <tr>
-                                            <td><?php echo $unit['id'];?></td>
-                                            <td><?php echo $unit['unit_name'];?></td>
-                                            <td><?php echo $unit['description'];?></td>
-                                            <td><?php echo $unit['Hours'];?></td>
+                                            <td><?php echo $unit['code_module'];?></td>
+                                            <td><?php echo $unit['intitule'];?></td>
+                                            <td><?php echo $unit['semestre'];?></td>
                                             <td><?php echo $unit['credits'];?></td>
+                                            <td><?php echo $cours;?></td>
+                                            <td><?php echo $td;?></td>
+                                            <td><?php echo $tp;?></td>
+                                            <td><?php echo $autre;?></td>
+                                            <td><?php echo $evaluation;?></td>
+                                            <td><?php echo $VolumeTotal;?></td>
                                             <td>
                                                 <?php echo ($filiere && isset($filiere['label'])) ? $filiere['label'] : ''; ?>
                                             </td>

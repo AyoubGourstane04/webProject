@@ -9,6 +9,7 @@
     
 
     ob_start();
+    $Ue_id=isset($_GET['unit_id'])?$_GET['unit_id']:null;
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
@@ -29,8 +30,8 @@
                                 JOIN userroles r 
                                 ON u.id=r.user_id 
                                 WHERE u.id_departement=? AND r.role_id=2 AND u.id!=? ;",[$data['id_departement'],$data['id']]);
-        
-    $units=GetFromDb("SELECT * FROM units WHERE departement_id=? ;",$data['id_departement']);
+    
+    
 
 ?>
 
@@ -57,17 +58,48 @@
                        
                             <div class="form-group row">
                                 <div class="col-sm-6">
+                                    <label for="filiere" class="form-label">Filière</label>
+                                    <select class="form-control" id="filiere" name="filiere" onchange="filterUnits()">
+                                        <option value="" selected>Sélectionnez la filière</option>
+                                        <?php 
+                                        $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? ;",$data['id_departement']);
+                                        foreach($filieres as $filiere){
+                                        ?>
+                                        <option value="<?= $filiere['id']?>"><?=$filiere['label']?></option>
+
+                                        <?php 
+                                                    
+                                                }  
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="semestre" class="form-label">Semestre</label>
+                                    <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
+                                        <option value="" selected>Sélectionnez le semestre</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
+                                            <option value="S4">S4</option>
+                                            <option value="S5">S5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
                                     <label for="unit" class="form-label">Unités</label>
                                     <select class="form-control" id="unit" name="unit" >
                                         <option value="" selected>Sélectionnez l' U.E</option>
-                                        <?php foreach($units as $unit){
-                                                 if($unit['statut']==0){
-                                        ?>
-                                        <option value="<?= $unit['id']?>"><?=$unit['unit_name']?></option>
-
                                         <?php 
-                                                    }
-                                                }  
+                                          $units=GetFromDb("SELECT * FROM units WHERE departement_id=? AND statut=0 ;",$data['id_departement']);
+                                        foreach($units as $unit){
+                                        ?>
+                                        <!-- <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option> -->
+                                            <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>" <?= ($Ue_id == $unit['id']) ? 'selected' : '' ?>>
+                                                   <?=$unit['intitule']?>
+                                            </option>
+                                        <?php 
+                                            }  
                                         ?>
                                     </select>
                                 </div>
@@ -82,7 +114,7 @@
                                     </select>
                                 </div>
                             </div>
-                                <input type="submit" value="Affecter" class="btn btn-primary btn-user btn-block">
+                            <input type="submit" value="Affecter" class="btn btn-primary btn-user btn-block">
                     </form>
                 </div>
             </div>
@@ -108,6 +140,36 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+    <script>
+function filterUnits() {
+    const filiereFilter = document.getElementById('filiere').value;
+    const semestreFilter = document.getElementById('semestre').value;
+    const unitOptions = document.getElementById('unit').options;
+    
+    for (let i = 0; i < unitOptions.length; i++) {
+        const option = unitOptions[i];
+        if (option.value === "") {
+            option.style.display = "";
+            continue;
+        }
+        
+        const filiereMatch = filiereFilter === "" || option.getAttribute('data-filiere') === filiereFilter;
+        const semestreMatch = semestreFilter === "" || option.getAttribute('data-semestre') === semestreFilter;
+        
+        if (filiereMatch && semestreMatch) {
+            option.style.display = "";
+        } else {
+            option.style.display = "none";
+        }
+    }
+    
+    // Reset the selected value if it's now hidden
+    if (document.getElementById('unit').options[document.getElementById('unit').selectedIndex].style.display === "none") {
+        document.getElementById('unit').selectedIndex = 0;
+    }
+}
+</script>
 
     
 
