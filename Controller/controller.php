@@ -145,10 +145,11 @@
  function addUnit_prof(){
   $unitId = !empty($_POST['unit']) ? htmlspecialchars(trim($_POST['unit'])) : null;
   $profId = !empty($_POST['prof']) ? htmlspecialchars(trim($_POST['prof'])) : null;
+  $annee= !empty($_POST['Au']) ? htmlspecialchars(trim($_POST['Au'])) : null;
 
   try {
     $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$unitId,false);
-    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit,Volume_horr) VALUES (?,?,?);',[$profId,$unitId,$hours['VolumeTotal']]);
+    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit,Volume_horr,anneeUniversitaire) VALUES (?,?,?,?);',[$profId,$unitId,$hours['VolumeTotal'],$annee]);
       if ($result === true ) {
         $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$unitId]);
         if ($update === true ) {
@@ -168,10 +169,10 @@
  }
 
 
- function validate_choice_action($id_prof,$id_unit){
+ function validate_choice_action($id_prof,$id_unit,$anne){
   try {
     $hours=GetFromDb('SELECT * FROM volumehorraire WHERE id_unit=?;',$id_unit,false);
-    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit,Volume_horr) VALUES (?,?,?);',[$id_prof,$id_unit,$hours['VolumeTotal']]);
+    $result = changeTable('INSERT INTO professeur (id_professeur,id_unit,Volume_horr,anneeUniversitaire) VALUES (?,?,?,?);',[$id_prof,$id_unit,$hours['VolumeTotal'],$anne]);
       if ($result === true ) {
         $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$id_unit]);
         if ($update === true) {
