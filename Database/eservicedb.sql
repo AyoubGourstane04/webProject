@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 04:52 AM
+-- Generation Time: May 20, 2025 at 11:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -119,6 +119,20 @@ CREATE TABLE `groupes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `historiques`
+--
+
+CREATE TABLE `historiques` (
+  `id` int(11) NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  `id_unite` int(11) NOT NULL,
+  `annee` varchar(20) NOT NULL,
+  `date_cr` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newusers`
 --
 
@@ -153,7 +167,7 @@ CREATE TABLE `notes` (
   `id_unit` int(11) NOT NULL,
   `semestre` varchar(2) NOT NULL,
   `session` varchar(15) NOT NULL,
-  `anneeUniversitaire` varchar(12) NOT NULL,
+  `anneeUniversitaire` varchar(20) NOT NULL,
   `Notes` varchar(255) NOT NULL,
   `date_upload` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -167,6 +181,7 @@ CREATE TABLE `notes` (
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
   `id_utilisateur` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
   `message` text NOT NULL,
   `is_read` tinyint(1) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -181,16 +196,16 @@ CREATE TABLE `notifications` (
 CREATE TABLE `professeur` (
   `id_professeur` int(11) NOT NULL,
   `id_unit` int(11) NOT NULL,
-  `Volume_horr` int(11) NOT NULL
+  `Volume_horr` int(11) NOT NULL,
+  `anneeUniversitaire` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `professeur`
 --
 
-INSERT INTO `professeur` (`id_professeur`, `id_unit`, `Volume_horr`) VALUES
-(2, 1, 50),
-(6, 2, 68);
+INSERT INTO `professeur` (`id_professeur`, `id_unit`, `Volume_horr`, `anneeUniversitaire`) VALUES
+(2, 1, 63, '2024-2025');
 
 -- --------------------------------------------------------
 
@@ -231,7 +246,7 @@ CREATE TABLE `tempunits` (
 --
 
 INSERT INTO `tempunits` (`id_prof`, `id_unit`, `demande`) VALUES
-(2, 2, 'I want to teach the algo unit');
+(2, 2, 'cvv');
 
 -- --------------------------------------------------------
 
@@ -258,7 +273,7 @@ CREATE TABLE `units` (
 
 INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
 (1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 19:30:57'),
-(2, 'INF102', 'Algorithmiquenées', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 20:09:39');
+(2, 'INF102', 'Algorithmiquenées', 'S1', 6.00, 'INFO', 1, 3, 0, '2025-05-17 20:09:39');
 
 -- --------------------------------------------------------
 
@@ -356,7 +371,8 @@ CREATE TABLE `volumehorraire` (
 --
 
 INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
-(2, 26, 12, 16, 8, 6);
+(2, 26, 12, 16, 8, 6),
+(1, 24, 13, 13, 7, 6);
 
 --
 -- Indexes for dumped tables
@@ -395,6 +411,14 @@ ALTER TABLE `filieres`
 ALTER TABLE `groupes`
   ADD KEY `id_coordinateur` (`id_coordinateur`),
   ADD KEY `id_filiere` (`id_filiere`);
+
+--
+-- Indexes for table `historiques`
+--
+ALTER TABLE `historiques`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_utilisateur` (`id_utilisateur`),
+  ADD KEY `id_unite` (`id_unite`);
 
 --
 -- Indexes for table `newusers`
@@ -490,6 +514,12 @@ ALTER TABLE `filieres`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `historiques`
+--
+ALTER TABLE `historiques`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `newusers`
 --
 ALTER TABLE `newusers`
@@ -549,6 +579,13 @@ ALTER TABLE `filieres`
 ALTER TABLE `groupes`
   ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `groupes_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
+
+--
+-- Constraints for table `historiques`
+--
+ALTER TABLE `historiques`
+  ADD CONSTRAINT `historiques_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id`),
+  ADD CONSTRAINT `historiques_ibfk_2` FOREIGN KEY (`id_unite`) REFERENCES `units` (`id`);
 
 --
 -- Constraints for table `notes`
