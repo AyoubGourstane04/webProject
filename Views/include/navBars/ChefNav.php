@@ -84,7 +84,7 @@
 
     <!-- Nav Item - Reporting -->
     <li class="nav-item">
-        <a class="nav-link" href="repotsPage.php">
+        <a class="nav-link" href="filterReport.php">
             <i class="fas fa-fw fa-chart-bar"></i>
             <span>Générer des Rapports</span></a>
     </li>

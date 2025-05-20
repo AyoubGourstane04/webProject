@@ -53,20 +53,63 @@
                                     <th>Nom</th>
                                     <th>Unité</th>
                                     <th>Demande</th>
+                                    <!-- <th>Année Univérsitaire</th> -->
                                     <th>Operations</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                    <?php foreach($choix as $choice){ 
+                                    <?php foreach($choix as $choice){
                                     ?>
                                         <tr>
                                             <td><?php echo $choice['firstName'];?></td>
                                             <td><?php echo $choice['lastName'];?></td>
                                             <td><?php echo $choice['intitule'];?></td>
                                             <td><?php echo $choice['demande'];?></td>
+                                            <!-- <td>
+                                                <select id="Au" class="form-control form-control-sm w-auto" name="Au" required style="height: 28px;">
+                                                <option value="">Sélectionnez l'année universitaire</option>
+                                                    <?php
+                                                        $currentYear = date('Y');
+                                                        $currentMonth = date('n');
+                                                        if ($currentMonth >= 9) {
+                                                            $lastAcademicStart = $currentYear;
+                                                        } else {
+                                                            $lastAcademicStart = $currentYear - 1;
+                                                        }
+
+                                                        for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                                            $nextYear = $i + 1;
+                                                            echo "<option value=\"$i-$nextYear\">$i-$nextYear</option>";
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </td> -->
                                             <td>
-                                            <a href="operations/valider_choix.php?id_prof=<?=$choice['id']?>&id_unit=<?=$choice['id_unit']?>" class="btn btn-success btn-sm"> <i class="fa-solid fa-circle-check"></i> Valider</a>
-                                            <a href="operations/refuser_choix.php?id_prof=<?=$choice['id']?>&id_unit=<?=$choice['id_unit']?>" class="btn btn-danger btn-sm"><i class="fa-solid fa-circle-xmark"></i> Décliner</a>
+                                                <!-- <a href="operations/valider_choix.php?id_prof=<?=$choice['id']?>&id_unit=<?=$choice['id_unit']?>" class="btn btn-success btn-sm"> <i class="fa-solid fa-circle-check"></i> Valider</a> -->
+                                                <form method="POST" action="operations/valider_choix.php" class="d-inline-flex">
+                                                <input type="hidden" name="id_prof" value="<?= $choice['id'] ?>">
+                                                <input type="hidden" name="id_unit" value="<?= $choice['id_unit'] ?>">
+                                                <select name="Au" class="form-control form-control-sm mr-2" required style="height: 28px; width: auto;">
+                                                    <option value="" class ="text-center">--- A.U ---</option>
+                                                    <?php
+                                                        $currentYear = date('Y');
+                                                        $currentMonth = date('n');
+                                                        $lastAcademicStart = ($currentMonth >= 9) ? $currentYear : $currentYear - 1;
+                                                        $defaultAcademicYear = "$lastAcademicStart-" . ($lastAcademicStart + 1);
+
+                                                        for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                                            $nextYear = $i + 1;
+                                                            $value = "$i-$nextYear";
+                                                            $selected = ($value === $defaultAcademicYear) ? 'selected' : '';
+                                                            echo "<option value=\"$value\" $selected>$value</option>";
+                                                        }
+                                                    ?>
+                                                </select>
+                                                <button type="submit" class="btn btn-success btn-sm ml-2">
+                                                    <i class="fa-solid fa-circle-check"></i> Valider
+                                                </button>
+                                            </form>
+                                                <a href="operations/refuser_choix.php?id_prof=<?=$choice['id']?>&id_unit=<?=$choice['id_unit']?>" class="btn btn-danger btn-sm"><i class="fa-solid fa-circle-xmark"></i> Décliner</a>
                                             </td>
                                         </tr>
                                        <?php }?>

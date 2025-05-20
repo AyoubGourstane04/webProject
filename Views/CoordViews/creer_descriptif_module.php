@@ -113,6 +113,26 @@
                                     <option value="S5">S5</option>
                             </select>
                         </div> 
+                        <!-- <div class="col-sm-6">
+                           <label for="Au" class="form-label">Année Universitaire</label>
+                            <select id="Au"  class="form-control" name="Au" required>
+                            <option value="">Sélectionnez l'année universitaire</option>
+                            <?php
+                                $currentYear = date('Y');
+                                $currentMonth = date('n');
+                                if ($currentMonth >= 9) {
+                                    $lastAcademicStart = $currentYear;
+                                } else {
+                                    $lastAcademicStart = $currentYear - 1;
+                                }
+
+                                for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                    $nextYear = $i + 1;
+                                    echo "<option value=\"$i-$nextYear\">$i-$nextYear</option>";
+                                }
+                            ?>
+                            </select>
+                        </div> -->
                     </div>
                     <div class="form-group">
                                     <p class="h6 text-gray-800 mb-4">Volume Horraire</p>

@@ -11,6 +11,7 @@
     ob_start();
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
+    
 
     $title=$data['firstName'].' '.$data['lastName'];
     $userName=$data['firstName'].' '.$data['lastName'];
@@ -46,35 +47,61 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Générer des Rapports</h1>
                         </div>
-                        <form action="operations/Generate_Repport.php" class="user" method="POST">
+                        <form action="ReportsPage.php" class="user" method="POST">
                         
                                 <div class="form-group row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
+                                        <label for="type" class="form-label">Type de rapport</label>
+                                        <select id="type"  class="form-control" name="type">
+                                        <option value="" selected>Tous</option>
+                                        <option value="1">Unités d'Enseignement</option>
+                                        <option value="2">Enseignants</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
                                         <label for="filiere" class="form-label">Filière</label>
                                         <select class="form-control" id="filiere" name="filiere">
-                                            <option value="" selected>Sélectionnez la filière</option>
+                                            <option value="" selected>Tous</option>
                                             <?php 
                                             $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? ;",$data['id_departement']);
                                             foreach($filieres as $filiere){
                                             ?>
-                                            <option value="<?= $filiere['id']?>"><?=$filiere['label']?></option>
-
+                                            <option value="<?= $filiere['id']?>"><?=$filiere['acronym']?></option>
                                             <?php    
                                                     }  
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <label for="semestre" class="form-label">Semestre</label>
                                         <select class="form-control" id="semestre" name="semestre">
-                                            <option value="" selected>Sélectionnez le semestre</option>
-                                                <option value="S1">S1</option>
-                                                <option value="S2">S2</option>
-                                                <option value="S3">S3</option>
-                                                <option value="S4">S4</option>
-                                                <option value="S5">S5</option>
+                                            <option value="" selected>Tous</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
+                                            <option value="S4">S4</option>
+                                            <option value="S5">S5</option>
                                         </select>
                                     </div>
+                                    <div class="col-sm-3">
+                                        <label for="Au" class="form-label">Année Universitaire</label>
+                                        <select id="Au"  class="form-control" name="Au" required>
+                                        <option value="">Année Universitaire</option>
+                                   <?php
+                                        $currentYear = date('Y');
+                                        $currentMonth = date('n');
+                                        $lastAcademicStart = ($currentMonth >= 9) ? $currentYear : $currentYear - 1;
+                                        $defaultAcademicYear = "$lastAcademicStart-" . ($lastAcademicStart + 1);
+
+                                        for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                            $nextYear = $i + 1;
+                                            $value = "$i-$nextYear";
+                                            $selected = ($value === $defaultAcademicYear) ? 'selected' : '';
+                                            echo "<option value=\"$value\" $selected>$value</option>";
+                                        }
+                                    ?>
+                                        </select>
+                                    </div>                                     
                                 </div>
                                 <input type="submit" value="Générer Rapport" class="btn btn-primary btn-user btn-block">
                         </form>
