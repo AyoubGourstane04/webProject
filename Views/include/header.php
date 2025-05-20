@@ -52,56 +52,35 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
+                                            
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">.</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500"></div>
-                                        <span class="font-weight-bold"></span>
-                                    </div>
-                                </a>
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500"></div>
-                           
-                                    </div>
-                                </a> -->
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500"></div>
-                                       
-                                    </div>
-                                </a> -->
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Notifications</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell fa-fw"></i>
+                            <span class="badge badge-danger badge-counter">!</span>
+                        </a>
+
+                        <!-- Dropdown stylisé -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in p-0" 
+                            aria-labelledby="alertsDropdown" style="min-width: 320px; border-radius: 8px; overflow: hidden;">
+
+                            <!-- Titre bleu -->
+                            <div class="bg-primary text-white text-uppercase font-weight-bold px-3 py-2" style="font-size: 14px;">
+                                NOTIFICATIONS
                             </div>
+
+                            <!-- Contenu avec fond blanc -->
+                            <div class="bg-white text-center py-3">
+                            <a href="notificationProf.php" class="text-success font-weight-bold text-decoration-none">
+                                <i class="fas fa-angle-double-right"></i> Lire les notifications
+                            </a>
+                            </div>
+
+                        </div>
                         </li>
+                                            
+
+
 
 
                         <div class="topbar-divider d-none d-sm-block"></div>

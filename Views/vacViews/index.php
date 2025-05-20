@@ -115,7 +115,7 @@
                                                     <?php foreach ($messages as $message){
                                                     ?>
                                                         <tr>
-                                                            <td><?= $message['message'] ?></td>
+                                                            <td><?= $message['title'] ?></td>
                                                             <td><?= $message['created_at'] ?></td>                                                            
                                                         </tr>
                                                     <?php } ?>

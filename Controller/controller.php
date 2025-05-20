@@ -152,6 +152,7 @@
       if ($result === true ) {
         $update = changeTable('UPDATE units SET statut=? WHERE id=?;',[1,$unitId]);
         if ($update === true ) {
+           changeTable('INSERT INTO historiques (id_utilisateur,id_unite,annee) VALUES (?,?,?);',[$profId,$unitId,'2024-2025']);
           header('location: '.$_SERVER['HTTP_REFERER']);
           exit();
         }else{
@@ -258,6 +259,52 @@ function addUnit($filiere_id,$dept_id){
       exit();
     }
   }
+
+
+
+  /*             cc                                                cc                */
+
+
+
+
+
+
+
+function countUnreadNotifications($pdo, $id_utilisateur) {
+    $sql = "SELECT COUNT(*) FROM notification WHERE id_utilisateur = :id_utilisateur AND is_read = 0";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_utilisateur' => $id_utilisateur]);
+    return $stmt->fetchColumn();
+}
+
+
+
+
+
+function markAsRead($id_notification) {
+    changeTable('UPDATE notifications SET is_read = 1 WHERE id = ?',$id_notification);
+}
+
+function getNotifications($pdo, $id_utilisateur) {
+    $sql = "SELECT * FROM notifications WHERE id_utilisateur = :id_utilisateur ORDER BY created_at DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_utilisateur' => $id_utilisateur]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+
+function envoyerNotification($pdo, $id_utilisateur, $message) {
+    $sql = "INSERT INTO notifications (id_utilisateur, message) VALUES (:id_utilisateur, :message)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_utilisateur' => $id_utilisateur, 'message' => $message]);
+}
+
+
+
+
+
 
 
 
