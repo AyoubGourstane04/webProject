@@ -79,15 +79,15 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Historique
+        Historique & Rapports
     </div>
 
     <!-- Nav Item - Reporting -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="reporting.php">
+    <li class="nav-item">
+        <a class="nav-link" href="repotsPage.php">
             <i class="fas fa-fw fa-chart-bar"></i>
-            <span>Reporting</span></a>
-    </li> -->
+            <span>Générer des Rapports</span></a>
+    </li>
 
     <!-- Nav Item - Historique -->
     <li class="nav-item">
