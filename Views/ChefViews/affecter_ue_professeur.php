@@ -43,84 +43,85 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                <div class="container">
+                    
+              <div class="container">
 
-<div class="card o-hidden border-0 shadow-lg my-5">
-    <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="p-5">
-                    <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Affecter des unités d'enseignement au professeurs</h1>
-                    </div>
-                    <form action="../../addUnit_prof.php" class="user" method="POST">
-                       
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label for="filiere" class="form-label">Filière</label>
-                                    <select class="form-control" id="filiere" name="filiere" onchange="filterUnits()">
-                                        <option value="" selected>Sélectionnez la filière</option>
-                                        <?php 
-                                        $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? ;",$data['id_departement']);
-                                        foreach($filieres as $filiere){
-                                        ?>
-                                        <option value="<?= $filiere['id']?>"><?=$filiere['label']?></option>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Affecter des unités d'enseignement au professeurs</h1>
+                        </div>
+                        <form action="../../addUnit_prof.php" class="user" method="POST">
+                        
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label for="filiere" class="form-label">Filière</label>
+                                        <select class="form-control" id="filiere" name="filiere" onchange="filterUnits()">
+                                            <option value="" selected>Sélectionnez la filière</option>
+                                            <?php 
+                                            $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? ;",$data['id_departement']);
+                                            foreach($filieres as $filiere){
+                                            ?>
+                                            <option value="<?= $filiere['id']?>"><?=$filiere['label']?></option>
 
-                                        <?php 
-                                                    
+                                            <?php 
+                                                        
+                                                    }  
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="semestre" class="form-label">Semestre</label>
+                                        <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
+                                            <option value="" selected>Sélectionnez le semestre</option>
+                                                <option value="S1">S1</option>
+                                                <option value="S2">S2</option>
+                                                <option value="S3">S3</option>
+                                                <option value="S4">S4</option>
+                                                <option value="S5">S5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label for="unit" class="form-label">Unités</label>
+                                        <select class="form-control" id="unit" name="unit" >
+                                            <option value="" selected>Sélectionnez l' U.E</option>
+                                            <?php 
+                                            $units=GetFromDb("SELECT * FROM units WHERE departement_id=? AND statut=0 ;",$data['id_departement']);
+                                            foreach($units as $unit){
+                                            ?>
+                                            <!-- <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option> -->
+                                                <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>" <?= ($Ue_id == $unit['id']) ? 'selected' : '' ?>>
+                                                    <?=$unit['intitule']?>
+                                                </option>
+                                            <?php 
                                                 }  
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="semestre" class="form-label">Semestre</label>
-                                    <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
-                                        <option value="" selected>Sélectionnez le semestre</option>
-                                            <option value="S1">S1</option>
-                                            <option value="S2">S2</option>
-                                            <option value="S3">S3</option>
-                                            <option value="S4">S4</option>
-                                            <option value="S5">S5</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6">
-                                    <label for="unit" class="form-label">Unités</label>
-                                    <select class="form-control" id="unit" name="unit" >
-                                        <option value="" selected>Sélectionnez l' U.E</option>
-                                        <?php 
-                                          $units=GetFromDb("SELECT * FROM units WHERE departement_id=? AND statut=0 ;",$data['id_departement']);
-                                        foreach($units as $unit){
-                                        ?>
-                                        <!-- <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>"><?=$unit['intitule']?></option> -->
-                                            <option value="<?=$unit['id']?>" data-filiere="<?= $unit['id_filiere']?>" data-semestre="<?= $unit['semestre']?>" <?= ($Ue_id == $unit['id']) ? 'selected' : '' ?>>
-                                                   <?=$unit['intitule']?>
-                                            </option>
-                                        <?php 
-                                            }  
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="prof" class="form-label">Professeurs</label>
-                                    <select class="form-control" id="prof" name="prof" >
-                                        <option value="" selected>Sélectionnez le professeur</option>
-                                        <?php foreach($professeurs as $prof){  ?>
-                                        <option value="<?= $prof['id']?>"><?php echo $prof['firstName'].' '.$prof['lastName'];?></option>
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="prof" class="form-label">Professeurs</label>
+                                        <select class="form-control" id="prof" name="prof" >
+                                            <option value="" selected>Sélectionnez le professeur</option>
+                                            <?php foreach($professeurs as $prof){  ?>
+                                            <option value="<?= $prof['id']?>"><?php echo $prof['firstName'].' '.$prof['lastName'];?></option>
 
-                                        <?php   }  ?>
-                                    </select>
+                                            <?php   }  ?>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <input type="submit" value="Affecter" class="btn btn-primary btn-user btn-block">
-                    </form>
+                                <input type="submit" value="Affecter" class="btn btn-primary btn-user btn-block">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>
 
@@ -129,10 +130,9 @@
 
             </div>
             <!-- End of Main Content -->
-        </div>
+        <!-- </div> -->
         <!-- End of Content Wrapper -->
-
-    </div>
+    <!-- </div> -->
     <!-- End of Page Wrapper -->
     <?php require_once "../include/footer.php";?>
 

@@ -71,13 +71,10 @@
                                         </tr>
                                        <?php }?>
                                     </tbody>
-                </table>
-                            </div>
-                        </div>
-                    </div>
-
+                    </table>
                 </div>
                 <!-- /.container-fluid -->
+
 
             </div>
             <!-- End of Main Content -->
@@ -93,8 +90,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    
 
 
 <?php

@@ -42,22 +42,44 @@
                     <h1 class="h4 text-gray-900 mb-4">Uploader les Notes</h1>
                 </div>
                 <form action="operations/ImportNotes.php?id_vacat=<?=$_SESSION['id']?>" class="user" method="POST" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="unit" class="form-label">Module</label>
+                                <select class="form-control" id="unit" name="unit" required>
+                                    <option value="" selected>--Sélectionnez le Module--</option>
+                                    <?php foreach($units as $unit){?>
+                                        <option value="<?=$unit['id']?>"><?=$unit['intitule']?></option>
+                                    <?php    
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <label for="unit" class="form-label">Module</label>
-                            <select class="form-control" id="unit" name="unit">
-                                <option value="" selected>Sélectionnez le Module</option>
-                                   <?php foreach($units as $unit){?>
-                                     <option value="<?=$unit['id']?>"><?=$unit['intitule']?></option>
-                                  <?php    
-                                   }
-                                   ?>
+                           <label for="Au" class="form-label">Année Universitaire</label>
+                            <select id="Au"  class="form-control" name="Au" required>
+                            <option value="">-- Sélectionnez l'année universitaire--</option>
+                            <?php
+                                $currentYear = date('Y');
+                                $currentMonth = date('n');
+                                if ($currentMonth >= 9) {
+                                    $lastAcademicStart = $currentYear;
+                                } else {
+                                    $lastAcademicStart = $currentYear - 1;
+                                }
+
+                                for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                    $nextYear = $i + 1;
+                                    echo "<option value=\"$i-$nextYear\">$i-$nextYear</option>";
+                                }
+                            ?>
                             </select>
                         </div>
                         <div class="col-sm-6">
                             <label for="session" class="form-label">Session</label>
-                            <select class="form-control" id="session" name="session">
-                                <option value="" selected>Sélectionnez la Session </option>
+                            <select class="form-control" id="session" name="session" required>
+                                <option value="" selected>--Sélectionnez la Session--</option>
                                     <option value="normale">Normale</option>
                                     <option value="rattrapage">Rattrapage</option>
                             </select>

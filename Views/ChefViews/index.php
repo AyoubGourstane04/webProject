@@ -51,8 +51,8 @@
         <!-- Page Heading<i class="fas fa-download fa-sm text-white-50"></i> -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-chart-line fa-sm text-white-50 pr-2"></i>Générer des Rapports</a>
+        <!-- <a href="operations/Generate_Repport.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-chart-line fa-sm text-white-50 pr-2"></i>Générer des Rapports</a>-->
         </div>
         <!-- Content Row -->
         <div class="row">
@@ -269,7 +269,7 @@
                                                 <thead class="table-primary">
                                                     <tr>
                                                         <th>Professeur</th>
-                                                        <th>Demande</th>
+                                                        <th>Module</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -281,7 +281,7 @@
                                                     ?>
                                                         <tr>
                                                             <td><?php echo $prof['firstName'].' '.$prof['lastName']?></td>
-                                                            <td><?= htmlspecialchars($demande['demande']) ?></td>                                                            
+                                                            <td><?= htmlspecialchars($demande['intitule']) ?></td>                                                            
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
