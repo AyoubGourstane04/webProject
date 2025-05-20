@@ -14,14 +14,12 @@
 
     $title=$data['firstName'].' '.$data['lastName'];
     $userName=$data['firstName'].' '.$data['lastName'];
-    
 
 ?>
 
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-    <?php require_once "../include/navBars/CoordNav.php";?>
+    <?php require_once "../include/navBars/ChefNav.php";?>
 
     <?php require_once "../include/header.php";?>
 
@@ -34,7 +32,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-             
+        
 
                 </div>
                 <!-- /.container-fluid -->
