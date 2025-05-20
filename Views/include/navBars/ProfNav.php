@@ -37,21 +37,24 @@
         </a>
         <div id="collapseUE" class="collapse" aria-labelledby="headingUE" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="../ProfViews/UeList.php">Liste disponibles</a>
+                <h6 class="collapse-header">Gestion Des Modules:</h6>
+                <a class="collapse-item" href="../ProfViews/UeList.php">Liste des Unités</a>
+                <a class="collapse-item" href="../ProfViews/demUe.php">Liste disponibles</a>
             </div>
         </div>
     </li>
+  
 
     <!-- Modules assurés -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="moduleAffec.php">                                            
             <i class="fas fa-chalkboard-teacher"></i>
             <span>Modules assurés</span>
         </a>
     </li>
 
     <!-- Notes -->
-    <li class="nav-item">
+ <!--   <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotes"
             aria-expanded="false" aria-controls="collapseNotes">
             <i class="fas fa-clipboard-list"></i>
@@ -64,6 +67,21 @@
             </div>
         </div>
     </li>
+-->
+
+
+ <li class="nav-item">
+        <a class="nav-link" href="upload_notes.php">
+            <i class="fas fa-upload"></i>
+            <span>Uploader Notes</span>
+        </a>
+    </li>
+
+
+
+
+
+
 
     <!-- Historique -->
     <li class="nav-item">
