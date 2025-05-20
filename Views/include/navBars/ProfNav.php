@@ -85,7 +85,7 @@
 
     <!-- Historique -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="historique.php">
             <i class="fas fa-history"></i>
             <span>Historique</span>
         </a>
