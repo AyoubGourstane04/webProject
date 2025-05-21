@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
  */
 
 
-function exportTableToExcel(array $data, string $fileName = 'export.xlsx', string $sheetTitle = 'Sheet1') {
+function exportTableToExcel(array $data, string $fileName = 'export.xlsx', string $sheetTitle = 'Sheet1' ,array $highlightedRows = []) {
     if (empty($data)) {
         throw new Exception('No data provided for export.');
     }
@@ -30,6 +30,14 @@ function exportTableToExcel(array $data, string $fileName = 'export.xlsx', strin
             $sheet->setCellValue($cellAddress, $value);
             $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
         }
+            if (in_array($rowIndex, $highlightedRows)) {
+                $firstCol = 'A';
+                $lastCol = Coordinate::stringFromColumnIndex(count($row));
+                $range = "{$firstCol}" . ($rowIndex + 1) . ":{$lastCol}" . ($rowIndex + 1);
+
+                $sheet->getStyle($range)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()->setRGB('FFC7CE'); // light red
+            }
     }
 
     // hadchi ta3 lbrowser bach i dir download : 

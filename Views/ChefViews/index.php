@@ -135,11 +135,7 @@
                                                 <tbody>
                                                     <?php foreach($profs as $prof){
                                                        $nbrUnits = CounterValues('SELECT COUNT(*) FROM professeur WHERE id_professeur=?;',$prof['id']);  
-                                                       $vol_horr = GetFromDb('SELECT SUM(a.Volume_horr) AS total_volume
-                                                                                FROM affectation a
-                                                                                JOIN professeur p ON p.id_professeur = a.id_professeur
-                                                                                WHERE p.id_professeur = ?
-                                                                                GROUP BY p.id_professeur;',$prof['id']);
+                                                       $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;', $prof['id']);
                                                        $volume_horr= !empty($vol_horr)?$vol_horr:0;
                                                        $rowClass=($volume_horr<$minHours)?'table-danger':'';
                                                     ?>
