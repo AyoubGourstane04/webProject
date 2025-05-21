@@ -22,7 +22,7 @@ $total = count($notifications);
   <!-- Page Wrapper -->
     <div id="wrapper">
 
-   <?php require_once "../include/navBars/VacNav.php";?>
+   <?php require_once "../include/navBars/ChefNav.php";?>
 
    <?php require_once "../include/header.php";?>
    

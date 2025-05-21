@@ -1,7 +1,7 @@
 <?php
    require_once __DIR__ . '/../../Controller/controller.php';
    
-    $Vac_id = isset($_GET['id_vacat']) ? intval($_GET['id_vacat']) : null;
+    $prof_id = isset($_GET['id_prof']) ? intval($_GET['id_prof']) : null;
     $unit_id = isset($_POST['unit']) ? $_POST['unit'] : null;
     $session = isset($_POST['session']) ? $_POST['session'] : null;
 
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $destination = __DIR__ . '/../../resources/Notes/' . $fileName;
 
             if (move_uploaded_file($fileTempPath,  $destination)) {
-                 $result=changeTable('INSERT INTO notes (id_prof, id_unit, semestre, session, Notes) VALUE(?,?,?,?,?);',[$Vac_id,$unit_id,$fullUnit['semestre'],$session,$fileName]);
+                 $result=changeTable('INSERT INTO notes (id_prof, id_unit, semestre, session, Notes) VALUE(?,?,?,?,?);',[$prof_id,$unit_id,$fullUnit['semestre'],$session,$fileName]);
                     if($result){
                             header('location: '.$_SERVER['HTTP_REFERER']);
                             exit();

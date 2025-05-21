@@ -24,7 +24,7 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-<?php require_once "../include/navBars/VacNav.php";?>
+<?php require_once "../include/navBars/CoordNav.php";?>
 
 <?php require_once "../include/header.php";?>
 

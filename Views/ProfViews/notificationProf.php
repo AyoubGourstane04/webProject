@@ -19,16 +19,16 @@ $notifications = GetFromDb("SELECT * FROM notifications WHERE id_utilisateur=? O
 $total = count($notifications);
 ?>
 
-<!-- Page Wrapper -->
-<div id="wrapper">
-    <?php require_once "../include/navBars/ProfNav.php"; ?>
-    <?php require_once "../include/header.php"; ?>
+  <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Contenu principal -->
-    <div class="container-fluid">
-       
+   <?php require_once "../include/navBars/ProfNav.php";?>
 
-        <!-- Bloc Notifications -->
+   <?php require_once "../include/header.php";?>
+   
+    <!-- Begin Page Content -->
+   <div class="container-fluid">
+    <!-- Bloc Notifications -->
         <div class="container">
             <h2 class="mb-3">Notifications</h2>
 
@@ -66,10 +66,16 @@ $total = count($notifications);
                 </table>
             </div>
         </div>
-    </div>
 
-    <?php require_once "../include/footer.php"; ?>
-</div>
+        
+
+    </div>
+    <!-- /.container-fluid -->
+    </div>
+        <!-- End of Main Content -->
+        <?php require_once "../include/footer.php";?>
+
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

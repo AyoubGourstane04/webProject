@@ -36,7 +36,7 @@ $historique = GetFromDb("
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-    <?php require_once "../include/navBars/ProfNav.php"; ?>
+    <?php require_once "../include/navBars/CoordNav.php"; ?>
     <?php require_once "../include/header.php"; ?>
 
     <!-- Contenu principal -->
@@ -80,10 +80,8 @@ $historique = GetFromDb("
         </div>
     </div>
 
-                        
     </div>
-        <!-- End of Main Content -->
-
+    <!-- /.container-fluid -->
     <?php require_once "../include/footer.php"; ?>
 
 

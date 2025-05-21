@@ -3,7 +3,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../adminViews/index.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon">
             <img src="..\..\startbootstrap-sb-admin-2-gh-pages\img\logo2.png" alt="Logo" style="width: 40px; height: 40px;">
         </div>
@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Accueil -->
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/index.php">
+        <a class="nav-link" href="index.php">
             <!-- ../adminViews/admin.php -->
             <i class="fas fa-home"></i>
             <span>Accueil</span>
@@ -40,55 +40,32 @@
 
     <!-- Nav Items- Enseignants -->
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/Enseignant.php"  data-target="#collapseCours"
+        <a class="nav-link" href="Enseignant.php"  data-target="#collapseCours"
             aria-expanded="false" aria-controls="collapseCours">
             <i class="fas fa-users"></i>
             <span>Enseignants</span>
         </a>
-        <!-- <div id="collapseCours" class="collapse" aria-labelledby="headingCours" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Enseignants:</h6>
-                <a class="collapse-item" href="#">List des Enseignants</a>
-                <a class="collapse-item" href="..\operations\Modifier.php">Modifier</a>
-            </div>
-        </div> -->
     </li>
 
     <!-- Nav Item - chefs de departement -->
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/chefs.php" data-target="#collapseRapports"
+        <a class="nav-link" href="chefs.php" data-target="#collapseRapports"
             aria-expanded="false" aria-controls="collapseRapports">
             <i class="fas fa-user-tie"></i>
             <span>Chefs de departement</span>
         </a>
-        <!-- <div id="collapseRapports" class="collapse" aria-labelledby="headingRapports" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">Chefs des departement</a>
-                <a class="collapse-item" href="#">List des Chefs</a>
-                <a class="collapse-item" href="#">Ajouter</a>
-                <a class="collapse-item" href="#">Modifier</a>
-            </div>
-        </div> -->
     </li>
 
     <!-- Nav Item - coordinateurs des filiéres -->
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/coordinateur.php" data-target="#collapseBibliotheque"
+        <a class="nav-link" href="coordinateur.php" data-target="#collapseBibliotheque"
             aria-expanded="false" aria-controls="collapseBibliotheque">
             <i class="fas fa-user-tie"></i>
             <span>coordinateurs des filiéres</span>
         </a>
-        <!-- <div id="collapseBibliotheque" class="collapse" aria-labelledby="headingBibliotheque" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">coordinateurs des filiéres </h6>
-                <a class="collapse-item" href="#">List des Coordinateurs</a>
-                <a class="collapse-item" href="#">Ajouter</a>
-                <a class="collapse-item" href="#">Modifier</a>
-            </div>
-        </div> -->
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="../adminViews/Vacataires.php"  data-target="#collapseCours"
+        <a class="nav-link" href="Vacataires.php"  data-target="#collapseCours"
             aria-expanded="false" aria-controls="collapseCours">
             <i class="fas fa-user-clock"></i>
             <span>Vacataires</span>

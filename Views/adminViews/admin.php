@@ -13,6 +13,8 @@
     $title = $data['firstName'] . ' ' . $data['lastName'];
     $userName = $data['firstName'] . ' ' . $data['lastName'];
 
+
+
     $users = GetSimpleDb('SELECT * FROM Newusers;');
 ?>
 
