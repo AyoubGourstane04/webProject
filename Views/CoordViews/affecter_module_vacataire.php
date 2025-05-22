@@ -58,15 +58,34 @@
                     <form action="../../addUnit_prof.php" class="user" method="POST">
                        
                             <div class="form-group row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
                                     <label for="semestre" class="form-label">Semestres</label>
                                     <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
-                                        <option value="" selected>Sélectionnez le semestre</option>
+                                        <option value="" selected>--Semestre--</option>
                                             <option value="S1">S1</option>
                                             <option value="S2">S2</option>
                                             <option value="S3">S3</option>
                                             <option value="S4">S4</option>
                                             <option value="S5">S5</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="Au" class="form-label">Année Universitaire</label>
+                                    <select id="Au"  class="form-control" name="Au" required>
+                                    <option value="">-- Sélectionnez l'année universitaire--</option>
+                                    <?php
+                                        $currentYear = date('Y');
+                                        $currentMonth = date('n');
+                                        $lastAcademicStart = ($currentMonth >= 9) ? $currentYear : $currentYear - 1;
+                                        $defaultAcademicYear = "$lastAcademicStart-" . ($lastAcademicStart + 1);
+
+                                        for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                            $nextYear = $i + 1;
+                                            $value = "$i-$nextYear";
+                                            $selected = ($value === $defaultAcademicYear) ? 'selected' : '';
+                                            echo "<option value=\"$value\" $selected>$value</option>";
+                                        }
+                                    ?>
                                     </select>
                                 </div>
                                 <div class="col-sm-6">
@@ -84,7 +103,7 @@
                                 <div class="col-sm-12">
                                     <label for="unit" class="form-label">Unités</label>
                                     <select class="form-control" id="unit" name="unit" >
-                                        <option value="" selected>Sélectionnez l' U.E</option>
+                                        <option value="" selected>Sélectionnez le Module</option>
                                         <?php 
                                           $units=GetFromDb("SELECT * FROM units WHERE id_filiere=? AND statut=0 ;",$Coord['id_filiere']);
                                         foreach($units as $unit){

@@ -64,7 +64,23 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="AU" class="form-label">Année Universitaire</label>
-                            <input type="text" class="form-control form-control-user" name="AU" id="AU" placeholder="Entrer l'année universitaire">
+                            <select id="AU"  class="form-control" name="AU" required>
+                            <option value="">-- Sélectionnez l'année universitaire--</option>
+                            <?php
+                                $currentYear = date('Y');
+                                $currentMonth = date('n');
+                                $lastAcademicStart = ($currentMonth >= 9) ? $currentYear : $currentYear - 1;
+                                $defaultAcademicYear = "$lastAcademicStart-" . ($lastAcademicStart + 1);
+
+                                for ($i = $lastAcademicStart - 5; $i <= $lastAcademicStart; $i++) {
+                                    $nextYear = $i + 1;
+                                    $value = "$i-$nextYear";
+                                    $selected = ($value === $defaultAcademicYear) ? 'selected' : '';
+                                    echo "<option value=\"$value\" $selected>$value</option>";
+                                }
+                            ?>
+                            </select>
+
                         </div>
                     </div>
                    
