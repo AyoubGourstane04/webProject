@@ -12,7 +12,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title='Définir Groupes';
     $userName=$data['firstName'].' '.$data['lastName'];
     
     $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);

@@ -1,4 +1,13 @@
 <?php
  require_once __DIR__ . '../Controller/controller.php';
- $id=$_GET['id'];
- create($id);
+ 
+    session_start();
+    
+    $id=$_GET['id'];
+    
+    $response = create($id);
+
+    $_SESSION['flash'] = $response; 
+
+    header('location: Views/adminViews/admin.php');
+      exit();

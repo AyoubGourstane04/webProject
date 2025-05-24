@@ -18,7 +18,7 @@
     $semesterFilter = isset($_GET['semestre']) && $_GET['semestre'] !== '' ? $_GET['semestre'] : null;
 
     $nbrofUnits = CounterValues('SELECT COUNT(*) FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=?;',$_SESSION['id']);           //  zedto db
-    $nbrTotalUnits = CounterValues('SELECT COUNT(*) FROM units WHERE departement_id=?;',$data['id_departement']);
+    // $nbrTotalUnits = CounterValues('SELECT COUNT(*) FROM units WHERE departement_id=?;',$data['id_departement']);
     
     if($semesterFilter){
         $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=? AND u.semestre=? LIMIT 10;',[$_SESSION['id'],$semesterFilter]);
@@ -27,6 +27,23 @@
     }
 
     $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=?;',$_SESSION['id']);
+
+    $minHours = 100;
+    $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;', $_SESSION['id']);
+    $volume_horr = !empty($vol_horr) ? $vol_horr : 0;
+
+    $progress = min(100, ($volume_horr / $minHours) * 100);
+
+
+    if ($volume_horr < $minHours) {
+        $color_class = 'danger';
+    } elseif ($volume_horr == $minHours) {
+        $color_class = 'primary';
+    } else {
+        $color_class = 'success';
+    }
+
+    
 ?>
 
 
@@ -43,13 +60,12 @@
    
                 <!-- Begin Page Content -->
    <div class="container-fluid">
+        <?php  displayFlashMessage(); ?>
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
-        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+            <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
         </div>
-                 <div class="row">
+                    <div class="row">
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -67,18 +83,30 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-6 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card border-left-<?= $color_class ?> shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Nombre Total des Unités</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$nbrTotalUnits?> Total Des Unit</div>
+                                            <div class="text-xs font-weight-bold text-<?= $color_class ?> text-uppercase mb-1">Mon Volume Horaire</div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $volume_horr ?> h</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-<?= $color_class ?>" role="progressbar"
+                                                            style="width: <?= $progress ?>%" aria-valuenow="<?= $progress ?>" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="small text-muted">Minimum requis : <?= $minHours ?>h</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>

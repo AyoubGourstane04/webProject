@@ -1,4 +1,6 @@
 <?php
+   require_once __DIR__ . '/../Controller/controller.php';
+
     ob_start();
     session_start();  // nssiti hadi 
     $title="ENSAH | E-SERVICES";
@@ -7,10 +9,14 @@
         echo "<div class='alert alert-info'>" . $_SESSION['signup_message'] . "</div>";
         unset($_SESSION['signup_message']);
     }
+    
+
+
 
 ?>
 
     <div class="container">
+    <?php  displayFlashMessage(); ?>
 
         <!-- Outer Row -->
         <div class="row justify-content-center ">

@@ -12,12 +12,13 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title='Ajouter Vacatires';
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $dept_id=$data['id_departement'];
     $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
     $filiere=$Coord['id_filiere'];
+
 
 
 
@@ -38,6 +39,8 @@
  <!-- Begin Page Content -->
                 <div class="container-fluid">
                 <div class="container">
+                        <?php  displayFlashMessage(); ?>
+
 
 <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">

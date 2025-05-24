@@ -12,7 +12,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title='Choix et Demandes';
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$data['id_departement'],false);
@@ -24,6 +24,7 @@
                                JOIN units u 
                                ON u.id=t.id_unit  
                                WHERE p.id_departement=? ;",$data['id_departement']);
+
 
 ?>
 
@@ -39,6 +40,8 @@
 
             <!-- Main Content -->
             <div id="content">
+                    <?php  displayFlashMessage(); ?>
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 

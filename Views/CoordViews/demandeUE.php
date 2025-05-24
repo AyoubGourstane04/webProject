@@ -12,7 +12,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title="Demander Unités";
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $unit_id=$_GET['id'];
@@ -25,7 +25,14 @@
         $demande=!empty($_POST['demande']) ? htmlspecialchars(trim($_POST['demande'])) : null;
         $Id_Unit=$unit_id;
         $prof_id=$_SESSION['id'];
-        insertTempUnit($prof_id,$Id_Unit,$demande);
+
+        $mess = insertTempUnit($prof_id,$Id_Unit,$demande);
+
+        $_SESSION['flash']=$mess;
+
+        
+            header('location: '.$_SERVER['HTTP_REFERER']);
+                exit();
     }
 
 
@@ -45,6 +52,8 @@
    
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                        <?php  displayFlashMessage(); ?>
+
                 <table class="table table-striped">
                             <thead>
                                 <tr>

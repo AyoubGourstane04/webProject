@@ -12,7 +12,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title='Modules de Département';
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $units=GetFromDb("SELECT * FROM units WHERE departement_id=? ;",$data['id_departement']);

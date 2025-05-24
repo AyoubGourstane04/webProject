@@ -32,7 +32,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUE"
             aria-expanded="true" aria-controls="collapseUE">
             <i class="fas fa-fw fa-book"></i>
-            <span>Modules De Filière</span>
+            <span>Modules Département</span>
         </a>
         <div id="collapseUE" class="collapse" aria-labelledby="headingUE" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">

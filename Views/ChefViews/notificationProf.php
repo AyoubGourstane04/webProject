@@ -13,7 +13,7 @@ ob_start();
 // Récupération des informations utilisateur pour afficher le nom
 $data = GetFromDb("SELECT firstName, lastName FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
 $userName = $data['firstName'] . ' ' . $data['lastName'];
-$title ="Notification";
+$title ="Notifications";
 // Récupération des notifications de l'utilisateur
 $notifications = GetFromDb("SELECT * FROM notifications WHERE id_utilisateur=? ORDER BY created_at DESC;", $_SESSION['id']);
 $total = count($notifications);

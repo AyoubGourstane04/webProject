@@ -25,6 +25,9 @@
 
   $filieres=GetSimpleDb('SELECT * FROM filieres');
 
+   $MyUnits = CounterValues('SELECT COUNT(*) FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=?;',$_SESSION['id']);           //  zedto db
+
+
 
     $pdo=dataBaseConnection();
 
@@ -40,6 +43,20 @@
     $demandes=GetFromDB('SELECT * FROM units u JOIN tempunits t ON u.id=t.id_unit WHERE u.departement_id=?;',$data['id_departement']);
 
 
+    $vol = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;', $_SESSION['id']);
+    $volume = !empty($vol) ? $vol : 0;
+
+    $progress = min(100, ($volume / $minHours) * 100);
+
+
+    if ($volume < $minHours) {
+        $color_class = 'danger';
+    } elseif ($volume == $minHours) {
+        $color_class = 'primary';
+    } else {
+        $color_class = 'success';
+    }
+
 ?>
   
   <!-- Page Wrapper -->
@@ -48,66 +65,115 @@
     <?php require_once "../include/header.php";?>
    <!-- Begin Page Content -->
    <div class="container-fluid">
-        <!-- Page Heading<i class="fas fa-download fa-sm text-white-50"></i> -->
+        <?php  displayFlashMessage(); ?>
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
-        <!-- <a href="operations/Generate_Repport.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-chart-line fa-sm text-white-50 pr-2"></i>Générer des Rapports</a>-->
+            <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
         </div>
+
         <!-- Content Row -->
-        <div class="row">
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    Nombre d'unités d'enseignement</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$nbrofUnits?> Unités</div>
+                <div class="row">
+                    <!-- Unités d'enseignement -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Unités d'Enseignement du Département</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $nbrofUnits ?> Unités</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-book-open fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Professeurs + Filières stacked -->
+                    <div class="col-xl-3 col-md-6 mb-4 d-flex flex-column justify-content-between">
+                        <!-- Professeurs -->
+                        <div class="card border-left-success shadow mb-2 py-2">
+                            <div class="card-body py-2">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                           Nbr. Professeurs</div>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800"><?= $nbrofProfs ?></div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-chalkboard-teacher fa-lg text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Filières -->
+                        <div class="card border-left-warning shadow py-2 ">
+                                <div class="card-body py-2">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                               Nbr. Filières</div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800"><?= $nbrofFile ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-graduation-cap fa-lg text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <!-- Mes Unités -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="row w-100 justify-content-between align-items-center">
+                                    <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Mes unités</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $MyUnits ?></div>
+                                    </div>
+                                    <div class="col-auto">
+                                    <i class="fas fa-book-open-reader fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mon Volume Horaire -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-<?= $color_class ?> shadow h-100 py-2">
+                            <div class="card-body d-flex align-items-center">
+                                <div class="row w-100 justify-content-between align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-<?= $color_class ?> text-uppercase mb-1">Mon Volume Horaire</div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $volume ?> h</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-<?= $color_class ?>" role="progressbar"
+                                                            style="width: <?= $progress ?>%" aria-valuenow="<?= $progress ?>" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="small text-muted">Minimum requis : <?= $minHours ?>h</div>
+                                        </div>
+                                        <div class="col-auto">
+                                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                
                 </div>
-                <div class="col-auto">
-                    <i class="fas fa-book-open fa-2x text-gray-300"></i>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                    Nombre des professeurs</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$nbrofProfs?> Professeurs</div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                    Nombres des filières</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$nbrofFile?> filières</div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        </div>
+
           <!-- Content Row -->
 
                     <div class="row">

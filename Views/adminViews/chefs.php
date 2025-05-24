@@ -6,6 +6,7 @@
         exit();
     }
 
+
     ob_start();
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
@@ -33,6 +34,7 @@
    
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+        <?php  displayFlashMessage(); ?>
 
                     <!-- Page Heading -->
                     <!-- <h1 class="h3 mb-4 text-gray-800"></h1> -->

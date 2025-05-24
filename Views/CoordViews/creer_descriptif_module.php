@@ -10,14 +10,13 @@
    
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title="Ajouter Une UE";
+    $title="Ajouter Une Unités";
     
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
 
     $departement=GetFromDb("SELECT * FROM filieres WHERE id	=? ;",$Coord['id_filiere'],false);
-
 
 ?>
 
@@ -41,7 +40,7 @@
 
 
  <!--Notification ta3 les erreurs oula success  mn hna -->
-   <?php 
+   <!-- <?php 
     if (isset($_SESSION['AddMessage'])){
         $notification = $_SESSION['AddMessage'];
         unset($_SESSION['AddMessage']);
@@ -63,12 +62,14 @@
             }
         }, 3000);
     </script>
-<?php } ?>
+<?php } ?> -->
     <!--7tal hna-->
    
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                 <div class="container">
+                        <?php  displayFlashMessage(); ?>
+
 
 <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">

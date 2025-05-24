@@ -13,7 +13,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title=$data['firstName'].' '.$data['lastName'];
+    $title='Affecter Unités';
     $userName=$data['firstName'].' '.$data['lastName'];
 
     $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$data['id_departement'],false);
@@ -29,9 +29,9 @@
                                 FROM utilisateurs u
                                 JOIN userroles r 
                                 ON u.id=r.user_id 
-                                WHERE u.id_departement=? AND r.role_id=2 AND u.id!=? ;",[$data['id_departement'],$data['id']]);
-    
-    
+                                WHERE u.id_departement=? AND r.role_id=2;",$data['id_departement']);
+
+
 
 ?>
 
@@ -45,6 +45,8 @@
                 <div class="container-fluid">
                     
               <div class="container">
+        
+              <?php  displayFlashMessage(); ?>
 
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">

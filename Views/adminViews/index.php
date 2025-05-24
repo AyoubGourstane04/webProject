@@ -61,6 +61,8 @@
     <?php require_once "../include/header.php";?>
    <!-- Begin Page Content -->
    <div class="container-fluid">
+        <?php  displayFlashMessage(); ?>
+
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
@@ -266,7 +268,7 @@
                                                                 <?= htmlspecialchars(implode(' / ', $userRoles[$user['id']] ?? ['Aucun rôle'])) ?>
                                                             </td>
                                                             <td>
-                                                                <a href="..\operations\Modifier.php?id=<?= $user['id']; ?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
+                                                                <a href="Modifier.php?id=<?= $user['id']; ?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
                                                                     <i class="fas fa-pencil-alt pr-2"></i> Modifier
                                                                 </a>
                                                             </td>

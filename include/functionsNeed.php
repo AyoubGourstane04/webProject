@@ -1,5 +1,4 @@
 <?php
-
     function GeneratePassword($length=12){
         $chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
         $password='';
@@ -134,10 +133,39 @@
     
         return true;
     }
+    
+    function displayFlashMessage() {
+        if (isset($_SESSION['flash'])) {
+            $flash = $_SESSION['flash'];
+            $alertType = $flash['success'] ? 'alert-success' : 'alert-danger';
+            echo '<div class="container mt-3 d-flex justify-content-center">
+                    <div id="notification-toast" class="alert '.$alertType.' d-flex align-items-center justify-content-between w-100" style="max-width: 600px;">
+                        <span>'.$flash['message'].'</span>
+                        <button type="button" class="btn btn-sm btn-light border ms-3" style="line-height: 1;" aria-label="Close" onclick="document.getElementById(\'notification-toast\').remove()">&times;</button>
 
-
+                    </div>
+                </div>
+                <script>
+                    setTimeout(() => {
+                        const toast = document.getElementById(\'notification-toast\');
+                        if (toast) {
+                            toast.style.opacity = \'0\';
+                            setTimeout(() => toast.remove(), 500);
+                        }
+                    }, 3000);
+                </script>';
+            unset($_SESSION['flash']);
+        }
+    }
+    
 
     
+?>
+
+
+
+
+
 
 
 

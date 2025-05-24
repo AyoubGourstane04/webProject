@@ -7,10 +7,11 @@
         exit();
     }
 
+
     ob_start();
 
     $data = GetFromDb("SELECT * FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
-    $title = $data['firstName'] . ' ' . $data['lastName'];
+    $title = 'Ajouter Utilisateurs';
     $userName = $data['firstName'] . ' ' . $data['lastName'];
 
 
@@ -26,6 +27,8 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+                <?php  displayFlashMessage(); ?>
+
 
             <!-- Card with title and action -->
             <div class="card shadow mb-4">
@@ -60,7 +63,7 @@
                                     <td><?= htmlspecialchars($info['speciality']) ?></td>
                                     <td class="text-nowrap">
                                         <div class="d-flex justify-content-center gap-3">
-                                            <a href="..\operations\Ajouter.php?id=<?= $info['id']; ?>" 
+                                            <a href="Ajouter.php?id=<?= $info['id']; ?>" 
                                             class="btn btn-success btn-sm px-2">
                                                 <i class="fas fa-user-plus me-1"></i> Ajouter
                                             </a>

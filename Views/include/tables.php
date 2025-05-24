@@ -1,4 +1,5 @@
 <?php 
+
     $roleData=GetSimpleDb('SELECT * FROM role WHERE id='.$role.';',false);
     
     $roles=GetSimpleDb('SELECT * FROM userroles WHERE role_id='.$role.';');
@@ -43,7 +44,7 @@
                                             <th>Email</th>
                                             <th>Specialité</th>
                                             <th>Departement</th>
-                                            <th>Role</th>
+                                            <!-- <th>Role</th> -->
                                             <th>Operations</th>
                                         </tr>
                                     </thead>
@@ -64,9 +65,9 @@
                                             <td>
                                                 <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
                                             </td>
-                                            <td><?php echo $roleData['role_label'];?></td>
+                                            <!-- <td><?php echo $roleData['role_label'];?></td> -->
                                             <td>
-                                            <a href="..\operations\Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
+                                            <a href="Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
                                             <a href="..\operations\Supprimer.php?id=<?=$user['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>
                                             </td>
                                         </tr>
