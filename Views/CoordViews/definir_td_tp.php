@@ -31,6 +31,8 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
     <div class="container">
+    <?php  displayFlashMessage(); ?>
+
 
 <div class="card o-hidden border-0 shadow-lg my-5">
 <div class="card-body p-0">

@@ -1,24 +1,27 @@
 <?php
-require_once __DIR__ . '/../../Controller/controller.php';
-session_start();
+    require_once __DIR__ . '/../../Controller/controller.php';
+    session_start();
 
-// Sécurité : redirection si utilisateur non connecté
-if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
-    header("Location: /webProject/Views/login.php");
-    exit();
-}
-$id_notification = $_GET['id_not'];
-markAsRead($id_notification);
+    if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
+        header("Location: /webProject/Views/login.php");
+        exit();
+    }
 
-ob_start();
+    $id_notification = isset($_GET['id_not'])? $_GET['id_not']:null;
 
-// Récupération des informations utilisateur pour afficher le nom
-$data = GetFromDb("SELECT firstName, lastName FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
-$userName = $data['firstName'] . ' ' . $data['lastName'];
-$title ="Notification";
-// Récupération des notifications de l'utilisateur
-$notifications = GetFromDb("SELECT * FROM notifications WHERE id_utilisateur=? ORDER BY created_at DESC;", $_SESSION['id'],false);
-$total = count($notifications);
+    markAsRead($id_notification);
+
+
+
+    ob_start();
+
+    // Récupération des informations utilisateur pour afficher le nom
+    $data = GetFromDb("SELECT firstName, lastName FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
+    $userName = $data['firstName'] . ' ' . $data['lastName'];
+    $title ="Notifications";
+
+    $notifications = GetFromDb('SELECT * FROM notifications WHERE id=?;',$id_notification,false);
+    $total = count($notifications);
 ?>
 
 <div id="wrapper">
@@ -35,7 +38,7 @@ $total = count($notifications);
             <div class="card-body">
                 <p class="text-muted">🕒 Reçue le : <?= $notifications['created_at'] ?></p>
                 <hr>
-                <p class="mb-4"><?= nl2br(htmlspecialchars($notifications['message'])) ?></p>
+                <p class="mb-4"><?= nl2br($notifications['message']) ?></p>
                 <a href="notificationProf.php" class="btn btn-secondary">⬅️ Retour</a>
             </div>
         </div>

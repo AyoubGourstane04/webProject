@@ -7,7 +7,7 @@
    $result=addUnit($filiere_id,$dept_id);
 
    session_start();
-   $_SESSION['AddMessage']=$result;
+   $_SESSION['flash']=$result;
    header('location: '.$_SERVER['HTTP_REFERER']);
    exit();
 

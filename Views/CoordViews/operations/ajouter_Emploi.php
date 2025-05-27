@@ -1,6 +1,8 @@
 <?php
    require_once __DIR__ . '/../../../Controller/controller.php';
    
+   session_start();
+
     $filiere_id = isset($_GET['id_filiere']) ? intval($_GET['id_filiere']) : null;
     $coord_id = isset($_GET['id_coord']) ? intval($_GET['id_coord']) : null;
     $semestre = isset($_POST['semestre']) ? $_POST['semestre'] : null;
@@ -22,20 +24,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (move_uploaded_file($fileTempPath,  $destination)) {
                  $result=changeTable('INSERT INTO emploi (id_coordinateur, id_filiere, semestre, anneeUniversitaire, Emploi) VALUE(?,?,?,?,?);',[$coord_id,$filiere_id,$semestre,$annee,$fileName]);
                     if($result){
-                            header('location: '.$_SERVER['HTTP_REFERER']);
-                            exit();
-                    }else{
-                            throw new Exception($result);
-                        }
+                        $profs =GetFromDb('SELECT DISTINCT p.id_professeur FROM professeur p 
+                                           JOIN units u ON p.id_unit=u.id
+                                           WHERE u.id_filiere = ? AND p.anneeUniversitaire=?;',[$filiere_id,$annee]);
+
+                        $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$filiere_id,false);
+                        $message = 'L\'emploi du temps du semestre '.$semestre.' de la filière '.$filiere['label'].' pour l\'année universitaire '.$annee.' est maintenant disponible.
+                                    <a href="/webProject/Views/operations/exportEmploi.php?semestre='.$semestre.'&filiere='.$filiere['id'].'&annee='.$annee.'" class="btn btn-primary" style="margin-top:15px;display:inline-block;">Exporter</a>';
+
+                        foreach($profs as $prof){
+                            envoyerNotification($prof['id_professeur'],$message,'Emploi du Temps - Semestre '.$semestre);
+                        }     
+                        $_SESSION['flash'] = ['success' => true, 'message' => 'Emploi du temps importé avec succès.'];
+                    } else {
+                        $_SESSION['flash'] = ['success' => false, 'message' => 'Erreur lors de l\'enregistrement en base de données.'];
+                    }
             } else {
-                echo "Erreur lors du déplacement du fichier.";
+                $_SESSION['flash'] = ['success' => false, 'message' => 'Erreur lors du déplacement du fichier.'];
             }
         } else {
-            echo "Extension non autorisée : .$fileExtension";
+            $_SESSION['flash'] = ['success' => false, 'message' => "Extension non autorisée : .$fileExtension"];
         }
     } else {
-        echo "Erreur dans l'envoi du fichier : " . $_FILES['emploi_file']['error'];
+        $_SESSION['flash'] = ['success' => false, 'message' => 'Erreur dans l\'envoi du fichier (code : ' . $_FILES['emploi_file']['error'] . ')'];
     }
+
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
 }
 
 

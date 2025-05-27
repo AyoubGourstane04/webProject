@@ -44,7 +44,9 @@
                                             <th>Email</th>
                                             <th>Specialité</th>
                                             <th>Departement</th>
-                                            <!-- <th>Role</th> -->
+                                            <?php if($role == 5){?>
+                                            <th>Filière</th>
+                                            <?php }?>
                                             <th>Operations</th>
                                         </tr>
                                     </thead>
@@ -52,6 +54,9 @@
 
                                     <?php foreach($users as $user){ 
                                             $department = GetFromDb("SELECT * FROM departement WHERE id=? ;",$user['id_departement'],false);
+                                            if($role == 5){
+                                                $filiere = GetFromDb("SELECT f.label FROM vacataires v JOIN filieres f ON v.id_filiere = f.id WHERE id_vacataire=? ;",$user['id'],false);
+                                            }
                                           
                                     ?>
                                         <tr>
@@ -65,7 +70,9 @@
                                             <td>
                                                 <?php echo ($department && isset($department['departement_name'])) ? $department['departement_name'] : ''; ?>
                                             </td>
-                                            <!-- <td><?php echo $roleData['role_label'];?></td> -->
+                                        <?php if($role == 5){?>
+                                            <td><?php echo $filiere['label'];?></td>
+                                        <?php }?>
                                             <td>
                                             <a href="Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
                                             <a href="..\operations\Supprimer.php?id=<?=$user['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>

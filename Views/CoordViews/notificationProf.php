@@ -1,22 +1,22 @@
 <?php
-require_once __DIR__ . '/../../Controller/controller.php';
-session_start();
+    require_once __DIR__ . '/../../Controller/controller.php';
+    session_start();
 
-// Sécurité : redirection si utilisateur non connecté
-if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
-    header("Location: /webProject/Views/login.php");
-    exit();
-}
+    if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
+        header("Location: /webProject/Views/login.php");
+        exit();
+    }
 
-ob_start();
 
-// Récupération des informations utilisateur pour afficher le nom
-$data = GetFromDb("SELECT firstName, lastName FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
-$userName = $data['firstName'] . ' ' . $data['lastName'];
-$title ="Notification";
-// Récupération des notifications de l'utilisateur
-$notifications = GetFromDb("SELECT * FROM notifications WHERE id_utilisateur=? ORDER BY created_at DESC;", $_SESSION['id']);
-$total = count($notifications);
+    ob_start();
+
+    // Récupération des informations utilisateur pour afficher le nom
+    $data = GetFromDb("SELECT firstName, lastName FROM utilisateurs WHERE id=?;", $_SESSION['id'], false);
+    $userName = $data['firstName'] . ' ' . $data['lastName'];
+    $title ="Notifications";
+    // Récupération des notifications de l'utilisateur
+    $notifications = GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=? ORDER BY created_at DESC;', $_SESSION['id']);
+    $total = count($notifications);
 ?>
 
   <!-- Page Wrapper -->

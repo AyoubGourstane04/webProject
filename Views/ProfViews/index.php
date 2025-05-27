@@ -18,7 +18,6 @@
     $semesterFilter = isset($_GET['semestre']) && $_GET['semestre'] !== '' ? $_GET['semestre'] : null;
 
     $nbrofUnits = CounterValues('SELECT COUNT(*) FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=?;',$_SESSION['id']);           //  zedto db
-    // $nbrTotalUnits = CounterValues('SELECT COUNT(*) FROM units WHERE departement_id=?;',$data['id_departement']);
     
     if($semesterFilter){
         $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=? AND u.semestre=? LIMIT 10;',[$_SESSION['id'],$semesterFilter]);
@@ -26,7 +25,7 @@
         $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=? LIMIT 8;',$_SESSION['id']);
     }
 
-    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=?;',$_SESSION['id']);
+    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=? LIMIT 8;',$_SESSION['id']);
 
     $minHours = 100;
     $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;', $_SESSION['id']);
@@ -66,53 +65,57 @@
             <h1 class="h3 mb-0 text-gray-800">Bienvenue <?=$userName?></h1>
         </div>
                     <div class="row">
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- Nombre d'unités d'enseignement -->
                         <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="row no-gutters align-items-center w-100">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Nombre d'unités d'enseignement</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$nbrofUnits?> Unités</div>
+                                            <div class="text-sm font-weight-bold text-primary text-uppercase mb-2">
+                                                Nombre d'unités d'enseignement
+                                            </div>
+                                            <div class="h4 mb-0 font-weight-bolder text-dark"><?= $nbrofUnits ?> <span class="text-muted small">Unités</span></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-book-open fa-2x text-gray-300"></i>
+                                            <i class="fas fa-book-open fa-3x text-primary"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Earnings (Monthly) Card Example -->
+
+                        <!-- Mon Volume Horaire -->
                         <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-<?= $color_class ?> shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="row no-gutters align-items-center w-100">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-<?= $color_class ?> text-uppercase mb-1">Mon Volume Horaire</div>
+                                            <div class="text-sm font-weight-bold text-<?= $color_class ?> text-uppercase mb-2">
+                                                Mon Volume Horaire
+                                            </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $volume_horr ?> h</div>
+                                                    <div class="h5 mb-0 font-weight-bolder text-dark"><?= $volume_horr ?> h</div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="progress progress-sm mr-2">
+                                                    <div class="progress progress-sm ml-2">
                                                         <div class="progress-bar bg-<?= $color_class ?>" role="progressbar"
                                                             style="width: <?= $progress ?>%" aria-valuenow="<?= $progress ?>" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="small text-muted">Minimum requis : <?= $minHours ?>h</div>
+                                            <div class="small text-muted mt-1">Minimum requis : <?= $minHours ?>h</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                            <i class="fas fa-clock fa-3x text-<?= $color_class ?>"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                                 <!-- User Validation Table -->
                                 <div class="col-xl-8 col-lg-7">
@@ -162,10 +165,13 @@
                                     </div>
                                 </div>
 
-                             <div class="col-xl-4 col-lg-5">
+                            <div class="col-xl-4 col-lg-5">
                                 <div class="card shadow mb-4">
-                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Actualités</h6>
+                                        <a href="notificationProf.php">
+                                            <i class="fas fa-arrow-up-right-from-square"></i>
+                                        </a>
                                     </div>
 
                                     <div class="card-body">
@@ -178,17 +184,18 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php foreach ($messages as $message){
+                                                                if(!$message['is_read']){
                                                     ?>
                                                         <tr>
                                                             <td><?= $message['title'] ?></td>
                                                             <td><?= $message['created_at'] ?></td>                                                            
                                                         </tr>
-                                                    <?php } ?>
+                                                    <?php        }  
+                                                            } ?>
                                                 </tbody>
                                             </table>         
                                     </div>
                                 </div>
-
                             </div>
                     </div>
         </div>

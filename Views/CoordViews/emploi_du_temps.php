@@ -12,7 +12,7 @@
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
-    $title='Charger Emploi du Temps';
+    $title='Emplois du Temps';
     $userName=$data['firstName'].' '.$data['lastName'];
     
     $Coord=GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur	=? ;",$_SESSION['id'],false);
@@ -31,6 +31,8 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                 <div class="container">
+                    <?php  displayFlashMessage(); ?>
+
 
 <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">
@@ -110,10 +112,7 @@
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
-        </div>
-        <!-- End of Content Wrapper -->
+            
 
     </div>
     <!-- End of Page Wrapper -->

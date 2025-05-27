@@ -29,11 +29,33 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+        <style>
+            /* Completely remove DataTables sorting arrows */
+            table.dataTable thead th.sorting,
+            table.dataTable thead th.sorting_asc,
+            table.dataTable thead th.sorting_desc,
+            table.dataTable thead td.sorting,
+            table.dataTable thead td.sorting_asc,
+            table.dataTable thead td.sorting_desc {
+                background-image: none !important;
+                background: none !important;
+                position: relative;
+                padding-right: 10px !important;
+            }
+        </style>
+
+
+
+
+
 </head>
 <body id="page-top">
 
 
     <?php  echo $content;?>
+
+
 
 
 
@@ -53,7 +75,7 @@
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\datatables\dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\datatables-demo.js"></script>
+    <!-- <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\datatables-demo.js"></script> -->
 
         <!-- Page level plugins -->
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\vendor\chart.js\Chart.min.js"></script>
@@ -61,6 +83,21 @@
     <!-- Page level custom scripts -->
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\chart-area-demo.js"></script>
     <script src="..\..\startbootstrap-sb-admin-2-gh-pages\js\demo\chart-pie-demo.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+        if ($.fn.DataTable.isDataTable('#dataTable')) {
+            $('#dataTable').DataTable().destroy(); 
+        }
+
+        $('#dataTable').DataTable({
+            ordering: false
+        });
+    });
+</script>
+
+
 
 </body>
 

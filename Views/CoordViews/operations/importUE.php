@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     session_start();
     $message = $importUE->import($filePath, $filiere_id, $dept_id);
-    $_SESSION['AddMessage'] = $message;
+    $_SESSION['flash'] = $message;
 
     header('location: '.$_SERVER['HTTP_REFERER']);
         exit();

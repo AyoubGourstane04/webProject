@@ -14,9 +14,6 @@
 
     $title="Importer Notes";
     $userName=$data['firstName'].' '.$data['lastName'];
-    
-    $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=?;',$_SESSION['id']);
-
 
 
 
@@ -31,6 +28,7 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
     <div class="container">
+        <?php  displayFlashMessage(); ?>
 
     <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
@@ -43,16 +41,32 @@
                             </div>
                             <form action="../operations/ImportNotes.php?id_prof=<?=$_SESSION['id']?>" class="user" method="POST" enctype="multipart/form-data">
                                     <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <label for="unit" class="form-label">Module</label>
-                                            <select class="form-control" id="unit" name="unit" required>
-                                                <option value="" selected>--Sélectionnez le Module--</option>
-                                                <?php foreach($units as $unit){?>
-                                                    <option value="<?=$unit['id']?>"><?=$unit['intitule']?></option>
-                                                <?php    
-                                                }
-                                                ?>
+                                        <div class="col-sm-3">
+                                            <label for="semestre" class="form-label">Semestre</label>
+                                            <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
+                                                <option value="" selected>Semestre</option>
+                                                    <option value="S1">S1</option>
+                                                    <option value="S2">S2</option>
+                                                    <option value="S3">S3</option>
+                                                    <option value="S4">S4</option>
+                                                    <option value="S5">S5</option>
                                             </select>
+                                        </div>
+                                        <div class="col-sm-9">
+                                        <label for="unit" class="form-label">Module</label>
+                                        <select class="form-control" id="unit" name="unit" >
+                                            <option value="" selected>Sélectionnez l' U.E</option>
+                                            <?php 
+                                            $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=?;',$_SESSION['id']);
+                                            foreach($units as $unit){
+                                            ?>
+                                                <option value="<?=$unit['id']?>" data-semestre="<?= $unit['semestre']?>">
+                                                    <?=$unit['intitule']?>
+                                                </option>
+                                            <?php 
+                                                }  
+                                            ?>
+                                        </select>
                                         </div>
                                     </div>
                                 <div class="form-group row">
@@ -142,6 +156,39 @@
         document.getElementById('fileName').textContent = fileName;
     });
 </script>
+
+    <script>
+function filterUnits() {
+    const semestreFilter = document.getElementById('semestre').value;
+    const unitOptions = document.getElementById('unit').options;
+    
+    for (let i = 0; i < unitOptions.length; i++) {
+        const option = unitOptions[i];
+        if (option.value === "") {
+            option.style.display = "";
+            continue;
+        }
+        
+        const semestreMatch = semestreFilter === "" || option.getAttribute('data-semestre') === semestreFilter;        
+        if (semestreMatch) {
+            option.style.display = "";
+        } else {
+            option.style.display = "none";
+        }
+    }
+    
+    // Reset the selected value if it's now hidden
+    if (document.getElementById('unit').options[document.getElementById('unit').selectedIndex].style.display === "none") {
+        document.getElementById('unit').selectedIndex = 0;
+    }
+}
+</script>
+
+
+
+
+
+
 
 <?php
     $content=ob_get_clean();

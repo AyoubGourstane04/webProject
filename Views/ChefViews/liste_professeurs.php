@@ -30,7 +30,7 @@
                                 FROM utilisateurs u
                                 JOIN userroles r 
                                 ON u.id=r.user_id 
-                                WHERE u.id_departement=? AND r.role_id=2 AND u.id!=? ;",[$data['id_departement'],$data['id']]);
+                                WHERE u.id_departement=? AND r.role_id=2 OR r.role_id=5;",$data['id_departement']);
 ?>
 
     <!-- Page Wrapper -->
@@ -83,23 +83,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+                                            $underMinRows = [];
+                                            $otherRows = [];
 
-                                    <?php foreach($professeurs as $prof){ 
-                                              $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;',$prof['id']);
+                                            foreach ($professeurs as $prof) {
+                                                $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;',$prof['id']);
                                                 $volume_horr= !empty($vol_horr)?$vol_horr:0;
                                                 $rowClass=($volume_horr<$minHours)?'table-danger':'';    
-                                    ?>
-                                        <tr class="<?=$rowClass?>">
-                                            <td><?php echo $prof['id'];?></td>
-                                            <td><?php echo $prof['firstName'];?></td>
-                                            <td><?php echo $prof['lastName'];?></td>
-                                            <td><?php echo $prof['CIN'];?></td>
-                                            <td><?php echo $prof['Birthdate'];?></td>
-                                            <td><?php echo $prof['email'];?></td>
-                                            <td><?php echo $prof['speciality'];?></td>
-                                            <td><?= $volume_horr ?></td>      
-                                        </tr>
-                                       <?php }?>
+                                                $rowHtml = "<tr class=\"$rowClass\">
+                                                        <td>" . htmlspecialchars($prof['id']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['firstName']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['lastName']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['CIN']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['Birthdate']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['email']) . "</td>
+                                                        <td>" . htmlspecialchars($prof['speciality']) . "</td>
+                                                        <td>$volume_horr</td>
+                                                    </tr>";
+                                                
+
+                                                if ($volume_horr < $minHours) {
+                                                    $underMinRows[] = $rowHtml;
+                                                } else {
+                                                    $otherRows[] = $rowHtml;
+                                                }
+                                            }
+                                                echo implode('', $underMinRows) . implode('', $otherRows);
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -123,6 +134,8 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+
 
     
 

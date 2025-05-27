@@ -39,7 +39,7 @@
     ?>
     <div class="container mt-3 d-flex justify-content-center">
         <div id="notification-toast" class="alert <?= $alertType ?> d-flex align-items-center justify-content-between w-100" style="max-width: 600px;">
-            <span><?= htmlspecialchars($notification['message']) ?></span>
+            <span><?= $notification['message']?></span>
             <button type="button" class="btn-close ms-3" aria-label="Close" onclick="document.getElementById('notification-toast').remove()"></button>
         </div>
     </div>
