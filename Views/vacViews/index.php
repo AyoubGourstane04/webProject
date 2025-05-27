@@ -23,7 +23,8 @@
         $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=? LIMIT 8;',$_SESSION['id']);
     }
 
-    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=?;',$_SESSION['id']);
+    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=? AND is_read=0 LIMIT 5;',$_SESSION['id']);
+
 
 
 ?>
@@ -101,6 +102,9 @@
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Actualités</h6>
+                                        <a href="notificationProf.php">
+                                            <i class="fas fa-arrow-up-right-from-square"></i>
+                                        </a>
                                     </div>
 
                                     <div class="card-body">

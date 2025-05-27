@@ -25,7 +25,7 @@
         $units=GetFromDb('SELECT * FROM units u JOIN professeur p ON u.id=p.id_unit WHERE p.id_professeur=? LIMIT 8;',$_SESSION['id']);
     }
 
-    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=? LIMIT 8;',$_SESSION['id']);
+    $messages=GetFromDb('SELECT * FROM notifications WHERE id_utilisateur=? AND is_read=0 LIMIT 5;',$_SESSION['id']);
 
     $minHours = 100;
     $vol_horr = CounterValues('SELECT SUM(Volume_horr) AS total_volume FROM professeur WHERE id_professeur = ?;', $_SESSION['id']);
@@ -123,7 +123,7 @@
                                         <!-- Card Header -->
                                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 class="m-0 font-weight-bold text-primary">Mes Modules</h6>
-                                            <a href="Vac_Eus.php">
+                                            <a href="moduleAffec.php">
                                                 <i class="fas fa-arrow-up-right-from-square"></i>
                                             </a>
                                         </div>

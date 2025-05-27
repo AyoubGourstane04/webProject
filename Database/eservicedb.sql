@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 11:45 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Hôte : 127.0.0.1
+-- Généré le : mar. 27 mai 2025 à 05:03
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eservicedb`
+-- Base de données : `eservicedb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coordinateurs`
+-- Structure de la table `coordinateurs`
 --
 
 CREATE TABLE `coordinateurs` (
@@ -33,7 +33,7 @@ CREATE TABLE `coordinateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `coordinateurs`
+-- Déchargement des données de la table `coordinateurs`
 --
 
 INSERT INTO `coordinateurs` (`id_coordinateur`, `id_filiere`) VALUES
@@ -42,7 +42,7 @@ INSERT INTO `coordinateurs` (`id_coordinateur`, `id_filiere`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `departement`
+-- Structure de la table `departement`
 --
 
 CREATE TABLE `departement` (
@@ -52,7 +52,7 @@ CREATE TABLE `departement` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `departement`
+-- Déchargement des données de la table `departement`
 --
 
 INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
@@ -63,7 +63,7 @@ INSERT INTO `departement` (`id`, `departement_name`, `acronym`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emploi`
+-- Structure de la table `emploi`
 --
 
 CREATE TABLE `emploi` (
@@ -77,7 +77,7 @@ CREATE TABLE `emploi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `filieres`
+-- Structure de la table `filieres`
 --
 
 CREATE TABLE `filieres` (
@@ -88,7 +88,7 @@ CREATE TABLE `filieres` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `filieres`
+-- Déchargement des données de la table `filieres`
 --
 
 INSERT INTO `filieres` (`id`, `label`, `acronym`, `id_departement`) VALUES
@@ -104,7 +104,7 @@ INSERT INTO `filieres` (`id`, `label`, `acronym`, `id_departement`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `groupes`
+-- Structure de la table `groupes`
 --
 
 CREATE TABLE `groupes` (
@@ -119,7 +119,7 @@ CREATE TABLE `groupes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `historiques`
+-- Structure de la table `historiques`
 --
 
 CREATE TABLE `historiques` (
@@ -133,7 +133,7 @@ CREATE TABLE `historiques` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `newusers`
+-- Structure de la table `newusers`
 --
 
 CREATE TABLE `newusers` (
@@ -146,20 +146,10 @@ CREATE TABLE `newusers` (
   `speciality` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `newusers`
---
-
-INSERT INTO `newusers` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `speciality`) VALUES
-(8, 'Youssef', 'El Amrani', 'CD789012', '1993-03-14', 'youssef.amrani@example.com', 'Génie Civil'),
-(9, 'Nadia', 'Kabbaj', 'EF345678', '1990-11-02', 'nadia.kabbaj@example.com', 'Télécommunications'),
-(10, 'Omar', 'Zahidi', 'GH901234', '1998-01-25', 'omar.zahidi@example.com', 'Électronique'),
-(11, 'Fatima', 'Maaroufi', 'IJ567890', '1996-06-10', 'fatima.maaroufi@example.com', 'Mathématiques Appliquées');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notes`
+-- Structure de la table `notes`
 --
 
 CREATE TABLE `notes` (
@@ -175,7 +165,7 @@ CREATE TABLE `notes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notifications`
+-- Structure de la table `notifications`
 --
 
 CREATE TABLE `notifications` (
@@ -190,7 +180,7 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `professeur`
+-- Structure de la table `professeur`
 --
 
 CREATE TABLE `professeur` (
@@ -200,17 +190,10 @@ CREATE TABLE `professeur` (
   `anneeUniversitaire` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `professeur`
---
-
-INSERT INTO `professeur` (`id_professeur`, `id_unit`, `Volume_horr`, `anneeUniversitaire`) VALUES
-(2, 1, 63, '2024-2025');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Structure de la table `role`
 --
 
 CREATE TABLE `role` (
@@ -219,7 +202,7 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role`
+-- Déchargement des données de la table `role`
 --
 
 INSERT INTO `role` (`id`, `role_label`) VALUES
@@ -232,7 +215,7 @@ INSERT INTO `role` (`id`, `role_label`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tempunits`
+-- Structure de la table `tempunits`
 --
 
 CREATE TABLE `tempunits` (
@@ -241,17 +224,10 @@ CREATE TABLE `tempunits` (
   `demande` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tempunits`
---
-
-INSERT INTO `tempunits` (`id_prof`, `id_unit`, `demande`) VALUES
-(2, 2, 'cvv');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `units`
+-- Structure de la table `units`
 --
 
 CREATE TABLE `units` (
@@ -267,18 +243,10 @@ CREATE TABLE `units` (
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `units`
---
-
-INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
-(1, 'INF101', 'Algorithmique et Structures de Données', 'S1', 6.00, 'INFO', 1, 2, 1, '2025-05-17 19:30:57'),
-(2, 'INF102', 'Algorithmiquenées', 'S1', 6.00, 'INFO', 1, 3, 0, '2025-05-17 20:09:39');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userroles`
+-- Structure de la table `userroles`
 --
 
 CREATE TABLE `userroles` (
@@ -287,7 +255,7 @@ CREATE TABLE `userroles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `userroles`
+-- Déchargement des données de la table `userroles`
 --
 
 INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
@@ -295,7 +263,6 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (2, 2),
 (3, 3),
 (3, 2),
-(4, 2),
 (5, 2),
 (5, 4),
 (6, 5);
@@ -303,7 +270,7 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateurs`
+-- Structure de la table `utilisateurs`
 --
 
 CREATE TABLE `utilisateurs` (
@@ -321,21 +288,20 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `utilisateurs`
+-- Déchargement des données de la table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
 (2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
 (3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
-(4, 'Yahya', 'Azalmat', 'UB11058', '2003-02-16', 'yahyazahra451@gmail.com', '$2y$10$I6LxzsJgnm3LZaw/amvk6ei/CVmCa2jpZ.STz7y456htY6HVFcVpa', 'AI', 1, '2025-05-05 15:34:17', 0),
 (5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
 (6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vacataires`
+-- Structure de la table `vacataires`
 --
 
 CREATE TABLE `vacataires` (
@@ -344,7 +310,7 @@ CREATE TABLE `vacataires` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `vacataires`
+-- Déchargement des données de la table `vacataires`
 --
 
 INSERT INTO `vacataires` (`id_vacataire`, `id_filiere`) VALUES
@@ -353,7 +319,7 @@ INSERT INTO `vacataires` (`id_vacataire`, `id_filiere`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `volumehorraire`
+-- Structure de la table `volumehorraire`
 --
 
 CREATE TABLE `volumehorraire` (
@@ -367,53 +333,45 @@ CREATE TABLE `volumehorraire` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `volumehorraire`
---
-
-INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
-(2, 26, 12, 16, 8, 6),
-(1, 24, 13, 13, 7, 6);
-
---
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `coordinateurs`
+-- Index pour la table `coordinateurs`
 --
 ALTER TABLE `coordinateurs`
   ADD KEY `id_coordinateur` (`id_coordinateur`),
   ADD KEY `id_filiere` (`id_filiere`);
 
 --
--- Indexes for table `departement`
+-- Index pour la table `departement`
 --
 ALTER TABLE `departement`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `emploi`
+-- Index pour la table `emploi`
 --
 ALTER TABLE `emploi`
   ADD KEY `id_coordinateur` (`id_coordinateur`),
   ADD KEY `id_filiere` (`id_filiere`);
 
 --
--- Indexes for table `filieres`
+-- Index pour la table `filieres`
 --
 ALTER TABLE `filieres`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_departement` (`id_departement`);
 
 --
--- Indexes for table `groupes`
+-- Index pour la table `groupes`
 --
 ALTER TABLE `groupes`
   ADD KEY `id_coordinateur` (`id_coordinateur`),
   ADD KEY `id_filiere` (`id_filiere`);
 
 --
--- Indexes for table `historiques`
+-- Index pour la table `historiques`
 --
 ALTER TABLE `historiques`
   ADD PRIMARY KEY (`id`),
@@ -421,47 +379,48 @@ ALTER TABLE `historiques`
   ADD KEY `id_unite` (`id_unite`);
 
 --
--- Indexes for table `newusers`
+-- Index pour la table `newusers`
 --
 ALTER TABLE `newusers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `notes`
+-- Index pour la table `notes`
 --
 ALTER TABLE `notes`
   ADD KEY `id_prof` (`id_prof`),
   ADD KEY `id_unit` (`id_unit`);
 
 --
--- Indexes for table `notifications`
+-- Index pour la table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_utilisateur` (`id_utilisateur`);
 
 --
--- Indexes for table `professeur`
+-- Index pour la table `professeur`
 --
 ALTER TABLE `professeur`
   ADD KEY `id_professeur` (`id_professeur`),
   ADD KEY `id_unit` (`id_unit`);
 
 --
--- Indexes for table `role`
+-- Index pour la table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tempunits`
+-- Index pour la table `tempunits`
 --
 ALTER TABLE `tempunits`
   ADD KEY `id_prof` (`id_prof`),
   ADD KEY `id_unit` (`id_unit`);
 
 --
--- Indexes for table `units`
+-- Index pour la table `units`
 --
 ALTER TABLE `units`
   ADD PRIMARY KEY (`id`),
@@ -469,14 +428,14 @@ ALTER TABLE `units`
   ADD KEY `id_filiere` (`id_filiere`);
 
 --
--- Indexes for table `userroles`
+-- Index pour la table `userroles`
 --
 ALTER TABLE `userroles`
   ADD KEY `role_id` (`role_id`),
   ADD KEY `user_Id` (`user_id`);
 
 --
--- Indexes for table `utilisateurs`
+-- Index pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
   ADD PRIMARY KEY (`id`),
@@ -485,158 +444,164 @@ ALTER TABLE `utilisateurs`
   ADD KEY `id_departement` (`id_departement`);
 
 --
--- Indexes for table `vacataires`
+-- Index pour la table `vacataires`
 --
 ALTER TABLE `vacataires`
   ADD KEY `id_vacataire` (`id_vacataire`),
   ADD KEY `id_filiere` (`id_filiere`);
 
 --
--- Indexes for table `volumehorraire`
+-- Index pour la table `volumehorraire`
 --
 ALTER TABLE `volumehorraire`
   ADD KEY `id_unit` (`id_unit`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `departement`
+-- AUTO_INCREMENT pour la table `departement`
 --
 ALTER TABLE `departement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `filieres`
+-- AUTO_INCREMENT pour la table `filieres`
 --
 ALTER TABLE `filieres`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `historiques`
+-- AUTO_INCREMENT pour la table `historiques`
 --
 ALTER TABLE `historiques`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `newusers`
+-- AUTO_INCREMENT pour la table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `notifications`
+-- AUTO_INCREMENT pour la table `notifications`
 --
 ALTER TABLE `notifications`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `units`
+-- AUTO_INCREMENT pour la table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `utilisateurs`
+-- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `coordinateurs`
+-- Contraintes pour la table `coordinateurs`
 --
 ALTER TABLE `coordinateurs`
   ADD CONSTRAINT `coordinateurs_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `coordinateurs_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
--- Constraints for table `emploi`
+-- Contraintes pour la table `emploi`
 --
 ALTER TABLE `emploi`
   ADD CONSTRAINT `emploi_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `coordinateurs` (`id_coordinateur`),
   ADD CONSTRAINT `emploi_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
--- Constraints for table `filieres`
+-- Contraintes pour la table `filieres`
 --
 ALTER TABLE `filieres`
   ADD CONSTRAINT `filieres_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
 
 --
--- Constraints for table `groupes`
+-- Contraintes pour la table `groupes`
 --
 ALTER TABLE `groupes`
   ADD CONSTRAINT `groupes_ibfk_1` FOREIGN KEY (`id_coordinateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `groupes_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
--- Constraints for table `historiques`
+-- Contraintes pour la table `historiques`
 --
 ALTER TABLE `historiques`
   ADD CONSTRAINT `historiques_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `historiques_ibfk_2` FOREIGN KEY (`id_unite`) REFERENCES `units` (`id`);
 
 --
--- Constraints for table `notes`
+-- Contraintes pour la table `notes`
 --
 ALTER TABLE `notes`
   ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`id_prof`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 
 --
--- Constraints for table `professeur`
+-- Contraintes pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateurs` (`id`);
+
+--
+-- Contraintes pour la table `professeur`
 --
 ALTER TABLE `professeur`
   ADD CONSTRAINT `professeur_ibfk_1` FOREIGN KEY (`id_professeur`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `professeur_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 
 --
--- Constraints for table `tempunits`
+-- Contraintes pour la table `tempunits`
 --
 ALTER TABLE `tempunits`
   ADD CONSTRAINT `tempunits_ibfk_1` FOREIGN KEY (`id_prof`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `tempunits_ibfk_2` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
 
 --
--- Constraints for table `units`
+-- Contraintes pour la table `units`
 --
 ALTER TABLE `units`
   ADD CONSTRAINT `units_ibfk_1` FOREIGN KEY (`departement_id`) REFERENCES `departement` (`id`),
   ADD CONSTRAINT `units_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
--- Constraints for table `userroles`
+-- Contraintes pour la table `userroles`
 --
 ALTER TABLE `userroles`
   ADD CONSTRAINT `userroles_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   ADD CONSTRAINT `userroles_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `utilisateurs` (`id`);
 
 --
--- Constraints for table `utilisateurs`
+-- Contraintes pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
   ADD CONSTRAINT `utilisateurs_ibfk_1` FOREIGN KEY (`id_departement`) REFERENCES `departement` (`id`);
 
 --
--- Constraints for table `vacataires`
+-- Contraintes pour la table `vacataires`
 --
 ALTER TABLE `vacataires`
   ADD CONSTRAINT `vacataires_ibfk_1` FOREIGN KEY (`id_vacataire`) REFERENCES `utilisateurs` (`id`),
   ADD CONSTRAINT `vacataires_ibfk_2` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`);
 
 --
--- Constraints for table `volumehorraire`
+-- Contraintes pour la table `volumehorraire`
 --
 ALTER TABLE `volumehorraire`
   ADD CONSTRAINT `volumehorraire_ibfk_1` FOREIGN KEY (`id_unit`) REFERENCES `units` (`id`);
