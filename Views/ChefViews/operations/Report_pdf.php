@@ -120,7 +120,7 @@
                 []
             ];
 
-        exportMultipleTablesToPDF($data, 'Rapport_Complet_'.$department['acronym'].'.xlsx', $highlightedRowsPerSheet);
+        exportMultipleTablesToPDF($data, 'Rapport_Complet_'.$department['acronym'].'.pdf', $highlightedRowsPerSheet);
 
             break;           
        

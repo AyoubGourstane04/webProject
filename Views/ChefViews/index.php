@@ -316,7 +316,7 @@
                                                                 <?php echo ($filiere && isset($filiere['label'])) ? $filiere['label'] : ''; ?>
                                                             </td>
                                                              <td> 
-                                                                <a href="affecter_module_vacataire.php?unit_id=<?=$unit['id']?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
+                                                                <a href="affecter_ue_professeur.php?unit_id=<?=$unit['id']?>&fil_id=<?=$unit['id_filiere']?>&semestre=<?=$unit['semestre']?>" class="btn btn-primary btn-sm d-inline-flex align-items-center">
                                                                     <i class="fas fa-user-plus pr-2"></i> Affecter
                                                                 </a>
                                                             </td>

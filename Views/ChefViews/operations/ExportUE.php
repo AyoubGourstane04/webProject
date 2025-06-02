@@ -52,5 +52,6 @@ foreach ($units as $unit) {
         ($prof['firstName'] ?? '') . ' ' . ($prof['lastName'] ?? '')
     ];
 }
-
-exportTableToExcel($data, 'unites_enseignement_'.$department['acronym'].'.xlsx');
+$dept=trim($department['acronym']);
+$fileName='unites_enseignement_'.$dept.'.xlsx';
+exportTableToExcel($data,$fileName);

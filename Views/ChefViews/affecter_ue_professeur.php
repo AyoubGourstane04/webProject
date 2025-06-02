@@ -10,6 +10,9 @@
 
     ob_start();
     $Ue_id=isset($_GET['unit_id'])?$_GET['unit_id']:null;
+    $Fil_id=isset($_GET['fil_id'])?$_GET['fil_id']:null;
+    $Sem=isset($_GET['semestre'])?$_GET['semestre']:null;
+
     
     $data=GetFromDb("SELECT * FROM utilisateurs WHERE id=? ;",$_SESSION['id'],false);
 
@@ -65,10 +68,10 @@
                                         <select class="form-control" id="filiere" name="filiere" onchange="filterUnits()">
                                             <option value="" selected>Sélectionnez la filière</option>
                                             <?php 
-                                            $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? ;",$data['id_departement']);
+                                            $filieres=GetFromDb("SELECT * FROM filieres WHERE id_departement=? OR id_departement=3 ;",$data['id_departement']);
                                             foreach($filieres as $filiere){
                                             ?>
-                                            <option value="<?= $filiere['id']?>"><?=$filiere['label']?></option>
+                                            <option value="<?= $filiere['id']?>" <?= ($Fil_id == $filiere['id']) ? 'selected' : '' ?>><?=$filiere['label']?></option>
 
                                             <?php 
                                                         
@@ -80,11 +83,11 @@
                                         <label for="semestre" class="form-label">Semestre</label>
                                         <select class="form-control" id="semestre" name="semestre" onchange="filterUnits()" >
                                             <option value="" selected>Semestre</option>
-                                                <option value="S1">S1</option>
-                                                <option value="S2">S2</option>
-                                                <option value="S3">S3</option>
-                                                <option value="S4">S4</option>
-                                                <option value="S5">S5</option>
+                                                <option value="S1" <?= ($Sem == 'S1') ? 'selected' : '' ?>>S1</option>
+                                                <option value="S2" <?= ($Sem == 'S2') ? 'selected' : '' ?>>S2</option>
+                                                <option value="S3" <?= ($Sem == 'S3') ? 'selected' : '' ?>>S3</option>
+                                                <option value="S4" <?= ($Sem == 'S4') ? 'selected' : '' ?>>S4</option>
+                                                <option value="S5" <?= ($Sem == 'S5') ? 'selected' : '' ?>>S5</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
