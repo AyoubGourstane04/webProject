@@ -262,16 +262,14 @@
                                     </div>
                                     <div class="mt-4 text-center small">
                                        <?php
-                                            //$colors = ['text-primary', 'text-success', 'text-info', 'text-warning', 'text-danger', 'text-secondary', 'text-dark', 'text-muted'];
-                                            $colors = ['#1f77b4','#2ca02c','#17becf','#ff7f0e','#d62728','#9467bd','#8c564b','#7f7f7f'];
+                                            // $colors = ['text-primary', 'text-success', 'text-info', 'text-warning', 'text-danger', 'text-secondary', 'text-dark', 'text-muted'];
+                                            $colors = ['#1f77b4','#2ca02c','#17becf','#ff7f0e','#d62728','#9467bd','#e377c2','#7f7f7f'];
                                             $colorCount = count($colors);
                                             $i = 0;
-
-                                            //<i class="fas fa-circle ' . $colorClass . '"></i> ' . htmlspecialchars($fil['acronym']) . '
                                             foreach ($filieres as $fil) {
                                                 $colorClass = $colors[$i % $colorCount];
                                                 echo '<span class="mr-2">
-                                                        <i class="fas fa-circle" style="color : '. $colorClass .'" ></i> ' . htmlspecialchars($fil['acronym']) . '
+                                                        <i class="fas fa-circle" style="color : ' .$colorClass. '" ></i> ' . htmlspecialchars($fil['acronym']) . '
                                                     </span>';
                                                 $i++;
                                             }
