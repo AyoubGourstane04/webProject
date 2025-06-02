@@ -169,7 +169,7 @@
                                                         <td><?= htmlspecialchars($info['firstName']) ?></td>
                                                         <td><?= htmlspecialchars($info['lastName']) ?></td>
                                                         <td>
-                                                            <a href="..\operations\Ajouter.php?id=<?= $info['id']; ?>" 
+                                                            <a href="Ajouter.php?id=<?= $info['id']; ?>" 
                                                             class="btn btn-success btn-sm me-1">
                                                                 <i class="fas fa-user-plus pr-2"></i> Ajouter
                                                             </a>

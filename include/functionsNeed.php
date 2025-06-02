@@ -104,7 +104,7 @@
     }
 
     function validateRoles($roles){
-        $validRoles = ['1','2', '3', '4'];
+        $validRoles = ['1','2', '3', '4','5'];
         $sanitizedRoles = isset($roles) && is_array($roles)? array_values(array_intersect($validRoles,$roles)):[];
         
         if (empty($sanitizedRoles)) {

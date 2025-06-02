@@ -5,7 +5,7 @@
    if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
        header("Location: /webProject/Views/login.php");
        exit();
-   }
+    }
     
 
     ob_start();

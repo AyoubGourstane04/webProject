@@ -54,20 +54,12 @@
                                                 name="password" id="loginPassword" placeholder="Saisir votre mot de passe" minlength="8" required>
                                                 <div class="invalid-feedback">Le mot de passe doit contenir au moins 8 caractères.</div>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck"> Se rappeler moi</label>
-                                            </div>
-                                        </div> -->
+                                        
                                         <input type="submit" value="Se connecter" class="btn btn-primary btn-user btn-block">
                                         <hr>
                                  
                                     </form>
-                                   
-                                    <!-- <div class="text-center">
-                                        <a class="small" href="..\forgot-password.html">Mot de passe oublié ?</a>
-                                    </div><br> -->
+                                 
                                     <div class="text-center">
                                      Don't have an account? <a class="small" href="signup.php"> SignUp</a>
                                     </div><br>
