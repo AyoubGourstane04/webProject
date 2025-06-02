@@ -9,7 +9,7 @@ if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
 }
 
 $Coord = GetFromDb("SELECT * FROM coordinateurs WHERE id_coordinateur = ?", $_SESSION['id'], false);
-$units = GetFromDb("SELECT * FROM units WHERE id_filiere = ?", $Coord['id_filiere']);
+$units = GetFromDb("SELECT * FROM units WHERE id_filiere = ? AND statut=1;", $Coord['id_filiere']);
 $filiere = GetFromDb("SELECT * FROM filieres WHERE id=? ;",$Coord['id_filiere'],false);
 
 
