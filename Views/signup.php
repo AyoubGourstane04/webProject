@@ -1,7 +1,7 @@
 <?php
     ob_start();
     $title="ENSAH | REGISTER";
-    session_start(); 
+    // session_start(); 
 
 
 ?>

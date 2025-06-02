@@ -1,5 +1,7 @@
 <?php
+    require_once __DIR__ . '/../Controller/controller.php';
 
+    
     session_start();
     if (!isset($_SESSION['role']) || !isset($_SESSION['id'])) {
         header("Location: /webProject/Views/login.php");
@@ -7,6 +9,7 @@
     }
 
     ob_start();
+
     
     $title="Changer mot de passe";
 
@@ -77,7 +80,6 @@
 </script>
 
 
-</html>
 
 
 <?php

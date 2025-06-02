@@ -89,6 +89,8 @@
         $email=$_POST['email'];
         $password=$_POST['password'];
 
+        session_start();
+        
         $pdo=dataBaseConnection();
         $statment=$pdo->prepare("SELECT * FROM utilisateurs WHERE email=? ;");
         $statment->execute([$email]);
@@ -96,15 +98,6 @@
 
         if($statment->rowCount()>=1){
             if(password_verify($password,$data['password'])){
-
-                    if ($data['must_change_password']) {
-                        $_SESSION['id'] = $data['id'];
-                        $_SESSION['force_password_change'] = true;
-                        header('Location: /webProject/Views/change_password.php');
-                        exit();
-                    }
-                
-
                 $stmt = $pdo->prepare('SELECT * FROM userroles WHERE user_id = ?;');
                 $stmt->execute([$data['id']]);
                 $roleData = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -126,7 +119,18 @@
                 } else {
                     $role = null;
                 }
+
+                    if ($data['must_change_password']) {
+                        $_SESSION['id'] = $data['id'];
+                        $_SESSION['force_password_change'] = true;
+                        $_SESSION['role'] = $role;
+                        header('Location: /webProject/Views/change_password.php');
+                        exit();
+                    }
                 $_SESSION['role'] = $role;
+                
+
+                
 
             switch ($role) {
                     case '1'://admin

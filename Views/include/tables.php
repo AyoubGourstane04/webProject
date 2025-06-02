@@ -44,7 +44,7 @@
                                             <th>Email</th>
                                             <th>Specialité</th>
                                             <th>Departement</th>
-                                            <?php if($role == 5){?>
+                                            <?php if($role == 5 || $role == 4){?>
                                             <th>Filière</th>
                                             <?php }?>
                                             <th>Operations</th>
@@ -57,6 +57,10 @@
                                             if($role == 5){
                                                 $filiere = GetFromDb("SELECT f.label FROM vacataires v JOIN filieres f ON v.id_filiere = f.id WHERE id_vacataire=? ;",$user['id'],false);
                                             }
+                                            if($role == 4){
+                                                $filiereC = GetFromDb("SELECT f.label FROM coordinateurs c JOIN filieres f ON c.id_filiere = f.id WHERE 	id_coordinateur=? ;",$user['id'],false);
+                                            }
+                                            
                                           
                                     ?>
                                         <tr>
@@ -72,6 +76,9 @@
                                             </td>
                                         <?php if($role == 5){?>
                                             <td><?php echo $filiere['label'];?></td>
+                                        <?php }?>
+                                        <?php if($role == 4){?>
+                                            <td><?php echo $filiereC['label'];?></td>
                                         <?php }?>
                                             <td>
                                             <a href="Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
