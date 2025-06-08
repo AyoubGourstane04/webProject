@@ -55,28 +55,32 @@ class ExcelImporter {
     }
 
     private function processRow(array $data, int $row): ?array {
-        $code = trim($data[0] ?? '');
-        if (empty($code)) {
-            echo "Skipping row $row: Missing module code<br>";
-            return null;
-        }
+    $code = trim($data[0] ?? ''); // A
 
-        if ($this->recordExists($code)) {
-            echo "Skipping duplicate: $code<br>";
-            return null;
-        }
-
-        return [
-            'codeModule'  => $code,
-            'intitule'    => trim($data[1] ?? ''),
-            'semestre'    => trim($data[2] ?? ''),
-            'cours'       => (int)($data[4] ?? 0),
-            'TD'          => (int)($data[5] ?? 0),
-            'TP'          => (int)($data[6] ?? 0),
-            'autre'       => (int)($data[7] ?? 0),
-            'evaluation'  => (int)($data[8] ?? 0),
-        ];
+    if (empty($code)) {
+        echo "Skipping row $row: Missing module code<br>";
+        return null;
     }
+
+    if ($this->recordExists($code)) {
+        echo "Skipping duplicate: $code<br>";
+        return null;
+    }
+
+    return [
+        'codeModule'  => $code,                      // A
+        'intitule'    => trim($data[1] ?? ''),       // B
+        'semestre'    => trim($data[2] ?? ''),       // C
+        'cours'       => (int)($data[3] ?? 0),       // D
+        'TD'          => (int)($data[4] ?? 0),       // E
+        'TP'          => (int)($data[5] ?? 0),       // F
+        'autre'       => (int)($data[6] ?? 0),       // G
+        'evaluation'  => (int)($data[7] ?? 0),       // H
+        'credits'     => trim($data[8] ?? ''),       // I
+        'speciality'  => trim($data[9] ?? '')        // J
+    ];
+}
+
 
     private function recordExists(string $code): bool {
         $stmt = $this->pdo->prepare('SELECT id FROM units WHERE code_module = ? LIMIT 1');
@@ -86,7 +90,7 @@ class ExcelImporter {
 
     private function insertRow(array $data, int $filiereId, int $departementId): array {
         try {
-            $unit_id = insertUnit($data['codeModule'], $data['intitule'], $data['semestre'], 0, '', $departementId, $filiereId);
+            $unit_id = insertUnit($data['codeModule'], $data['intitule'], $data['semestre'], $data['credits'], $data['speciality'], $departementId, $filiereId);
             if ($unit_id !== -1) {
                 $result = changeTable(
                     'INSERT INTO volumehorraire (id_unit, Cours, TD, TP, Autre, Evaluation) VALUES (?, ?, ?, ?, ?, ?)',
