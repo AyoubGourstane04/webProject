@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 27 mai 2025 à 05:03
+-- Généré le : dim. 08 juin 2025 à 04:32
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.0.30
 
@@ -243,6 +243,58 @@ CREATE TABLE `units` (
   `date_creation` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `units`
+--
+
+INSERT INTO `units` (`id`, `code_module`, `intitule`, `semestre`, `credits`, `speciality`, `departement_id`, `id_filiere`, `statut`, `date_creation`) VALUES
+(1, 'M111', 'Architecture des ordinateurs', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(2, 'M112', 'Langage C avancé et structures de données', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(3, 'M113', 'Recherche opérationnelle et théorie des graphes', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(4, 'M114', 'Systèmes d’Information et Bases de Données Relationnelles', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(5, 'M115', 'Réseaux informatiques', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(6, 'M116', 'Culture and Art skills', 'S1', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(7, 'M117.1', 'Langues Etrangéres (Français)', 'S1', 7.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(8, 'M117.2', 'Langues Etrangéres (Anglais)', 'S1', 7.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(9, 'M121', 'Architecture Logicielle et UML', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(10, 'M122', 'Web1 : Technologies de Web et PHP5', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(11, 'M123', 'Programmation Orientée Objet C++', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(12, 'M124', 'Linux et programmation systéme', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(13, 'M125', 'Algorithmique Avancée et complexité', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(14, 'M126', 'Prompt ingeniering for developpers', 'S2', 14.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(15, 'M127.1', 'Langues,Communication et TIC -fr', 'S2', 7.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(16, 'M127.2', 'Langues,Communication et TIC- Ang', 'S2', 7.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(17, 'M31', 'Python pour les sciences de données', 'S3', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(18, 'M32', 'Programmation Java Avancée', 'S3', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(19, 'M33.1', 'Langues et Communication -FR', 'S3', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(20, 'M33.2', 'Langues et Communication- Ang', 'S3', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(21, 'M33.3', 'Langues et Communication- Espagnol', 'S3', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(22, 'M34', 'Linux et programmation système', 'S3', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(23, 'M35', 'Administration des Bases de données Avancées', 'S3', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(24, 'M36', 'Administration réseaux et systèmes', 'S3', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(25, 'M41.1', 'Entreprenariat 2  - Contrôle gestion', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(26, 'M41.2', 'Entreprenariat 2  -Marketing fondamental', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(27, 'M42', 'Machine Learning', 'S4', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(28, 'M43.1', 'Gestion de projet', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(29, 'M43.2', 'Génie logiciel', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(30, 'M44.1', 'Crypto-systèmes', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(31, 'M44.2', 'sécurité Informatique', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(32, 'M45.1', 'Frameworks Java EE avancés', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(33, 'M45.2', '.Net', 'S4', 8.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(34, 'M46', 'Web 2 : Applications Web modernes', 'S4', 16.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(35, 'M51', 'Système embarqué et temps réel', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(36, 'M52', 'Développement des applications mobiles', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(37, 'M53.1', 'Virtualisation', 'S5', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:56'),
+(38, 'M53.2', 'Cloud Computing', 'S5', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(39, 'M54', 'Analyse et conception des systèmes décisionnels', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(40, 'M55', 'Enterprise Resource Planning ERP', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(41, 'M56', 'Ingénierie logicielle, Qualité, Test et Intégration', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(42, 'M57', 'Ingénierie de l’information et des connaissances', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(43, 'M58', 'Business Intelligence & Veille Stratégique', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(44, 'M59', 'Data Mining', 'S5', 10.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(45, 'M510.1', 'Entreprenariat 3 -RH', 'S5', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57'),
+(46, 'M510.2', 'Entreprenariat 3 - Gestion financiere', 'S5', 5.00, 'GI', 1, 2, 0, '2025-06-08 03:29:57');
+
 -- --------------------------------------------------------
 
 --
@@ -265,7 +317,8 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (3, 2),
 (5, 2),
 (5, 4),
-(6, 5);
+(6, 5),
+(14, 2);
 
 -- --------------------------------------------------------
 
@@ -293,10 +346,11 @@ CREATE TABLE `utilisateurs` (
 
 INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
-(2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
+(2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 0, '2025-04-29 12:06:25', 0),
 (3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
 (5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
-(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0);
+(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0),
+(14, 'ayoub', 'gours', 'JD888822', '1990-05-07', 'ayoub.2004.2099@gmail.com', '$2y$10$yO7i.XB3KXztb.QSHJWtluW2Rkih.WI.Mv.tUr2B96QYfQvXx9qHe', 'Data science', 0, '2025-06-02 02:56:25', 0);
 
 -- --------------------------------------------------------
 
@@ -331,6 +385,58 @@ CREATE TABLE `volumehorraire` (
   `Evaluation` int(11) NOT NULL,
   `VolumeTotal` int(11) GENERATED ALWAYS AS (`Cours` + `TD` + `TP` + `Autre` + `Evaluation`) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `volumehorraire`
+--
+
+INSERT INTO `volumehorraire` (`id_unit`, `Cours`, `TD`, `TP`, `Autre`, `Evaluation`) VALUES
+(1, 26, 16, 16, 4, 6),
+(2, 26, 16, 18, 0, 6),
+(3, 26, 24, 12, 0, 6),
+(4, 26, 24, 12, 0, 6),
+(5, 26, 18, 14, 4, 6),
+(6, 26, 10, 0, 9, 3),
+(7, 20, 6, 3, 0, 3),
+(8, 20, 6, 3, 0, 3),
+(9, 26, 16, 10, 10, 6),
+(10, 26, 10, 16, 10, 6),
+(11, 26, 16, 10, 10, 6),
+(12, 26, 16, 10, 10, 6),
+(13, 26, 26, 4, 6, 6),
+(14, 26, 26, 6, 4, 6),
+(15, 20, 6, 3, 0, 6),
+(16, 20, 6, 3, 0, 6),
+(17, 28, 0, 36, 0, 6),
+(18, 24, 8, 32, 0, 6),
+(19, 21, 0, 11, 0, 2),
+(20, 21, 10, 0, 0, 2),
+(21, 21, 10, 0, 0, 2),
+(22, 21, 16, 27, 0, 6),
+(23, 26, 4, 34, 0, 6),
+(24, 27, 15, 22, 0, 6),
+(25, 21, 18, 0, 0, 3),
+(26, 25, 0, 0, 0, 3),
+(27, 21, 20, 23, 0, 6),
+(28, 16, 6, 16, 0, 3),
+(29, 12, 6, 0, 8, 3),
+(30, 15, 10, 4, 0, 3),
+(31, 15, 10, 10, 0, 3),
+(32, 15, 10, 4, 0, 0),
+(33, 15, 10, 10, 0, 0),
+(34, 21, 15, 28, 0, 6),
+(35, 25, 25, 14, 0, 6),
+(36, 28, 0, 36, 0, 6),
+(37, 10, 4, 12, 0, 3),
+(38, 12, 8, 18, 0, 3),
+(39, 28, 12, 24, 0, 6),
+(40, 22, 12, 30, 0, 6),
+(41, 21, 18, 25, 0, 6),
+(42, 28, 12, 24, 0, 6),
+(43, 24, 16, 24, 0, 6),
+(44, 26, 14, 24, 0, 6),
+(45, 30, 0, 0, 0, 4),
+(46, 18, 16, 0, 0, 2);
 
 --
 -- Index pour les tables déchargées
@@ -482,7 +588,7 @@ ALTER TABLE `historiques`
 -- AUTO_INCREMENT pour la table `newusers`
 --
 ALTER TABLE `newusers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `notifications`
@@ -500,13 +606,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `units`
 --
 ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Contraintes pour les tables déchargées
