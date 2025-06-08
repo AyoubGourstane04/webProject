@@ -211,84 +211,81 @@
     } 
 
     function EditUser($id, $firstName, $lastName, $birthdate, $cin, $email, $speciality, $departement, $roles) {
-        try {
-            $pdo = dataBaseConnection();
+    try {
+        $pdo = dataBaseConnection();
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
 
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
 
-            $updateFields = [];
-            $params = [];
-    
-            if (!empty($firstName)) {
-                $updateFields[] = 'firstName = ?';
-                $params[] = $firstName;
+        $originalUser = GetFromDb('SELECT * FROM utilisateurs WHERE id = ?;', $id, false);
+        $userRoles = GetFromDb('SELECT role_id FROM userroles WHERE user_id = ?;', $id);
+        $existingRoleIds = array_column($userRoles, 'role_id');
+
+
+        $updateFields = [];
+        $params = [];
+
+
+        $fieldsToCheck = [
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'Birthdate' => $birthdate,
+            'CIN' => $cin,
+            'email' => $email,
+            'speciality' => $speciality,
+            'id_departement' => $departement
+        ];
+
+        foreach ($fieldsToCheck as $field => $value) {
+            if ($originalUser[$field] !== $value) {
+                $updateFields[] = "$field = ?";
+                $params[] = $value;
             }
-            if (!empty($lastName)) {
-                $updateFields[] = 'lastName = ?';
-                $params[] = $lastName;
-            }
-            if (!empty($birthdate)) {
-                $updateFields[] = 'Birthdate = ?';
-                $params[] = $birthdate;
-            }
-            if (!empty($cin)) {
-                $updateFields[] = 'CIN = ?';
-                $params[] = $cin;
-            }
-            if (!empty($email)) {
-                $updateFields[] = 'email = ?';
-                $params[] = $email;
-            }
-            if (!empty($speciality)) {
-                $updateFields[] = 'speciality = ?';
-                $params[] = $speciality;
-            }
-            if (!empty($departement)) {
-                $updateFields[] = 'id_departement = ?';
-                $params[] = $departement;
-            }
-
-            if (count($updateFields) > 0) {
-                $updateQuery = 'UPDATE utilisateurs SET ' . implode(', ', $updateFields) . ' WHERE id = ?';
-                $params[] = $id;
-    
-                $stmt = $pdo->prepare($updateQuery);
-                $stmt->execute($params);
-            }
-                $roles = validateRoles($_POST['roles']);
-
-                $existingRoles =GetFromDb('SELECT role_id FROM userroles WHERE user_id=?;',$id);
-
-                $existingRoleIds = array_column($existingRoles, 'role_id');
-
-                $rolesToRemove = array_diff($existingRoleIds, $roles);
-
-                if(!empty($rolesToRemove)){
-                    $placeholders=implode(',', array_fill(0, count($rolesToRemove), '?'));
-                    $statment=$pdo->prepare('DELETE FROM userroles WHERE user_id=? AND role_id IN ('.$placeholders.');');
-                    $statment->execute(array_merge([$id],$rolesToRemove));
-                }
-
-                foreach($roles as $roleId){
-                    if (!in_array($roleId,$existingRoleIds)){
-                        $sql=$pdo->prepare('INSERT INTO userroles (role_id,user_id) VALUES (?,?);');
-                        $sql->execute([$roleId,$id]);
-                    }
-                }
-
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
-
-            if ($stmt->rowCount() > 0) {
-                return "User updated successfully.";
-            } else {
-                return header('location: /webProject/Views/adminViews/admin.php');
-            }
-
-            
-        } catch (PDOException $e) {
-            return "Error updating user: " . $e->getMessage();
         }
+
+        $somethingChanged = false;
+
+
+        if (!empty($updateFields)) {
+            $query = "UPDATE utilisateurs SET " . implode(", ", $updateFields) . " WHERE id = ?";
+            $params[] = $id;
+            $stmt = $pdo->prepare($query);
+            $stmt->execute($params);
+            $somethingChanged = $stmt->rowCount() > 0;
+        }
+
+
+        $validatedRoles = validateRoles($_POST['roles'] ?? []);
+        $rolesToAdd = array_diff($validatedRoles, $existingRoleIds);
+        $rolesToRemove = array_diff($existingRoleIds, $validatedRoles);
+
+
+        if (!empty($rolesToRemove)) {
+            $placeholders = implode(',', array_fill(0, count($rolesToRemove), '?'));
+            $stmt = $pdo->prepare("DELETE FROM userroles WHERE user_id = ? AND role_id IN ($placeholders)");
+            $stmt->execute(array_merge([$id], $rolesToRemove));
+            $somethingChanged = true;
+        }
+
+
+        foreach ($rolesToAdd as $roleId) {
+            $stmt = $pdo->prepare("INSERT INTO userroles (role_id, user_id) VALUES (?, ?)");
+            $stmt->execute([$roleId, $id]);
+            $somethingChanged = true;
+        }
+
+        $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+
+        if ($somethingChanged) {
+            return "User updated successfully.";
+        } else {
+            return "Pas De Changements Détéctés.";
+        }
+
+    } catch (PDOException $e) {
+        return "Error updating user: " . $e->getMessage();
     }
+}
+
 
 
     function DeleteDb($tableName,$id){

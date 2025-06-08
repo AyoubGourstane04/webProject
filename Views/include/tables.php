@@ -74,7 +74,9 @@
                                             <td><?php echo $filiere['label'];?></td>
                                         <?php }?>
                                             <td>
+                                            <?php if($role != 5){?>
                                             <a href="Modifier.php?id=<?=$user['id'];?>" class="btn-icon-split-primary btn-sm">Modifier</a>
+                                            <?php }?>
                                             <a href="..\operations\Supprimer.php?id=<?=$user['id'];?>" class="btn-icon-split-danger btn-sm" onclick="return confirm('Are You Sure ?')">Supprimer</a>
                                             </td>
                                         </tr>
