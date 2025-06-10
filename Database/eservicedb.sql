@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : dim. 08 juin 2025 à 04:32
+-- Généré le : mar. 10 juin 2025 à 10:05
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.0.30
 
@@ -317,8 +317,7 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 (3, 2),
 (5, 2),
 (5, 4),
-(6, 5),
-(14, 2);
+(6, 5);
 
 -- --------------------------------------------------------
 
@@ -346,11 +345,10 @@ CREATE TABLE `utilisateurs` (
 
 INSERT INTO `utilisateurs` (`id`, `firstName`, `lastName`, `CIN`, `Birthdate`, `email`, `password`, `speciality`, `id_departement`, `creation_date`, `must_change_password`) VALUES
 (1, 'Ayoub', 'Gourstane', 'JC49250', '2004-09-25', 'ayoubgourstan@gmail.com', '$2y$10$bGjVMkqOgBWCLiKEWpUFOe0hssGgyMYLd4CjC13qR1DRIAaiL3I3e', 'none', 3, '2025-04-19 14:10:42', 0),
-(2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 0, '2025-04-29 12:06:25', 0),
+(2, 'John', 'Doe', 'EF34599', '2004-04-08', 'zoomenter2020@gmail.com', '$2y$10$jU1KliaVxmQbu6PpLmfhVeGVsjrXkBWHnhAmxrZervwULSZX/qMy6', 'Data science', 1, '2025-04-29 12:06:25', 0),
 (3, 'Chef', 'Dept', 'EF34566', '1995-05-01', 'rhdsp04@gmail.com', '$2y$10$I62TFtVM8vLqt1K8H2ULfOf85f76dj3jtiZIIZDjp5CCyxMRd0qZm', 'Mathématique et informatique', 1, '2025-05-03 01:18:03', 0),
 (5, 'Coordinateur', 'filiere', 'JC649259', '1990-05-24', 'ayoubgourstane78@gmail.com', '$2y$10$Oy5H/PqCai/mVoeLTOAzQ.O7rNt7iPW8sUsBCB61UC5B0NzyLHI6W', 'programming essentiels', 1, '2025-05-08 15:07:17', 0),
-(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0),
-(14, 'ayoub', 'gours', 'JD888822', '1990-05-07', 'ayoub.2004.2099@gmail.com', '$2y$10$yO7i.XB3KXztb.QSHJWtluW2Rkih.WI.Mv.tUr2B96QYfQvXx9qHe', 'Data science', 0, '2025-06-02 02:56:25', 0);
+(6, 'vacataire', 's', 'KJ664444', '1999-05-01', 'here.there.everywhere2004@gmail.com', '$2y$10$/lKSSzCn4qMOcXJaHUU8auGxCGbsIUwyNYURDQixcNYRkFPVTnLre', 'AI science', 1, '2025-05-18 02:23:34', 0);
 
 -- --------------------------------------------------------
 
